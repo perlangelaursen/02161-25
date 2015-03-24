@@ -14,5 +14,14 @@ public class Employee {
 	public void setProjectLeaderStatus(boolean status) {
 		this.isProjectLeader = status;
 	}
+	
+	public String assignEmployee(Employee e, Project p) {
+		if(isProjectLeader) {
+			p.addEmployeeToProject(e);
+			return "Employee assigned";
+		} else {
+			return "Not Project Leader";
+		}
+	}
 
 }
