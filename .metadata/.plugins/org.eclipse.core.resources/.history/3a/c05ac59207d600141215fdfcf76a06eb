@@ -1,7 +1,5 @@
 package softwarehuset;
 
-import java.util.GregorianCalendar;
-
 public class Employee {
 	private String id;
 	private String department;
@@ -23,15 +21,6 @@ public class Employee {
 			return "Employee assigned";
 		} else {
 			return "Not Project Leader";
-		}
-	}
-
-	public void createAcivity(Project specificProject, String activityName,
-			GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
-		if(isProjectLeader) {
-			specificProject.createActivity(activityName, start, end);
-		} else {
-			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", "Create activity");
 		}
 	}
 

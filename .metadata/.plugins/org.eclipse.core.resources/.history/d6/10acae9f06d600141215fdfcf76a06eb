@@ -12,20 +12,13 @@ public class Activity {
 	
 	public Activity(String activityName, GregorianCalendar start,
 			GregorianCalendar end) {
+		// TODO Auto-generated constructor stub
 		this.activityName = activityName;
 		this.start = start;
 		this.end = end;
 	}
 	
 	public void setActivityLeader(Employee e) {
-		this.activityLeader = e;
-	}
-	
-	public void addEmployeeToActivity(Employee e) {
-		assignedEmployees.add(e);
-	}
-
-	public String getName() {
-		return activityName;
+		this.activityLeader = activityLeader;
 	}
 }

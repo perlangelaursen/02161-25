@@ -9,7 +9,6 @@ public class Project {
 	private GregorianCalendar start, end;
 	private Employee projectLeader;
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
-	private List<Activity> activities = new ArrayList<Activity>();
 	
 	public Project(String name) {
 		this.name = name;
@@ -27,19 +26,6 @@ public class Project {
 	
 	public void addEmployeeToProject(Employee e) {
 		assignedEmployees.add(e);
-	}
-
-	public void createActivity(String activityName, GregorianCalendar start,
-			GregorianCalendar end) {
-		activities.add(new Activity(activityName, start, end));
-	}
-	
-	public void addEmployeeToActivity(Employee e, Activity a) {
-		for(Activity i : activities) {
-			if(i.getName() == a.getName()) {
-				i.addEmployeeToActivity(e);
-			}
-		}
 	}
 
 }

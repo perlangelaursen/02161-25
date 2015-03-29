@@ -28,10 +28,9 @@ public class Employee {
 
 	public void createAcivity(Project specificProject, String activityName,
 			GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
+		// TODO Auto-generated method stub
 		if(isProjectLeader) {
 			specificProject.createActivity(activityName, start, end);
-		} else {
-			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", "Create activity");
 		}
 	}
 

@@ -18,7 +18,7 @@ public class Activity {
 	}
 	
 	public void setActivityLeader(Employee e) {
-		this.activityLeader = e;
+		this.activityLeader = activityLeader;
 	}
 	
 	public void addEmployeeToActivity(Employee e) {
@@ -26,6 +26,7 @@ public class Activity {
 	}
 
 	public String getName() {
+		// TODO Auto-generated method stub
 		return activityName;
 	}
 }
