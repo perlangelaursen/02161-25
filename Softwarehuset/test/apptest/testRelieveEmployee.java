@@ -14,7 +14,21 @@ import softwarehuset.Employee;
 import softwarehuset.Executive;
 import softwarehuset.OperationNotAllowedException;
 
+/*
+* Test created by Per Lange Laursen - s144486 DTU
+*/
+
 public class testRelieveEmployee {
+	/**
+         * Tests the scenario where the project leader want to relieve
+         * an employee from a project
+         * <ol>
+         * <li>Project Leader relieves an employee
+         * </ol>
+         * @throws OperationNotAllowedException
+         */
+
+
 	public Company company;
 	public Employee projectLeader, test1;
 	

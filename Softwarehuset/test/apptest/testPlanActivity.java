@@ -14,6 +14,10 @@ import softwarehuset.Employee;
 import softwarehuset.Executive;
 import softwarehuset.OperationNotAllowedException;
 
+/*
+* Test created by Per Lange Laursen - s144486 DTU
+*/
+
 public class testPlanActivity {
 	/**
 	 * Tests the scenario where the project leader creates a activity
