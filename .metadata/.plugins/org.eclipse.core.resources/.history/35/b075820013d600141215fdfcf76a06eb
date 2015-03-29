@@ -61,8 +61,6 @@ public class Employee {
 	}
 
 	public void relieveEmployeeProject(Employee e, Project specificProject) {
-		if(isProjectLeader) {
-			specificProject.relieveEmployee(e);
-		}
+		specificProject.relieveEmployee(e);
 	}
 }
