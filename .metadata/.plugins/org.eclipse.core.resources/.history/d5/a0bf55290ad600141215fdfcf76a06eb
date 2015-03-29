@@ -26,6 +26,7 @@ public class testAssignEmployeePA {
 	 * @throws OperationNotAllowedException 
 	 */
 	
+	Project project1;
 	Employee projectLeader;
 	Employee test1;
 	Company company;
