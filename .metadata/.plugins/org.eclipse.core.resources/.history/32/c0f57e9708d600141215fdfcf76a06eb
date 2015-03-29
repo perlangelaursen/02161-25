@@ -8,6 +8,7 @@ public class Employee {
 	private boolean isProjectLeader = false;
 	
 	public Employee(String id, String department) {
+		// TODO Auto-generated constructor stub
 		this.id = id;
 		this.department = department;
 	}
@@ -30,8 +31,10 @@ public class Employee {
 		if(isProjectLeader) {
 			specificProject.createActivity(activityName, start, end);
 		} else {
-			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", 
-					"Create activity");
+			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", "Create activity");
 		}
 	}
+	
+	
+
 }

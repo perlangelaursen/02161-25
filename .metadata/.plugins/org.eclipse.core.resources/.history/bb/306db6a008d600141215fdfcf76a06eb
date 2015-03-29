@@ -30,8 +30,10 @@ public class Employee {
 		if(isProjectLeader) {
 			specificProject.createActivity(activityName, start, end);
 		} else {
-			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", 
-					"Create activity");
+			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", "Create activity");
 		}
 	}
+	
+	
+
 }

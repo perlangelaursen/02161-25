@@ -42,8 +42,4 @@ public class Project {
 		}
 	}
 
-	public Activity getSpecificActivity(int i) {
-		return activities.get(i);
-	}
-
 }
