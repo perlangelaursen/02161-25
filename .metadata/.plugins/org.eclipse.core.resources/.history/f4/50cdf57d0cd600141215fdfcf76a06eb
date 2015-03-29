@@ -72,6 +72,7 @@ public class testAssignEmployeePA {
 		
 		Employee activityLeader=new Employee("AL", "RandD");
 		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject(0).getSpecificActivity(0));
+//		company.getSpecificProject(0).getSpecificActivity(0).setActivityLeader(activityLeader);
 		String ret = activityLeader.assignEmployeeActivity(test1, company.getSpecificProject(0).getSpecificActivity(0));
 		
 		assertEquals("Employee assigned",ret);

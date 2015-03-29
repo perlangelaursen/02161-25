@@ -50,9 +50,7 @@ public class Employee {
 	}
 	
 	public void assignActivityLeader(Employee e, Activity a) {
-		if(isProjectLeader) {
-			a.setActivityLeader(e); 
-			e.setActivityLeaderStatus(true);
-		}
+		a.setActivityLeader(e);
+		
 	}
 }

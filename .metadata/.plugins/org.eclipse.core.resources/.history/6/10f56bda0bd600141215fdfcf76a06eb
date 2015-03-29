@@ -48,11 +48,4 @@ public class Employee {
 			return "Not Activity Leader";
 		}
 	}
-	
-	public void assignActivityLeader(Employee e, Activity a) {
-		if(isProjectLeader) {
-			a.setActivityLeader(e); 
-			e.setActivityLeaderStatus(true);
-		}
-	}
 }

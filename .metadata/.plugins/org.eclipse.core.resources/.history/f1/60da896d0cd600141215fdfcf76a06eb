@@ -21,8 +21,9 @@ public class Activity {
 		this.activityLeader = e;
 	}
 	
-	public void addEmployeeToActivity(Employee e) {
+	public String addEmployeeToActivity(Employee e) {
 		assignedEmployees.add(e);
+		return "Employee assigned";
 	}
 
 	public String getName() {

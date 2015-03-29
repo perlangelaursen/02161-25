@@ -57,7 +57,7 @@ public class testAssignEmployeePA {
 	
 	@Test
 	public void testAssignEmployeeProject() {
-		String ret = projectLeader.assignEmployeeProject(test1, company.getSpecificProject(0));
+		String ret = projectLeader.assignEmployee(test1, company.getSpecificProject(0));
 		assertEquals("Employee assigned",ret);
 	}
 	
@@ -71,8 +71,8 @@ public class testAssignEmployeePA {
 		projectLeader.createAcivity(company.getSpecificProject(0), "TestActivity", start, end);
 		
 		Employee activityLeader=new Employee("AL", "RandD");
-		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject(0).getSpecificActivity(0));
-		String ret = activityLeader.assignEmployeeActivity(test1, company.getSpecificProject(0).getSpecificActivity(0));
+		company.getSpecificProject(0).getSpecificActivity(0).setActivityLeader(activityLeader);
+		String ret = company.getSpecificProject(0).getSpecificActivity(0).addEmployeeToActivity(test1);
 		
 		assertEquals("Employee assigned",ret);
 	}

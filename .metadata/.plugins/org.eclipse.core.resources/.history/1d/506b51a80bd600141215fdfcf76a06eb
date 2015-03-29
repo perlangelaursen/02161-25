@@ -17,10 +17,6 @@ public class Employee {
 		this.isProjectLeader = status;
 	}
 	
-	public void setActivityLeaderStatus(boolean status) {
-		this.isActivityLeader = status;
-	}
-	
 	public String assignEmployeeProject(Employee e, Project p) {
 		if(isProjectLeader) {
 			p.addEmployeeToProject(e);
@@ -30,16 +26,6 @@ public class Employee {
 		}
 	}
 	
-	public void createAcivity(Project specificProject, String activityName,
-			GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
-		if(isProjectLeader) {
-			specificProject.createActivity(activityName, start, end);
-		} else {
-			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", 
-					"Create activity");
-		}
-	}
-
 	public String assignEmployeeActivity(Employee e, Activity a) {
 		if(isActivityLeader) {
 			a.addEmployeeToActivity(e); 
@@ -48,11 +34,14 @@ public class Employee {
 			return "Not Activity Leader";
 		}
 	}
-	
-	public void assignActivityLeader(Employee e, Activity a) {
+
+	public void createAcivity(Project specificProject, String activityName,
+			GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
 		if(isProjectLeader) {
-			a.setActivityLeader(e); 
-			e.setActivityLeaderStatus(true);
+			specificProject.createActivity(activityName, start, end);
+		} else {
+			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", 
+					"Create activity");
 		}
 	}
 }
