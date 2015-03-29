@@ -32,8 +32,4 @@ public class Activity {
 	public GregorianCalendar getStart() {
 		return start;
 	}
-
-	public GregorianCalendar getEnd() {
-		return end;
-	}
 }

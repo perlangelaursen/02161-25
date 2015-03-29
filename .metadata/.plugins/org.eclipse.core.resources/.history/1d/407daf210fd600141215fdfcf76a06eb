@@ -30,10 +30,7 @@ public class Activity {
 	}
 
 	public GregorianCalendar getStart() {
+		// TODO Auto-generated method stub
 		return start;
-	}
-
-	public GregorianCalendar getEnd() {
-		return end;
 	}
 }

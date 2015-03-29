@@ -32,12 +32,8 @@ public class Employee {
 	
 	public void createAcivity(Project specificProject, String activityName,
 			GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
-		if(isProjectLeader) {
-			if(end.after(start) || end.equals(start)){
-				specificProject.createActivity(activityName, start, end);
-			} else {
-				System.out.println("Date problems");
-			}
+		if(isProjectLeader && end.after(start)) {
+			specificProject.createActivity(activityName, start, end);
 		} else {
 			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", 
 					"Create activity");

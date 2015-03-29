@@ -41,11 +41,7 @@ public class Project {
 			}
 		}
 	}
-	
-	public List<Activity> getActivities() {
-		return activities;
-	}
-	
+
 	public Activity getSpecificActivity(int i) {
 		return activities.get(i);
 	}

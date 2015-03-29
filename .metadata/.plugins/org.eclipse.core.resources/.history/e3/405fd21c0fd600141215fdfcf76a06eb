@@ -28,12 +28,4 @@ public class Activity {
 	public String getName() {
 		return activityName;
 	}
-
-	public GregorianCalendar getStart() {
-		return start;
-	}
-
-	public GregorianCalendar getEnd() {
-		return end;
-	}
 }
