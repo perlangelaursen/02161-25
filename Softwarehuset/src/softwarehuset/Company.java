@@ -27,6 +27,7 @@ public class Company {
 	public void executiveLogin(String password) {
 		if (password == executive.getPassword()) {
 			executiveLoggedIn = true;
+			executive.setLoginStatus(executiveLoggedIn);
 		}
 	}
 
@@ -52,5 +53,9 @@ public class Company {
 
 	public Object getProjects() {
 		return projects;
+	}
+	
+	public Project getSpecificProject(int i) {
+		return projects.get(i);
 	}
 }

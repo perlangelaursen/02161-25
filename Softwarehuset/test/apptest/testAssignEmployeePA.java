@@ -19,12 +19,13 @@ public class testAssignEmployeePA {
 	Project project1;
 	Employee projectLeader;
 	Employee test1;
+	Company company;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company and executive
 		Address address = new Address("City", "Street");
-		Company company = new Company("Company", address);
+		company = new Company("Company", address);
 		Executive executive = new Executive("Name", "Department1", company, "password");
 		
 		// Log in as executive
@@ -40,20 +41,27 @@ public class testAssignEmployeePA {
 		company.createProject("Project02");
 		
 		projectLeader = new Employee("Test", "RandD");
-		projectLeader.setProjectLeaderStatus(true);
 		
-		project1.assignProjectLeader(projectLeader);
+		executive.assignProjectLeader(projectLeader,company.getSpecificProject(0));
 		test1 = new Employee("Test2", "RandD");
 	}
 	
 	@Test
 	public void testAssignEmployeeProject() {
-		String ret = projectLeader.assignEmployee(test1, project1);
+		String ret = projectLeader.assignEmployee(test1, company.getSpecificProject(0));
 		assertEquals("Employee assigned",ret);
 	}
 	
 	@Test
 	public void testAssignEmployeeActivity() {
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2015, Calendar.JANUARY, 23);
+		end.set(2015, Calendar.JANUARY, 25);
+	}
+	
+	@Test
+	public void testExecutiveNotLogin() {
 		
 	}
 	
