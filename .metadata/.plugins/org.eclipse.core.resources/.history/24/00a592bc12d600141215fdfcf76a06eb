@@ -54,7 +54,4 @@ public class Project {
 		return assignedEmployees;
 	}
 
-	public void relieveEmployee(Employee e) {
-		assignedEmployees.remove(e);
-	}
 }

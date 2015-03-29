@@ -59,8 +59,4 @@ public class Employee {
 			e.setActivityLeaderStatus(true);
 		}
 	}
-
-	public void relieveEmployeeProject(Employee e, Project specificProject) {
-		specificProject.relieveEmployee(e);
-	}
 }

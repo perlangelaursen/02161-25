@@ -50,11 +50,4 @@ public class Project {
 		return activities.get(i);
 	}
 
-	public List<Employee> getEmployees() {
-		return assignedEmployees;
-	}
-
-	public void relieveEmployee(Employee e) {
-		assignedEmployees.remove(e);
-	}
 }
