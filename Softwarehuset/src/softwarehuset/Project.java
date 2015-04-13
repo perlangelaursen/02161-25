@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
 
+import java.util.Date;
+
 public class Project {
 	private String name;
 	private GregorianCalendar start, end;
@@ -27,6 +29,10 @@ public class Project {
 	
 	public void addEmployeeToProject(Employee e) {
 		assignedEmployees.add(e);
+	}
+	
+	public Employee getProjectleader() {
+		return projectleader;
 	}
 
 	public void createActivity(String activityName, GregorianCalendar start,

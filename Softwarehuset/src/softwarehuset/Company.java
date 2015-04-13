@@ -51,11 +51,12 @@ public class Company {
 		
 	}
 
-	public Object getProjects() {
+	public ArrayList<Project> getProjects() {
 		return projects;
 	}
 	
 	public Project getSpecificProject(int i) {
 		return projects.get(i);
 	}
+
 }

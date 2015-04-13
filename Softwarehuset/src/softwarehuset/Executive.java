@@ -23,7 +23,6 @@ public class Executive {
 
 	public void assignProjectLeader(Employee employee,
 			Project specificProject) throws OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		if(executiveLoggedIn){
 			employee.setProjectLeaderStatus(true);
 			specificProject.assignProjectLeader(employee);

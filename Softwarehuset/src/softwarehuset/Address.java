@@ -1,3 +1,4 @@
+
 package softwarehuset;
 
 public class Address {
@@ -8,3 +9,4 @@ public class Address {
 		this.street = street;
 	}
 }
+
