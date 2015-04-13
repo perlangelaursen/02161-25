@@ -51,7 +51,7 @@ public class Company {
 		
 	}
 
-	public ArrayList<Project> getProjects() {
+	public List<Project> getProjects() {
 		return projects;
 	}
 	

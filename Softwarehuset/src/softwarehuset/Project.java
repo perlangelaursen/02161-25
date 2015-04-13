@@ -3,7 +3,6 @@ package softwarehuset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
-
 import java.util.Date;
 
 public class Project {
@@ -32,7 +31,7 @@ public class Project {
 	}
 	
 	public Employee getProjectleader() {
-		return projectleader;
+		return projectLeader;
 	}
 
 	public void createActivity(String activityName, GregorianCalendar start,
@@ -62,5 +61,15 @@ public class Project {
 
 	public void relieveEmployee(Employee e) {
 		assignedEmployees.remove(e);
+	}
+
+	public Employee getEmployee(String id) {
+		// TODO Auto-generated method stub
+		for(Employee e : assignedEmployees) {
+			if(e.getName() == id) {
+				return e;
+			}
+		}
+		return null;
 	}
 }
