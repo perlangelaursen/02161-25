@@ -62,6 +62,8 @@ public class testAssignEmployeePA {
 	@Test
 	public void testAssignEmployeeProject() throws OperationNotAllowedException {
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
+		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getName(), test1.getName());
+		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getDepartment(), test1.getDepartment());
 	}
 	
 	@Test

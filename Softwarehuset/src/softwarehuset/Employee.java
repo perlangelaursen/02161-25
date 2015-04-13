@@ -71,4 +71,12 @@ public class Employee {
 					"Relieve Employee");
 		}
 	}
+
+	public String getName() {
+		return id;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
 }
