@@ -23,6 +23,10 @@ public class Project {
 		this.end = end;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public void assignProjectLeader(Employee e) {
 		this.projectLeader = e;
 	}
@@ -32,7 +36,7 @@ public class Project {
 	}
 	
 	public Employee getProjectleader() {
-		return projectleader;
+		return projectLeader;
 	}
 
 	public void createActivity(String activityName, GregorianCalendar start,
