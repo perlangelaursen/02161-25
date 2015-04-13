@@ -55,7 +55,7 @@ public class Company {
 		return projects;
 	}
 	
-	public Project getSpecificProject(String name) {
+	public Project getSpecificProject(String name){
 		for (Project p : projects) {
 			if (p.getName().equals(name)) {
 				return p;
