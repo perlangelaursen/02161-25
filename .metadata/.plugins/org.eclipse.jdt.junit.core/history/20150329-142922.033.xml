@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="testPlanActivity" project="Softwarehuset" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="apptest.testPlanActivity" time="0.0">
+    <testcase name="testPlanActivity" classname="apptest.testPlanActivity" time="0.0"/>
+    <testcase name="testPlanActvityWrongDates" classname="apptest.testPlanActivity" time="0.0"/>
+  </testsuite>
+</testrun>

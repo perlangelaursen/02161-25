@@ -1,0 +1,21 @@
+package softwarehuset;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+public class Activity {
+	private String activityName;
+	private GregorianCalendar start, end;
+	private Employee projectLeader;
+	private List<Employee> assignedEmployees = new ArrayList<Employee>();
+	
+	public Activity(String activityName, GregorianCalendar start,
+			GregorianCalendar end) {
+		// TODO Auto-generated constructor stub
+		this.activityName = activityName;
+		this.start = start;
+		this.end = end;
+	}
+
+}

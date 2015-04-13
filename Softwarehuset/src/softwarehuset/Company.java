@@ -1,46 +1,62 @@
 package softwarehuset;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Company {
-
 	private String name;
-	private	Address add;
-	private	Boolean loggedIn = false;
-	private	List<Project> projects = new ArrayList<Project>();
-	private	Executive ex;
-	
-	public Company(String name, Address add) {
+	private Address address;
+	private Executive executive;
+	private boolean executiveLoggedIn;
+	private List<Project> projects = new ArrayList<Project>();
+
+	public Company(String name, Address address) {
 		this.name = name;
-		this.add = add;
+		this.address = address;
 	}
 
-	public void createProject(String name, Date start, Date end) {
-		Project project = new Project(name, start, end);
-		projects.add(project);
-		
-	}
-
-	public List getProjects() {
-		return projects;
+	public void setExecutive(Executive executive) {
+		this.executive = executive;
 	}
 
 	public boolean executiveIsLoggedIn() {
-		return loggedIn;
+		return executiveLoggedIn;
 	}
 
 	public void executiveLogin(String password) {
-		System.out.println();
-		loggedIn = ex.getPassword().equals(password);
+		if (password == executive.getPassword()) {
+			executiveLoggedIn = true;
+			executive.setLoginStatus(executiveLoggedIn);
+		}
+	}
+
+	public void createProject(String name) throws OperationNotAllowedException {
+		if (!executiveIsLoggedIn()) {
+			throw new OperationNotAllowedException("Create project operation is not allowed if not executive.", "Create project");
+		}
+		Project p = new Project(name);
+		projects.add(p);
+	}
+	
+	public void createProject(String name, GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
+		if (!executiveIsLoggedIn()) {
+			throw new OperationNotAllowedException("Create project operation is not allowed if not executive.", "Create project");
+		}
+		if (start.after(end)){
+			throw new OperationNotAllowedException("The end date is set before the start date", "Create project");
+		}
+		Project p = new Project(name, start, end);
+		projects.add(p);
 		
-		/*if (ex.getPassword().equals(password)) {
-			System.out.println("password");
-			loggedIn = true;
-		} else {
-			System.out.println("no password");
-		}*/
+	}
+
+	public ArrayList<Project> getProjects() {
+		return projects;
+	}
+	
+	public Project getSpecificProject(int i) {
+		return projects.get(i);
 	}
 
 }

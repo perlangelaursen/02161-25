@@ -1,26 +1,33 @@
 package softwarehuset;
 
 public class Executive {
-
+	private Company company;
 	private String name, department, password;
-	private Company com;
-	private Project p1;
-	
-	public Executive(String name, String department, Company com, String password) {
+	private boolean executiveLoggedIn = false;
+
+	public Executive(String name, String department, Company company, String password) {
 		this.name = name;
 		this.department = department;
-		this.com = com;
+		this.company = company;
+		company.setExecutive(this);
 		this.password = password;
 	}
 	
+	public void setLoginStatus(boolean b) {
+		executiveLoggedIn = b;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
-	public void setProjectLeader(Employee em, Project p1) throws NotLoggedInException {
-		p1.setProjectleader(em);
-		
+	public void assignProjectLeader(Employee employee,
+			Project specificProject) throws OperationNotAllowedException {
+		if(executiveLoggedIn){
+			employee.setProjectLeaderStatus(true);
+			specificProject.assignProjectLeader(employee);
+		} else {
+			throw new OperationNotAllowedException("Assign project leader is not allowed if not executive.", "Assign project leader");
+		}
 	}
-
-
 }

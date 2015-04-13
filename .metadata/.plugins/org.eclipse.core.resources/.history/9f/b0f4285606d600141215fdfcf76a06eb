@@ -1,0 +1,12 @@
+package softwarehuset;
+
+import java.util.GregorianCalendar;
+
+public class Activity {
+
+	public Activity(String activityName, GregorianCalendar start,
+			GregorianCalendar end) {
+		// TODO Auto-generated constructor stub
+	}
+
+}

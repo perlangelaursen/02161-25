@@ -1,14 +1,12 @@
+
 package softwarehuset;
 
 public class Address {
-
-	private String street, city;
-	private int zipcode;
+	private String city, street;
 	
-	public Address(String street, int zipcode, String city) {
-		this.street = street;
-		this.zipcode = zipcode;
+	public Address (String city, String street){
 		this.city = city;
+		this.street = street;
 	}
-
 }
+

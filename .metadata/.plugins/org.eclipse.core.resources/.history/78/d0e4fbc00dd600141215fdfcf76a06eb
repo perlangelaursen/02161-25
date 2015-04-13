@@ -1,0 +1,29 @@
+package apptest;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import softwarehuset.OperationNotAllowedException;
+
+public class testPlanActivity {
+	/**
+	 * Tests the scenario where the project leader creates a activity
+	 * with start and end date.
+	 * <ol>
+	 * <li>Project Leader creates a activity with two different dates
+	 * <li>Project Leader creates a activity with the same date.
+	 * </ol>
+	 * @throws OperationNotAllowedException 
+	 */
+	
+	@Test
+	public void testPlanActivity() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testPlanActvityWrongDates() {
+		
+	}
+}

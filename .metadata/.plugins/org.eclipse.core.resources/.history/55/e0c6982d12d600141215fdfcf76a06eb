@@ -1,0 +1,19 @@
+package apptest;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class testRelieveEmployee {
+	@Before
+	public void setUp() {
+		
+	}
+	
+	@Test
+	public void testRelieveEmployee() {
+		fail("Not yet implemented");
+	}
+
+}
