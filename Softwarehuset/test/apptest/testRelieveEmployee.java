@@ -59,12 +59,25 @@ public class testRelieveEmployee {
 	}
 	
 	@Test
-	public void testRelieveEmployee() {
+	public void testRelieveEmployee01() throws OperationNotAllowedException {
 		assertEquals(1, company.getSpecificProject(0).getEmployees().size());
 		
 		projectLeader.relieveEmployeeProject(test1, company.getSpecificProject(0));
 		
 		assertEquals(0, company.getSpecificProject(0).getEmployees().size());
+	}
+	
+	@Test
+	public void testNotProjectLeader() {
+		assertEquals(1, company.getSpecificProject(0).getEmployees().size());
+		Employee test2 = new Employee("Test2", "RandD");
+		try {
+			test2.relieveEmployeeProject(test1, company.getSpecificProject(0));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Relieve Employee if not projectleader",e.getMessage());
+			assertEquals("Not ProjectLeader",e.getOperation());
+		}
 	}
 
 }

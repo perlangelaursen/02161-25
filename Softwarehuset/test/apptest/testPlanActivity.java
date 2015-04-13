@@ -54,7 +54,7 @@ public class testPlanActivity {
 	}
 	
 	@Test
-	public void testPlanActivity() throws OperationNotAllowedException {
+	public void testPlanActivityRightDates() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2015, Calendar.JANUARY, 23);

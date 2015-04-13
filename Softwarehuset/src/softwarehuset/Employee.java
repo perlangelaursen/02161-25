@@ -60,9 +60,12 @@ public class Employee {
 		}
 	}
 
-	public void relieveEmployeeProject(Employee e, Project specificProject) {
+	public void relieveEmployeeProject(Employee e, Project specificProject) throws OperationNotAllowedException {
 		if(isProjectLeader) {
 			specificProject.relieveEmployee(e);
+		} else {
+			throw new OperationNotAllowedException("Relieve Employee if not projectleader", 
+					"Not ProjectLeader");
 		}
 	}
 }
