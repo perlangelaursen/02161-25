@@ -53,10 +53,13 @@ public class Employee {
 		}
 	}
 	
-	public void assignActivityLeader(Employee e, Activity a) {
+	public void assignActivityLeader(Employee e, Activity a) throws OperationNotAllowedException {
 		if(isProjectLeader) {
 			a.setActivityLeader(e); 
 			e.setActivityLeaderStatus(true);
+		} else {
+			throw new OperationNotAllowedException("Assign ActivityLeader is not allowed if not project leader.", 
+					"Assign ActivityLeader");
 		}
 	}
 
@@ -65,7 +68,7 @@ public class Employee {
 			specificProject.relieveEmployee(e);
 		} else {
 			throw new OperationNotAllowedException("Relieve Employee if not projectleader", 
-					"Not ProjectLeader");
+					"Relieve Employee");
 		}
 	}
 }

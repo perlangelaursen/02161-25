@@ -76,7 +76,7 @@ public class testRelieveEmployee {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Relieve Employee if not projectleader",e.getMessage());
-			assertEquals("Not ProjectLeader",e.getOperation());
+			assertEquals("Relieve Employee",e.getOperation());
 		}
 	}
 
