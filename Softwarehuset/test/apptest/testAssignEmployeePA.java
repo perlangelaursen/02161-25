@@ -55,22 +55,22 @@ public class testAssignEmployeePA {
 		
 		projectLeader = new Employee("Test", "RandD");
 		
-		executive.assignProjectLeader(projectLeader,company.getSpecificProject(0));
+		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		test1 = new Employee("Test2", "RandD");
 	}
 	
 	@Test
 	public void testAssignEmployeeProject() throws OperationNotAllowedException {
-		projectLeader.assignEmployeeProject(test1, company.getSpecificProject(0));
-		assertEquals(company.getSpecificProject(0).getEmployee("Test2").getName(), test1.getName());
-		assertEquals(company.getSpecificProject(0).getEmployee("Test2").getDepartment(), test1.getDepartment());
+		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
+		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getName(), test1.getName());
+		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getDepartment(), test1.getDepartment());
 	}
 	
 	@Test
 	public void testNotProjectLeader() throws OperationNotAllowedException {
 		Employee test2 = new Employee("Test2", "RandD");
 		try {
-			test2.assignEmployeeProject(test1, company.getSpecificProject(0));
+			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Assign Employee is not allowed if not project leader.",e.getMessage());
@@ -85,12 +85,12 @@ public class testAssignEmployeePA {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 25);
 		
-		projectLeader.createAcivity(company.getSpecificProject(0), "TestActivity", start, end);
+		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		Employee activityLeader=new Employee("AL", "RandD");
-		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject(0).getSpecificActivity(0));
+		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
 		
-		activityLeader.assignEmployeeActivity(test1, company.getSpecificProject(0).getSpecificActivity(0));
+		activityLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
 	}
 	
 	@Test
@@ -100,11 +100,11 @@ public class testAssignEmployeePA {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 25);
 		
-		projectLeader.createAcivity(company.getSpecificProject(0), "TestActivity", start, end);
+		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		Employee test2 = new Employee("Test2", "RandD");
 		try {
-			test2.assignEmployeeActivity(test1, company.getSpecificProject(0).getSpecificActivity(0));
+			test2.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Assign Employee is not allowed if not activity leader.",e.getMessage());

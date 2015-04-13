@@ -22,6 +22,10 @@ public class Project {
 		this.end = end;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public void assignProjectLeader(Employee e) {
 		this.projectLeader = e;
 	}

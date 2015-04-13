@@ -55,8 +55,13 @@ public class Company {
 		return projects;
 	}
 	
-	public Project getSpecificProject(int i) {
-		return projects.get(i);
+	public Project getSpecificProject(String name) {
+		for (Project p : projects) {
+			if (p.getName().equals(name)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 }
