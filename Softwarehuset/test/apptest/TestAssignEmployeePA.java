@@ -19,7 +19,7 @@ import softwarehuset.Project;
 * Test created by Per Lange Laursen - s144486 DTU
 */
 
-public class testAssignEmployeePA {
+public class TestAssignEmployeePA {
 	/**
 	 * Tests the scenario where a project or activity is created
 	 * then a projectleader or activityleader is assigned.
@@ -53,22 +53,22 @@ public class testAssignEmployeePA {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = new Employee("Test", "RandD");
+		projectLeader = new Employee("Test", "password", company, "Department1");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = new Employee("Test2", "RandD");
+		test1 = new Employee("Test2", "password", company, "Department1");
 	}
 	
 	@Test
 	public void testAssignEmployeeProject() throws OperationNotAllowedException {
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
-		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getName(), test1.getName());
+		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getID(), test1.getID());
 		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getDepartment(), test1.getDepartment());
 	}
 	
 	@Test
 	public void testNotProjectLeader() throws OperationNotAllowedException {
-		Employee test2 = new Employee("Test2", "RandD");
+		Employee test2 = new Employee("Test2", "password", company, "Department1");
 		try {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
@@ -87,7 +87,7 @@ public class testAssignEmployeePA {
 		
 		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
-		Employee activityLeader=new Employee("AL", "RandD");
+		Employee activityLeader = new Employee("AL", "password", company, "Department1");
 		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
 		
 		activityLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
@@ -102,7 +102,7 @@ public class testAssignEmployeePA {
 		
 		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
-		Employee test2 = new Employee("Test2", "RandD");
+		Employee test2 = new Employee("Test2", "password", company, "Department1");
 		try {
 			test2.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
 			fail("OperationNotAllowedException exception should have been thrown");

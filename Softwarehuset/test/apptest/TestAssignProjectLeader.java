@@ -28,11 +28,11 @@ public class TestAssignProjectLeader {
 		Project p1 = com.getSpecificProject("p1");
 		assertEquals(com.getProjects().size(),1);
 		
-		Employee em = new Employee("Anders", "Project Department");
+		Employee em = new Employee("Anders", "password", com, "Project Department");
 		
 		ex.assignProjectLeader(em, p1);
 		
-		assertEquals(p1.getProjectleader(), em);
+		assertEquals(p1.getProjectLeader(), em);
 		
 	}
 	
@@ -41,7 +41,7 @@ public class TestAssignProjectLeader {
 		Address add = new Address("Roskildevej", "Roskilde");
 		Company com = new Company("Softwarehus", add);
 		Executive ex = new Executive("Anders", "Department", com, "password");
-		Employee em = new Employee("Anders", "Department");
+		Employee em = new Employee("Anders", "password", com, "Department");
 		Project p1 = new Project("p1");
 		
 		GregorianCalendar d1 = new GregorianCalendar();
@@ -124,17 +124,17 @@ public class TestAssignProjectLeader {
 		Project p1 = com.getSpecificProject("p1");
 		assertEquals(com.getProjects().size(),1);
 		
-		Employee em = new Employee("Anders", "Project Department");
+		Employee em = new Employee("Anders", "password", com, "Project Department");
 		
 		ex.assignProjectLeader(em, p1);
 		
-		assertEquals(p1.getProjectleader(), em);
+		assertEquals(p1.getProjectLeader(), em);
 		
-		Employee em2 = new Employee("Andreas", "Project 2 Department");
+		Employee em2 = new Employee("Anders", "password", com, "Project 2 Department");
 		
 		ex.assignProjectLeader(em2, p1);
 		
-		assertEquals(p1.getProjectleader(), em2);
+		assertEquals(p1.getProjectLeader(), em2);
 		
 	}
 	

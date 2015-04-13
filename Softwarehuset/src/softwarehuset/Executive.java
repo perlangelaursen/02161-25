@@ -21,9 +21,7 @@ public class Executive {
 		return password;
 	}
 
-	public void assignProjectLeader(Employee employee,
-			Project specificProject) throws OperationNotAllowedException {
-
+	public void assignProjectLeader(Employee employee, Project specificProject) throws OperationNotAllowedException {
 		if(employee == null){
 			throw new OperationNotAllowedException("Employee not found", "Employee not found");
 		}
@@ -31,7 +29,6 @@ public class Executive {
 		if(!executiveLoggedIn){
 			throw new OperationNotAllowedException("Assign project leader is not allowed if not executive.", "Assign project leader");
 		}
-		employee.setProjectLeaderStatus(true);
 		specificProject.assignProjectLeader(employee);
 		
 	}

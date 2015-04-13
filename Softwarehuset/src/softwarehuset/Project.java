@@ -34,13 +34,14 @@ public class Project {
 		assignedEmployees.add(e);
 	}
 	
-	public Employee getProjectleader() {
+	public Employee getProjectLeader() {
 		return projectLeader;
 	}
 
-	public void createActivity(String activityName, GregorianCalendar start,
-			GregorianCalendar end) {
-		activities.add(new Activity(activityName, start, end));
+	public Activity createActivity(String activityName, GregorianCalendar start, GregorianCalendar end, Project project) {
+		Activity a = new Activity(activityName, start, end, project);
+		activities.add(a);
+		return a;
 	}
 	
 	public void addEmployeeToActivity(Employee e, Activity a) {
@@ -68,9 +69,8 @@ public class Project {
 	}
 
 	public Employee getEmployee(String id) {
-		// TODO Auto-generated method stub
 		for(Employee e : assignedEmployees) {
-			if(e.getName() == id) {
+			if(e.getID().equals(id)) {
 				return e;
 			}
 		}
