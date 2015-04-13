@@ -60,9 +60,20 @@ public class testAssignEmployeePA {
 	}
 	
 	@Test
-	public void testAssignEmployeeProject() {
-		String ret = projectLeader.assignEmployeeProject(test1, company.getSpecificProject(0));
-		assertEquals("Employee assigned",ret);
+	public void testAssignEmployeeProject() throws OperationNotAllowedException {
+		projectLeader.assignEmployeeProject(test1, company.getSpecificProject(0));
+	}
+	
+	@Test
+	public void testNotProjectLeader() throws OperationNotAllowedException {
+		Employee test2 = new Employee("Test2", "RandD");
+		try {
+			test2.assignEmployeeProject(test1, company.getSpecificProject(0));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Assign Employee is not allowed if not project leader.",e.getMessage());
+			assertEquals("Assign Employee",e.getOperation());
+		}
 	}
 	
 	@Test
@@ -76,8 +87,26 @@ public class testAssignEmployeePA {
 		
 		Employee activityLeader=new Employee("AL", "RandD");
 		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject(0).getSpecificActivity(0));
-		String ret = activityLeader.assignEmployeeActivity(test1, company.getSpecificProject(0).getSpecificActivity(0));
 		
-		assertEquals("Employee assigned",ret);
+		activityLeader.assignEmployeeActivity(test1, company.getSpecificProject(0).getSpecificActivity(0));
+	}
+	
+	@Test
+	public void testNotActivityLeader() throws OperationNotAllowedException {
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2015, Calendar.JANUARY, 23);
+		end.set(2015, Calendar.JANUARY, 25);
+		
+		projectLeader.createAcivity(company.getSpecificProject(0), "TestActivity", start, end);
+		
+		Employee test2 = new Employee("Test2", "RandD");
+		try {
+			test2.assignEmployeeActivity(test1, company.getSpecificProject(0).getSpecificActivity(0));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Assign Employee is not allowed if not activity leader.",e.getMessage());
+			assertEquals("Assign Employee",e.getOperation());
+		}
 	}
 }
