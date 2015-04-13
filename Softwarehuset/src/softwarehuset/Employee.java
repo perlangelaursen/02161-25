@@ -21,12 +21,12 @@ public class Employee {
 		this.isActivityLeader = status;
 	}
 	
-	public String assignEmployeeProject(Employee e, Project p) {
+	public void assignEmployeeProject(Employee e, Project p) throws OperationNotAllowedException {
 		if(isProjectLeader) {
 			p.addEmployeeToProject(e);
-			return "Employee assigned";
 		} else {
-			return "Not Project Leader";
+			throw new OperationNotAllowedException("Assign Employee is not allowed if not project leader.", 
+					"Assign Employee");
 		}
 	}
 	
@@ -44,25 +44,31 @@ public class Employee {
 		}
 	}
 
-	public String assignEmployeeActivity(Employee e, Activity a) {
+	public void assignEmployeeActivity(Employee e, Activity a) throws OperationNotAllowedException {
 		if(isActivityLeader) {
 			a.addEmployeeToActivity(e); 
-			return "Employee assigned";
 		} else {
-			return "Not Activity Leader";
+			throw new OperationNotAllowedException("Assign Employee is not allowed if not activity leader.", 
+					"Assign Employee");
 		}
 	}
 	
-	public void assignActivityLeader(Employee e, Activity a) {
+	public void assignActivityLeader(Employee e, Activity a) throws OperationNotAllowedException {
 		if(isProjectLeader) {
 			a.setActivityLeader(e); 
 			e.setActivityLeaderStatus(true);
+		} else {
+			throw new OperationNotAllowedException("Assign ActivityLeader is not allowed if not project leader.", 
+					"Assign ActivityLeader");
 		}
 	}
 
-	public void relieveEmployeeProject(Employee e, Project specificProject) {
+	public void relieveEmployeeProject(Employee e, Project specificProject) throws OperationNotAllowedException {
 		if(isProjectLeader) {
 			specificProject.relieveEmployee(e);
+		} else {
+			throw new OperationNotAllowedException("Relieve Employee if not projectleader", 
+					"Relieve Employee");
 		}
 	}
 }

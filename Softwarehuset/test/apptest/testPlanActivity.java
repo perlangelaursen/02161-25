@@ -54,7 +54,7 @@ public class testPlanActivity {
 	}
 	
 	@Test
-	public void testPlanActivity() throws OperationNotAllowedException {
+	public void testPlanActivityRightDates() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2015, Calendar.JANUARY, 23);
@@ -81,5 +81,43 @@ public class testPlanActivity {
 		projectLeader.createAcivity(company.getSpecificProject(0), "TestActivity", start, end);
 		
 		assertEquals(0, company.getSpecificProject(0).getActivities().size());
+	}
+	
+	@Test
+	public void testNotProjectLeader() throws OperationNotAllowedException {
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2015, Calendar.JANUARY, 23);
+		end.set(2015, Calendar.JANUARY, 25);
+		
+		Employee test2 = new Employee("Test2", "RandD");
+		try {
+			test2.createAcivity(company.getSpecificProject(0), "TestActivity", start, end);
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			// TODO: handle exception
+			assertEquals("Create activity is not allowed if not project leader.",e.getMessage());
+			assertEquals("Create activity",e.getOperation());
+		}
+	}
+	
+	@Test
+	public void testNotProjectLeader02() throws OperationNotAllowedException {
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2015, Calendar.JANUARY, 23);
+		end.set(2015, Calendar.JANUARY, 25);
+		
+		Employee test2 = new Employee("Test2", "RandD");
+		projectLeader.createAcivity(company.getSpecificProject(0), "TestActivity", start, end);
+		
+		Employee activityLeader=new Employee("AL", "RandD");
+		try {
+			test2.assignActivityLeader(activityLeader, company.getSpecificProject(0).getSpecificActivity(0));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Assign ActivityLeader is not allowed if not project leader.",e.getMessage());
+			assertEquals("Assign ActivityLeader",e.getOperation());
+		}
 	}
 }
