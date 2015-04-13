@@ -53,26 +53,26 @@ public class testRelieveEmployee {
 				
 		projectLeader = new Employee("Test", "RandD");
 				
-		executive.assignProjectLeader(projectLeader,company.getSpecificProject(0));
+		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		test1 = new Employee("Test2", "RandD");
-		projectLeader.assignEmployeeProject(test1, company.getSpecificProject(0));
+		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 	}
 	
 	@Test
 	public void testRelieveEmployee01() throws OperationNotAllowedException {
-		assertEquals(1, company.getSpecificProject(0).getEmployees().size());
+		assertEquals(1, company.getSpecificProject("Project01").getEmployees().size());
 		
-		projectLeader.relieveEmployeeProject(test1, company.getSpecificProject(0));
+		projectLeader.relieveEmployeeProject(test1, company.getSpecificProject("Project01"));
 		
-		assertEquals(0, company.getSpecificProject(0).getEmployees().size());
+		assertEquals(0, company.getSpecificProject("Project01").getEmployees().size());
 	}
 	
 	@Test
 	public void testNotProjectLeader() {
-		assertEquals(1, company.getSpecificProject(0).getEmployees().size());
+		assertEquals(1, company.getSpecificProject("Project01").getEmployees().size());
 		Employee test2 = new Employee("Test2", "RandD");
 		try {
-			test2.relieveEmployeeProject(test1, company.getSpecificProject(0));
+			test2.relieveEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Relieve Employee if not projectleader",e.getMessage());
