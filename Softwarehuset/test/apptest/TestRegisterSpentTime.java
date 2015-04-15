@@ -11,10 +11,10 @@ import softwarehuset.*;
 import static org.junit.Assert.*;
 
 public class TestRegisterSpentTime {
-	Company company;
-	Employee projectLeader, employee;
-	Project project;
-	Activity activity;
+	private Company company;
+	private Employee projectLeader, employee;
+	private Project project;
+	private Activity activity;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
@@ -51,6 +51,7 @@ public class TestRegisterSpentTime {
 	@Test
 	public void testRegisterSpentTime() throws OperationNotAllowedException {
 		// Add employee to project and activity
+		company.employeeLogin("Employee1", "empassword1");
 		projectLeader.assignEmployeeProject(employee, project);
 		projectLeader.assignEmployeeActivity(employee, activity);
 
@@ -63,7 +64,7 @@ public class TestRegisterSpentTime {
 	}
 
 	/**
-	 * Tests the scenario where an employee tries to register time without being signed in
+	 * Tests the scenario where an employee tries to register time without being logged in
 	 * <ol>
 	 * <li>The employee is not logged in
 	 * <li>The employee tries to register spent time on a chosen activity
@@ -100,6 +101,34 @@ public class TestRegisterSpentTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Employee is not assigned to the chosen activity", e.getMessage());
+			assertEquals("Register spent time", e.getOperation());
+		}
+	}
+	
+	/**
+	 * Tests the scenario where an employee tries to register negative time
+	 * <ol>
+	 * <li>The employee is logged in
+	 * <li>The employee tries to register negative spent time on a chosen activity
+	 * <li>An exception is thrown
+	 * </ol>
+	 * 
+	 */
+	@Test
+	public void testRegisterNegativeTime() throws Exception {
+		// Add employee to project and activity
+		company.employeeLogin("Employee1", "empassword1");
+		projectLeader.assignEmployeeProject(employee, project);
+		projectLeader.assignEmployeeActivity(employee, activity);
+		
+		//Log in as employee
+		company.employeeLogin("Employee2", "empassword2");
+		
+		try {
+			employee.registerSpentTime(activity, -10);
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Invalid time", e.getMessage());
 			assertEquals("Register spent time", e.getOperation());
 		}
 	}
