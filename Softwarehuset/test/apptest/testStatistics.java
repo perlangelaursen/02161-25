@@ -45,6 +45,8 @@ public class testStatistics {
 		test1 = new Employee("Test2", "password", company, "RandD");
 		test2 = new Employee("Test3", "password", company, "RandD");
 		
+		company.employeeLogin(projectLeader.getID(), "password");
+		
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(test2, company.getSpecificProject("Project01"));
 		
@@ -63,28 +65,29 @@ public class testStatistics {
 		List<String> statistics = projectLeader.getStatisticsProject(company.getSpecificProject("Project01"));
 		assertEquals("Project Name: " + company.getSpecificProject("Project01").getName(), statistics.get(0));
 		assertEquals("No. of employees assigned: " + company.getSpecificProject("Project01").getEmployees().size(), statistics.get(1));
-		assertEquals("ID: " + test1.getName() + "Department: " + test1.getDepartment(), statistics.get(2));
-		assertEquals("ID: " + test2.getName() + "Department: " + test2.getDepartment(), statistics.get(3));
+		assertEquals("ID: " + test1.getID() + "Department: " + test1.getDepartment(), statistics.get(2));
+		assertEquals("ID: " + test2.getID() + "Department: " + test2.getDepartment(), statistics.get(3));
 		assertEquals("No. of activities: " + company.getSpecificProject("Project01").getActivities().size(), statistics.get(4));
 		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(0).getName() +
 				"No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(0).getEmployees().size(),
 				statistics.get(5));
-		assertEquals("Activity Leader: " + company.getSpecificProject("Project01").getSpecificActivity(0).getActivityLeader().getName()
-				+ company.getSpecificProject("Project01").getSpecificActivity(0).getActivityLeader().getDepartment(),
+		assertEquals("Activity Leader: " + company.getSpecificProject("Project01").getSpecificActivity(0).getContactPerson().getID()
+				+ company.getSpecificProject("Project01").getSpecificActivity(0).getContactPerson().getDepartment(),
 				statistics.get(6));
-		assertEquals("ID: " + test1.getName() + "Department: " + test1.getDepartment(), statistics.get(7));
+		assertEquals("ID: " + test1.getID() + "Department: " + test1.getDepartment(), statistics.get(7));
 		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(1).getName() +
 				"No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(1).getEmployees().size(),
 				statistics.get(8));
-		assertEquals("Activity Leader: " + company.getSpecificProject("Project01").getSpecificActivity(1).getActivityLeader().getName()
-				+ company.getSpecificProject("Project01").getSpecificActivity(1).getActivityLeader().getDepartment(),
+		assertEquals("Contact Person: " + company.getSpecificProject("Project01").getSpecificActivity(1).getContactPerson().getID()
+				+ company.getSpecificProject("Project01").getSpecificActivity(1).getContactPerson().getDepartment(),
 				statistics.get(9));
-		assertEquals("ID: " + test2.getName() + "Department: " + test2.getDepartment(), statistics.get(10));
+		assertEquals("ID: " + test2.getID() + "Department: " + test2.getDepartment(), statistics.get(10));
 	}
 	
 	@Test
 	public void testgetStatisticsNotPL() throws OperationNotAllowedException {
 		Employee test3 = new Employee("Test4", "password", company, "RandD");
+		company.employeeLogin(test3.getID(), "password");
 		try {
 			test3.getStatisticsProject(company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
