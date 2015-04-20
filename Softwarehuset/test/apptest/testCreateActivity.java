@@ -39,10 +39,10 @@ public class testCreateActivity {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = new Employee("Test", "RandD");
+		projectLeader = new Employee("Test", "password", company, "RanD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = new Employee("Test2", "RandD");
+		test1 = new Employee("Test2", "password", company, "RanD");
 	}
 	
 	@Test
@@ -68,7 +68,7 @@ public class testCreateActivity {
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		
-		Employee test2 = new Employee("Test2", "RandD");
+		Employee test2 = new Employee("Test2", "password", company, "RanD");
 		
 		try {
 			test2.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);

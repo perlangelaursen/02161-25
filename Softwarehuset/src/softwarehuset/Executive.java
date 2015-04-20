@@ -21,13 +21,15 @@ public class Executive {
 		return password;
 	}
 
-	public void assignProjectLeader(Employee employee,
-			Project specificProject) throws OperationNotAllowedException {
-		if(executiveLoggedIn){
-			employee.setProjectLeaderStatus(true);
-			specificProject.assignProjectLeader(employee);
-		} else {
+	public void assignProjectLeader(Employee employee, Project specificProject) throws OperationNotAllowedException {
+		if(employee == null){
+			throw new OperationNotAllowedException("Employee not found", "Employee not found");
+		}
+		
+		if(!executiveLoggedIn){
 			throw new OperationNotAllowedException("Assign project leader is not allowed if not executive.", "Assign project leader");
 		}
+		specificProject.assignProjectLeader(employee);
+		
 	}
 }

@@ -39,11 +39,11 @@ public class testStatistics {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = new Employee("Test", "RandD");
+		projectLeader = new Employee("Test", "password", company, "RandD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = new Employee("Test2", "RandD");
-		test2 = new Employee("Test3", "RandD");
+		test1 = new Employee("Test2", "password", company, "RandD");
+		test2 = new Employee("Test3", "password", company, "RandD");
 		
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(test2, company.getSpecificProject("Project01"));
@@ -84,7 +84,7 @@ public class testStatistics {
 	
 	@Test
 	public void testgetStatisticsNotPL() throws OperationNotAllowedException {
-		Employee test3 = new Employee("Test4", "RandD");
+		Employee test3 = new Employee("Test4", "password", company, "RandD");
 		try {
 			test3.getStatisticsProject(company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
