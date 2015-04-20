@@ -15,6 +15,10 @@ import softwarehuset.Employee;
 import softwarehuset.Executive;
 import softwarehuset.OperationNotAllowedException;
 
+/*
+* Test created by Per Lange Laursen - s144486 DTU
+*/
+
 public class testStatistics {
 	Employee projectLeader;
 	Employee test1, test2;
