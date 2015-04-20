@@ -60,7 +60,7 @@ public class testPlanActivity {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 25);
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		Employee activityLeader=new Employee("AL", "password", company, "RandD");
 		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
@@ -78,7 +78,7 @@ public class testPlanActivity {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 22);
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 	}
@@ -92,7 +92,7 @@ public class testPlanActivity {
 		
 		Employee test2 = new Employee("Test2", "password", company, "RandD");
 		try {
-			test2.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+			test2.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			// TODO: handle exception
@@ -109,7 +109,7 @@ public class testPlanActivity {
 		end.set(2015, Calendar.JANUARY, 25);
 		
 		Employee test2 = new Employee("Test2", "password", company, "RandD");
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		Employee activityLeader=new Employee("AL", "password", company, "RandD");
 		try {

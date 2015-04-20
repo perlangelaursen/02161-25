@@ -18,7 +18,7 @@ import softwarehuset.OperationNotAllowedException;
 * Test created by Per Lange Laursen - s144486 DTU
 */
 
-public class testAssignEmployeePA {
+public class TestAssignEmployeePA {
 	/**
 	 * Tests the scenario where a project or activity is created
 	 * then a projectleader or activityleader is assigned.
@@ -67,7 +67,7 @@ public class testAssignEmployeePA {
 	
 	@Test
 	public void testNotProjectLeader() throws OperationNotAllowedException {
-		Employee test2 = new Employee("Test2", "password", company, "Department1");
+		Employee test2 = company.createEmployee("Test2", "password", "Department1");
 		try {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
@@ -84,9 +84,9 @@ public class testAssignEmployeePA {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 25);
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
-		Employee activityLeader = new Employee("AL", "password", company, "Department1");
+		Employee activityLeader = company.createEmployee("AL", "password", "Department1");
 		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
 		
 		activityLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
@@ -99,9 +99,9 @@ public class testAssignEmployeePA {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 25);
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
-		Employee test2 = new Employee("Test2", "password", company, "Department1");
+		Employee test2 = company.createEmployee("Test2", "password", "Department1");
 		try {
 			test2.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
 			fail("OperationNotAllowedException exception should have been thrown");

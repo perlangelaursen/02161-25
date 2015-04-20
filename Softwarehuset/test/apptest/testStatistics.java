@@ -54,8 +54,8 @@ public class testStatistics {
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(test2, company.getSpecificProject("Project01"));
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "AO1", start, end);
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "AO2", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "AO1", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "AO2", start, end);
 		
 		projectLeader.assignActivityLeader(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
 		projectLeader.assignActivityLeader(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(1));
