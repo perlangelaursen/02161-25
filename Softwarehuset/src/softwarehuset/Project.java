@@ -3,7 +3,6 @@ package softwarehuset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
-import java.util.Date;
 
 public class Project {
 	private String name;

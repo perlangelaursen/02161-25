@@ -1,6 +1,8 @@
 package softwarehuset;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Employee {
 	private String id;
@@ -78,5 +80,22 @@ public class Employee {
 
 	public String getDepartment() {
 		return department;
+	}
+
+	public void getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
+		// TODO Auto-generated method stub
+		if(isProjectLeader) {
+			List<String> statistics = new ArrayList<String>();
+			statistics.add("Project Name: " + specificProject.getName());
+			statistics.add("No. of employees assigned: " + specificProject.getEmployees().size());
+			for(Employee e : specificProject.getEmployees()) {
+				statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
+			}
+			statistics.add("No. of activities: "+ specificProject.getActivities().size());
+		} else {
+			throw new OperationNotAllowedException("Get statistics is not allowed if not project leader.", 
+					"Get statistics");
+		}
+		
 	}
 }

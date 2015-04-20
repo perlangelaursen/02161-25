@@ -13,7 +13,6 @@ import softwarehuset.Company;
 import softwarehuset.Employee;
 import softwarehuset.Executive;
 import softwarehuset.OperationNotAllowedException;
-import softwarehuset.Project;
 
 /*
 * Test created by Per Lange Laursen - s144486 DTU
