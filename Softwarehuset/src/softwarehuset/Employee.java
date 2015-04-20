@@ -31,7 +31,7 @@ public class Employee {
 		}
 	}
 	
-	public void createAcivity(Project specificProject, String activityName,	GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
+	public void createActivity(Project specificProject, String activityName,	GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
 		if(company.getLoggedInEmployee() == this && id.equals(specificProject.getProjectLeader().getID())) {
 			if(end.after(start) || end.equals(start)){
 				specificProject.createActivity(activityName, start, end, specificProject);
@@ -56,15 +56,6 @@ public class Employee {
 	
 	private void addActivity(Activity a) {
 		activities.put(a, 0);
-	}
-
-	public void assignActivityLeader(Employee e, Activity a) throws OperationNotAllowedException {
-		if(company.getLoggedInEmployee() == this && a.getProject().getProjectLeader() == this) {
-			a.setActivityLeader(e); 
-		} else {
-			throw new OperationNotAllowedException("Assign ActivityLeader is not allowed if not project leader.", 
-					"Assign ActivityLeader");
-		}
 	}
 
 	public void relieveEmployeeProject(Employee e, Project specificProject) throws OperationNotAllowedException {
@@ -133,7 +124,6 @@ public class Employee {
 		statistics.add("No. of activities: "+ specificProject.getActivities().size());
 		for(Activity a : specificProject.getActivities()) {
 			statistics.add("Activity name: " + a.getName() + "No. of employees: " + a.getEmployees().size());
-			statistics.add("Contact Person: " + a.getContactPerson().getID() + a.getContactPerson().getDepartment());
 			assignedEmployeesInActivity(statistics, a);
 		}
 	}

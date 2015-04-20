@@ -52,14 +52,15 @@ public class TestAssignEmployeePA {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = new Employee("Test", "password", company, "Department1");
+		projectLeader = company.createEmployee("Test", "password", "Department1");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = new Employee("Test2", "password", company, "Department1");
+		test1 = company.createEmployee("Test2", "password", "Department1");
 	}
 	
 	@Test
 	public void testAssignEmployeeProject() throws OperationNotAllowedException {
+		company.employeeLogin(projectLeader.getID(), "password");
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getID(), test1.getID());
 		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getDepartment(), test1.getDepartment());
@@ -84,30 +85,9 @@ public class TestAssignEmployeePA {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 25);
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		company.employeeLogin(projectLeader.getID(), "password");
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
-		Employee activityLeader = new Employee("AL", "password", company, "Department1");
-		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
-		
-		activityLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
-	}
-	
-	@Test
-	public void testNotActivityLeader() throws OperationNotAllowedException {
-		GregorianCalendar start = new GregorianCalendar();
-		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 25);
-		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
-		
-		Employee test2 = new Employee("Test2", "password", company, "Department1");
-		try {
-			test2.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
-			fail("OperationNotAllowedException exception should have been thrown");
-		} catch (OperationNotAllowedException e) {
-			assertEquals("Assign Employee is not allowed if not activity leader.",e.getMessage());
-			assertEquals("Assign Employee",e.getOperation());
-		}
+		projectLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
 	}
 }

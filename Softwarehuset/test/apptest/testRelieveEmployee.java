@@ -51,10 +51,11 @@ public class TestRelieveEmployee {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 				
-		projectLeader = new Employee("Test", "password", company, "RandD");
+		projectLeader = company.createEmployee("Test", "password", "RandD");
 				
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = new Employee("Test2", "password", company, "RandD");
+		test1 = company.createEmployee("Test2", "password", "RandD");
+		company.employeeLogin(projectLeader.getID(), "password");
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 	}
 	
@@ -70,7 +71,8 @@ public class TestRelieveEmployee {
 	@Test
 	public void testNotProjectLeader() {
 		assertEquals(1, company.getSpecificProject("Project01").getEmployees().size());
-		Employee test2 = new Employee("Test2", "password", company, "RandD");
+		Employee test2 = company.createEmployee("Test2", "password", "RandD");
+		company.employeeLogin(test2.getID(), "password");
 		try {
 			test2.relieveEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");

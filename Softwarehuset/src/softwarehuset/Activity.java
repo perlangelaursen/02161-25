@@ -9,7 +9,6 @@ import java.util.List;
 public class Activity {
 	private String activityName, type;
 	private GregorianCalendar start, end;
-	private Employee activityLeader;
 	private Project project;
 	private HashMap<Employee, Integer> employees = new HashMap<>();
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
@@ -24,10 +23,6 @@ public class Activity {
 		this(start, end, "Work");
 		this.activityName = activityName;
 		this.project = project;
-	}
-
-	public void setActivityLeader(Employee e) {
-		this.activityLeader = e;
 	}
 
 	public void addEmployeeToActivity(Employee e) {
@@ -51,11 +46,6 @@ public class Activity {
 
 	public List<Employee> getEmployees() {
 		return assignedEmployees;
-	}
-
-	public Employee getContactPerson() {
-		// TODO Auto-generated method stub
-		return activityLeader;
 	}
 	
 	public Project getProject() {

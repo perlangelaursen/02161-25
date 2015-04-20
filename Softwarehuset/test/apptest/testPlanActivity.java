@@ -48,7 +48,7 @@ public class TestPlanActivity {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.FEBRUARY, 23);
 		company.createProject("Project01", start, end);
-		projectLeader = new Employee("Test", "password", company, "RandD");
+		projectLeader = company.createEmployee("Test", "password", "RandD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 	}
@@ -60,10 +60,8 @@ public class TestPlanActivity {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 25);
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
-		
-		Employee activityLeader=new Employee("AL", "password", company, "RandD");
-		projectLeader.assignActivityLeader(activityLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
+		company.employeeLogin(projectLeader.getID(), "password");
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		assertEquals(1, company.getSpecificProject("Project01").getActivities().size());
 		assertEquals("TestActivity", company.getSpecificProject("Project01").getSpecificActivity(0).getName());
@@ -78,7 +76,8 @@ public class TestPlanActivity {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.JANUARY, 22);
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		company.employeeLogin(projectLeader.getID(), "password");
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 	}
@@ -92,32 +91,12 @@ public class TestPlanActivity {
 		
 		Employee test2 = new Employee("Test2", "password", company, "RandD");
 		try {
-			test2.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+			test2.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			// TODO: handle exception
 			assertEquals("Create activity is not allowed if not project leader.",e.getMessage());
 			assertEquals("Create activity",e.getOperation());
-		}
-	}
-	
-	@Test
-	public void testNotProjectLeader02() throws OperationNotAllowedException {
-		GregorianCalendar start = new GregorianCalendar();
-		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 25);
-		
-		Employee test2 = new Employee("Test2", "password", company, "RandD");
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
-		
-		Employee activityLeader=new Employee("AL", "password", company, "RandD");
-		try {
-			test2.assignActivityLeader(activityLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
-			fail("OperationNotAllowedException exception should have been thrown");
-		} catch (OperationNotAllowedException e) {
-			assertEquals("Assign ActivityLeader is not allowed if not project leader.",e.getMessage());
-			assertEquals("Assign ActivityLeader",e.getOperation());
 		}
 	}
 }

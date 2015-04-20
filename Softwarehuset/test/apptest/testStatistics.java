@@ -54,11 +54,8 @@ public class TestStatistics {
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(test2, company.getSpecificProject("Project01"));
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "AO1", start, end);
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "AO2", start, end);
-		
-		projectLeader.assignActivityLeader(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
-		projectLeader.assignActivityLeader(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(1));
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "AO1", start, end);
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "AO2", start, end);
 		
 		projectLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
 		projectLeader.assignEmployeeActivity(test2, company.getSpecificProject("Project01").getSpecificActivity(1));
@@ -75,17 +72,11 @@ public class TestStatistics {
 		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(0).getName() +
 				"No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(0).getEmployees().size(),
 				statistics.get(5));
-		assertEquals("Contact Person: " + company.getSpecificProject("Project01").getSpecificActivity(0).getContactPerson().getID()
-				+ company.getSpecificProject("Project01").getSpecificActivity(0).getContactPerson().getDepartment(),
-				statistics.get(6));
-		assertEquals("ID: " + test1.getID() + "Department: " + test1.getDepartment(), statistics.get(7));
+		assertEquals("ID: " + test1.getID() + "Department: " + test1.getDepartment(), statistics.get(6));
 		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(1).getName() +
 				"No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(1).getEmployees().size(),
-				statistics.get(8));
-		assertEquals("Contact Person: " + company.getSpecificProject("Project01").getSpecificActivity(1).getContactPerson().getID()
-				+ company.getSpecificProject("Project01").getSpecificActivity(1).getContactPerson().getDepartment(),
-				statistics.get(9));
-		assertEquals("ID: " + test2.getID() + "Department: " + test2.getDepartment(), statistics.get(10));
+				statistics.get(7));
+		assertEquals("ID: " + test2.getID() + "Department: " + test2.getDepartment(), statistics.get(8));
 	}
 	
 	@Test

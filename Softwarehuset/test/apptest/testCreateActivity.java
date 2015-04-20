@@ -43,10 +43,10 @@ public class TestCreateActivity {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = new Employee("Test", "password", company, "RanD");
+		projectLeader = company.createEmployee("Test", "password", "RanD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = new Employee("Test2", "password", company, "RanD");
+		test1 = company.createEmployee("Test2", "password", "RanD");
 	}
 	
 	@Test
@@ -58,7 +58,8 @@ public class TestCreateActivity {
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		
-		projectLeader.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		company.employeeLogin(projectLeader.getID(), "password");
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		assertEquals(1, company.getSpecificProject("Project01").getActivities().size());
 	}
@@ -72,10 +73,11 @@ public class TestCreateActivity {
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		
-		Employee test2 = new Employee("Test2", "password", company, "RanD");
+		Employee test2 = company.createEmployee("Test2", "password", "RanD");
+		company.employeeLogin(test2.getID(), "password");
 		
 		try {
-			test2.createAcivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+			test2.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Create activity is not allowed if not project leader.",e.getMessage());
