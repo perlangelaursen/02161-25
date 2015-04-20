@@ -68,7 +68,7 @@ public class TestAssignEmployeePA {
 	
 	@Test
 	public void testNotProjectLeader() throws OperationNotAllowedException {
-		Employee test2 = new Employee("Test2", "password", company, "Department1");
+		Employee test2 = company.createEmployee("Test2", "password", "Department1");
 		try {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");

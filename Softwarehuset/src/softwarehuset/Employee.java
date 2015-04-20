@@ -31,17 +31,19 @@ public class Employee {
 		}
 	}
 	
-	public void createActivity(Project specificProject, String activityName,	GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
-		if(company.getLoggedInEmployee() == this && id.equals(specificProject.getProjectLeader().getID())) {
-			if(end.after(start) || end.equals(start)){
-				specificProject.createActivity(activityName, start, end, specificProject);
-			} else {
-				System.out.println("Date problems");
-			}
-		} else {
+
+	public void createActivity(Project specificProject, String activityName, GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee()!= this){
+			throw new OperationNotAllowedException("Project leader must be logged in to create an activity",	"Create activity");
+		}
+		if (!id.equals(specificProject.getProjectLeader().getID())){
 			throw new OperationNotAllowedException("Create activity is not allowed if not project leader.", 
 					"Create activity");
 		}
+		if(!end.after(start)){
+			throw new OperationNotAllowedException("Incorrect order of dates.",	"Create activity");
+		}
+		specificProject.createActivity(activityName, start, end, specificProject);
 	}
 
 	public void assignEmployeeActivity(Employee e, Activity a) throws OperationNotAllowedException {

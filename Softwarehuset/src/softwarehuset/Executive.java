@@ -30,6 +30,5 @@ public class Executive {
 			throw new OperationNotAllowedException("Assign project leader is not allowed if not executive.", "Assign project leader");
 		}
 		specificProject.assignProjectLeader(employee);
-		
 	}
 }

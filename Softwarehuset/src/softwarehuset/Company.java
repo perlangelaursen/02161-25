@@ -90,11 +90,11 @@ public class Company {
 		return loggedInEmployee;
 	}
 
-//	public Calendar getCurrentTime() {
-//		return dateServer.getCurrentDate();
-//	}
-//	
-//	public void setDateServer(DateServer dateServer) {
-//		this.dateServer = dateServer;
-//	}
+	public Calendar getCurrentTime() {
+		return dateServer.getCurrentDate();
+	}
+	
+	public void setDateServer(DateServer dateServer) {
+		this.dateServer = dateServer;
+	}
 }
