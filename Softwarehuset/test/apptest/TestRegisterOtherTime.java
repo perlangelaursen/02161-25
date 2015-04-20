@@ -1,3 +1,4 @@
+//Test by Van Anh Thi Trinh - s144449
 package apptest;
 
 import java.util.Calendar;
@@ -37,7 +38,7 @@ public class TestRegisterOtherTime {
 	public void testRegisterOtherTime() throws OperationNotAllowedException {
 		company.employeeLogin("Employee", "empassword");
 
-		// Register time away by dates (all days are included)
+		// Register vacation, sick time and course attendance (all days are included)
 		employee.registerVacationTime(2015, 12, 23, 2016, 1, 3);
 		assertEquals(12 * 24, employee.getOtherTime("Vacation"));
 
@@ -279,15 +280,52 @@ public class TestRegisterOtherTime {
 		//Vacation now: 1/5/2016 - 10/5/2016
 		assertEquals(10 * 24, employee.getOtherTime("Vacation"));
 		
-		
 		//Register course attendance starting before the vacation and ending after the vacation (overwriting the vacation completely)
 		employee.registerCourseTime(2016, 4, 28, 2016, 5, 15);
 		assertEquals(18 * 24, employee.getOtherTime("Course"));  
 		assertEquals(0, employee.getOtherTime("Vacation"));
-		
+	
 		//Register vacation exactly in the course period
 		employee.registerVacationTime(2016, 4, 28, 2016, 5, 15);
 		assertEquals(0, employee.getOtherTime("Course"));
 		assertEquals(18 * 24, employee.getOtherTime("Vacation"));
+	}
+	@Test
+	public void testRegisteronOccupiedDates3() throws OperationNotAllowedException {
+		company.employeeLogin("Employee", "empassword");
+		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
+		
+		//Vacation now: 1/5/2016 - 10/5/2016
+		assertEquals(10 * 24, employee.getOtherTime("Vacation"));
+		
+		//Register course attendance starting on the same date as the vacation
+		employee.registerCourseTime(2016, 5, 1, 2016, 5, 1);  
+		assertEquals(24, employee.getOtherTime("Course"));
+		assertEquals(9 * 24, employee.getOtherTime("Vacation"));
+	}
+	@Test
+	public void testRegisteronOccupiedDates4() throws OperationNotAllowedException {
+		company.employeeLogin("Employee", "empassword");
+		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
+		
+		//Vacation now: 1/5/2016 - 10/5/2016
+		assertEquals(10 * 24, employee.getOtherTime("Vacation"));
+		
+		//Register course attendance ending on the same date as the vacation
+		employee.registerCourseTime(2016, 5, 9, 2016, 5, 10);  
+		assertEquals(2 * 24, employee.getOtherTime("Course"));
+		assertEquals(8 * 24, employee.getOtherTime("Vacation"));
+	}
+	/**
+	 * Tests the scenario where an employee's calendar is updated with no overlapping dates 
+	 * (cannot usually happen since the calendar is only updated IF there are overlapping dates)
+	 * 
+	 */
+	@Test
+	public void testRegisterOtherTime2() throws OperationNotAllowedException {
+		Activity vacation = employee.createPersonalActivity(2015, 12, 23, 2016, 1, 3, "Vacation");
+		Activity course = employee.createPersonalActivity(2016, 5, 1, 2016, 5, 1, "Course");
+		employee.updateOldPlans(course, vacation);
+		employee.updateOldPlans(vacation, course);
 	}
 }

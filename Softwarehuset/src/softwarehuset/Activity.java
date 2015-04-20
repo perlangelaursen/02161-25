@@ -65,7 +65,7 @@ public class Activity {
 				activity.getStart().before(start) && activity.getEnd().after(end)||
 				activity.getStart().before(start) && activity.getEnd().after(start)||
 				activity.getStart().before(end) && activity.getEnd().after(end)||
-				overLaps(activity));
+				activity.getStart().getTime().equals(start.getTime()));
 	}
 
 	public int getTimeSpan() {
@@ -84,13 +84,5 @@ public class Activity {
 
 	public void setStart(GregorianCalendar newDate) {
 		start = newDate;		
-	}
-	
-	private boolean overLaps(Activity activity) {
-		System.out.println("overlaps");
-		return  activity.getStart().get(Calendar.YEAR) == start.get(Calendar.YEAR) &&
-				activity.getStart().get(Calendar.DAY_OF_YEAR) == start.get(Calendar.DAY_OF_YEAR)&&
-				activity.getEnd().get(Calendar.YEAR) == end.get(Calendar.YEAR) &&
-				activity.getEnd().get(Calendar.DAY_OF_YEAR) == end.get(Calendar.DAY_OF_YEAR);
 	}
 }

@@ -78,20 +78,17 @@ public class Employee {
 	}
 
 	public void registerSpentTime(Activity activity, int time) throws OperationNotAllowedException {
-		if (company.getLoggedInEmployee() == this){
-			if(activities.containsKey(activity)){
-				if(time>=0){
-					activities.put(activity, time);
-					activity.setTime(this, time);
-				} else {
-					throw new OperationNotAllowedException("Invalid time", "Register spent time");
-				}
-			} else {
-				throw new OperationNotAllowedException("Employee is not assigned to the chosen activity", "Register spent time");
-			}
-		} else {
+		if(company.getLoggedInEmployee() != this){
 			throw new OperationNotAllowedException("Employee is not logged in", "Register spent time");
 		}
+		if(!activities.containsKey(activity)){
+			throw new OperationNotAllowedException("Employee is not assigned to the chosen activity", "Register spent time");
+		}
+		if(time<0){
+			throw new OperationNotAllowedException("Invalid time", "Register spent time");
+		}
+			activities.put(activity, time);
+			activity.setTime(this, time);
 	}
 
 	public String getDepartment() {
@@ -172,20 +169,20 @@ public class Employee {
 		calendar.put(course, "Course");
 	}
 
-	private void updateCalendar(Activity sick) {
+	private void updateCalendar(Activity a) {
 		ArrayList<Activity> removes = new ArrayList<>();
 		for(Activity activity: calendar.keySet()){
-			if(sick.isOverlapping(activity)){
+			if(a.isOverlapping(activity)){
             	removes.add(activity);
             }
 		}
 		for(Activity activity: removes){
-			updateOldPlans(sick, activity);
 			calendar.remove(activity);
-		}
+			updateOldPlans(a, activity);
+			}
 	}
 
-	private Activity createPersonalActivity(int year, int month, int date,	int year2, int month2, int date2, String type)throws OperationNotAllowedException {
+	public Activity createPersonalActivity(int year, int month, int date, int year2, int month2, int date2, String type)throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(year, month, date, 0,0,0);
@@ -214,7 +211,7 @@ public class Employee {
 		}
 	}
 
-	private void updateOldPlans(Activity newActivity, Activity oldActivity) {
+	public void updateOldPlans(Activity newActivity, Activity oldActivity) {
 		GregorianCalendar newStart = new GregorianCalendar();
 		GregorianCalendar newEnd = new GregorianCalendar();
 		GregorianCalendar start = newActivity.getStart();
@@ -227,18 +224,18 @@ public class Employee {
 			Activity oldActivityNewFirstPart = new Activity(oldActivity.getStart(), newEnd, oldActivity.getType());
 			Activity oldActivityNewSecondPart = new Activity(newStart, oldActivity.getEnd(), oldActivity.getType());
 						
-			calendar.put(oldActivityNewFirstPart, oldActivity.getType());
-			calendar.put(oldActivityNewSecondPart, oldActivity.getType());
+			calendar.put(oldActivityNewFirstPart, oldActivityNewFirstPart.getType());
+			calendar.put(oldActivityNewSecondPart, oldActivityNewSecondPart.getType());
 			
 			//Remove first part of old activity
-		} else if (oldActivity.getStart().before(start) && oldActivity.getEnd().after(start)){
+		} else if (oldActivity.getStart().before(start) && !oldActivity.getEnd().before(start)){
 			Activity oldActivityNew = new Activity(oldActivity.getStart(), newEnd, oldActivity.getType());
-			calendar.put(oldActivityNew, oldActivity.getType());
+			calendar.put(oldActivityNew, oldActivityNew.getType());
 			
 			//Remove last part of old activity
-		} else if (oldActivity.getStart().before(end) && oldActivity.getEnd().after(end)){
+		} else if (!oldActivity.getStart().after(end) && oldActivity.getEnd().after(end)){
 			Activity oldActivityNew = new Activity(newStart, oldActivity.getEnd(), oldActivity.getType());
-			calendar.put(oldActivityNew, oldActivity.getType());
+			calendar.put(oldActivityNew, oldActivityNew.getType());
 		}
 	}
 	
