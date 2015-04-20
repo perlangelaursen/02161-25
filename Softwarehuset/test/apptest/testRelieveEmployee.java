@@ -18,7 +18,7 @@ import softwarehuset.OperationNotAllowedException;
 * Test created by Per Lange Laursen - s144486 DTU
 */
 
-public class testRelieveEmployee {
+public class TestRelieveEmployee {
 	/**
          * Tests the scenario where the project leader want to relieve
          * an employee from a project

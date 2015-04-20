@@ -18,7 +18,7 @@ import softwarehuset.OperationNotAllowedException;
 * Test created by Per Lange Laursen - s144486 DTU
 */
 
-public class testPlanActivity {
+public class TestPlanActivity {
 	/**
 	 * Tests the scenario where the project leader creates a activity
 	 * with start and end date.

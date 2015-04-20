@@ -27,7 +27,6 @@ public class Project {
 	
 	public void assignProjectLeader(Employee e) {
 		this.projectLeader = e;
-		e.setProjectLeader(true);
 	}
 	
 	public void addEmployeeToProject(Employee e) {

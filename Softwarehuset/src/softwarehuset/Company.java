@@ -13,12 +13,12 @@ public class Company {
 	private Employee loggedInEmployee;
 	private List<Project> projects = new ArrayList<>();
 	private List<Employee> employees = new ArrayList<>();
-	//private DateServer dateServer;
+	private DateServer dateServer;
 
 	public Company(String name, Address address) {
 		this.name = name;
 		this.address = address;
-		//dateServer = new DateServer();
+		dateServer = new DateServer();
 	}
 
 	public void setExecutive(Executive executive) {
