@@ -109,11 +109,15 @@ public class Employee {
 			List<String> statistics) {
 		statistics.add("No. of activities: "+ specificProject.getActivities().size());
 		for(Activity a : specificProject.getActivities()) {
-			statistics.add("Activity name: " + a.getName() + "No. of employees: " + a.getEmployees().size() 
-					+ "Activity Start: " + a.getStart() + "Activity End: " + a.getEnd());
-			for(Employee e : a.getEmployees()) {
-				statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
-			}
+			statistics.add("Activity name: " + a.getName() + "No. of employees: " + a.getEmployees().size());
+			statistics.add("Activity Leader: " + a.getActivityLeader().getName() + a.getActivityLeader().getDepartment());
+			assignedEmployeesInActivity(statistics, a);
+		}
+	}
+
+	private void assignedEmployeesInActivity(List<String> statistics, Activity a) {
+		for(Employee e : a.getEmployees()) {
+			statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
 		}
 	}
 }

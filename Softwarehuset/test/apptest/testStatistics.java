@@ -2,6 +2,7 @@ package apptest;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -56,12 +57,20 @@ public class testStatistics {
 	
 	@Test
 	public void testgetStatisticsPL() throws OperationNotAllowedException {
-		projectLeader.getStatisticsProject(company.getSpecificProject("Project01"));
+		List<String> statistics = projectLeader.getStatisticsProject(company.getSpecificProject("Project01"));
+		assertEquals("Project Name: " + company.getSpecificProject("Project01").getName(), statistics.get(0));
 	}
 	
 	@Test
-	public void testgetStatisticsNotPL() {
-		
+	public void testgetStatisticsNotPL() throws OperationNotAllowedException {
+		Employee test3 = new Employee("Test4", "RandD");
+		try {
+			test3.getStatisticsProject(company.getSpecificProject("Project01"));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Get statistics is not allowed if not project leader.",e.getMessage());
+			assertEquals("Get statistics",e.getOperation());
+		}
 	}
 
 }

@@ -40,4 +40,9 @@ public class Activity {
 	public List<Employee> getEmployees() {
 		return assignedEmployees;
 	}
+
+	public Employee getActivityLeader() {
+		// TODO Auto-generated method stub
+		return activityLeader;
+	}
 }
