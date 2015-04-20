@@ -43,11 +43,11 @@ public class TestStatistics {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = new Employee("Test", "password", company, "RandD");
+		projectLeader = company.createEmployee("Test", "password", "RandD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = new Employee("Test2", "password", company, "RandD");
-		test2 = new Employee("Test3", "password", company, "RandD");
+		test1 = company.createEmployee("Test2", "password", "RandD");
+		test2 = company.createEmployee("Test3", "password", "RandD");
 		
 		company.employeeLogin(projectLeader.getID(), "password");
 		
@@ -75,7 +75,7 @@ public class TestStatistics {
 		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(0).getName() +
 				"No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(0).getEmployees().size(),
 				statistics.get(5));
-		assertEquals("Activity Leader: " + company.getSpecificProject("Project01").getSpecificActivity(0).getContactPerson().getID()
+		assertEquals("Contact Person: " + company.getSpecificProject("Project01").getSpecificActivity(0).getContactPerson().getID()
 				+ company.getSpecificProject("Project01").getSpecificActivity(0).getContactPerson().getDepartment(),
 				statistics.get(6));
 		assertEquals("ID: " + test1.getID() + "Department: " + test1.getDepartment(), statistics.get(7));
