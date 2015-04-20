@@ -36,4 +36,8 @@ public class Activity {
 	public GregorianCalendar getEnd() {
 		return end;
 	}
+
+	public List<Employee> getEmployees() {
+		return assignedEmployees;
+	}
 }

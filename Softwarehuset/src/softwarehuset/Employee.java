@@ -82,20 +82,38 @@ public class Employee {
 		return department;
 	}
 
-	public void getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
+	public List<String> getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
 		// TODO Auto-generated method stub
+		List<String> statistics = new ArrayList<String>();
 		if(isProjectLeader) {
-			List<String> statistics = new ArrayList<String>();
 			statistics.add("Project Name: " + specificProject.getName());
 			statistics.add("No. of employees assigned: " + specificProject.getEmployees().size());
-			for(Employee e : specificProject.getEmployees()) {
-				statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
-			}
-			statistics.add("No. of activities: "+ specificProject.getActivities().size());
+			assignedEmployeesInProject(specificProject, statistics);
+			activitiesInProject(specificProject, statistics);
 		} else {
 			throw new OperationNotAllowedException("Get statistics is not allowed if not project leader.", 
 					"Get statistics");
 		}
+		return statistics;
 		
+	}
+
+	private void assignedEmployeesInProject(Project specificProject,
+			List<String> statistics) {
+		for(Employee e : specificProject.getEmployees()) {
+			statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
+		}
+	}
+
+	private void activitiesInProject(Project specificProject,
+			List<String> statistics) {
+		statistics.add("No. of activities: "+ specificProject.getActivities().size());
+		for(Activity a : specificProject.getActivities()) {
+			statistics.add("Activity name: " + a.getName() + "No. of employees: " + a.getEmployees().size() 
+					+ "Activity Start: " + a.getStart() + "Activity End: " + a.getEnd());
+			for(Employee e : a.getEmployees()) {
+				statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
+			}
+		}
 	}
 }
