@@ -19,7 +19,7 @@ import softwarehuset.OperationNotAllowedException;
 * Test created by Per Lange Laursen - s144486 DTU
 */
 
-public class testStatistics {
+public class TestStatistics {
 	Employee projectLeader;
 	Employee test1, test2;
 	Company company;
