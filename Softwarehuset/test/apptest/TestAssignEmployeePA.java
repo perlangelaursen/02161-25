@@ -18,7 +18,7 @@ import softwarehuset.OperationNotAllowedException;
 * Test created by Per Lange Laursen - s144486 DTU
 */
 
-public class TestAssignEmployeePA {
+public class testAssignEmployeePA {
 	/**
 	 * Tests the scenario where a project or activity is created
 	 * then a projectleader or activityleader is assigned.

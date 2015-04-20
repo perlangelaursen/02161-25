@@ -15,8 +15,6 @@ public class Employee {
 	private String department;
 	private HashMap<Activity, Integer> activities = new HashMap<>();
 	private HashMap<Activity, String> calendar = new HashMap<>();
-	private boolean isProjectLeader = false;
-	private boolean isActivityLeader = false;
 	
 	public Employee(String id, String password, Company company, String department) {
 		this.id = id;
@@ -26,8 +24,7 @@ public class Employee {
 	}
 	
 	public void assignEmployeeProject(Employee e, Project p) throws OperationNotAllowedException {
-//		if(company.getLoggedInEmployee() == this && p.getProjectLeader() == this) {
-		if(isProjectLeader) {
+		if(company.getLoggedInEmployee() == this && p.getProjectLeader() == this) {
 			p.addEmployeeToProject(e);
 		} else {
 			throw new OperationNotAllowedException("Assign Employee is not allowed if not project leader.", "Assign Employee");
@@ -35,8 +32,7 @@ public class Employee {
 	}
 	
 	public void createAcivity(Project specificProject, String activityName,	GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
-//		if(company.getLoggedInEmployee() == this && id.equals(specificProject.getProjectLeader().getID())) {
-		if(isProjectLeader) {
+		if(company.getLoggedInEmployee() == this && id.equals(specificProject.getProjectLeader().getID())) {
 			if(end.after(start) || end.equals(start)){
 				specificProject.createActivity(activityName, start, end, specificProject);
 			} else {
@@ -49,8 +45,7 @@ public class Employee {
 	}
 
 	public void assignEmployeeActivity(Employee e, Activity a) throws OperationNotAllowedException {
-//		if(company.getLoggedInEmployee() == this && a.getProject().getProjectLeader() == this) {
-		if(isProjectLeader) {
+		if(company.getLoggedInEmployee() == this && a.getProject().getProjectLeader() == this) {
 			a.addEmployeeToActivity(e);
 			e.addActivity(a);
 		} else {
@@ -64,8 +59,7 @@ public class Employee {
 	}
 
 	public void assignActivityLeader(Employee e, Activity a) throws OperationNotAllowedException {
-//		if(company.getLoggedInEmployee() == this && a.getProject().getProjectLeader() == this) {
-		if(isProjectLeader) {
+		if(company.getLoggedInEmployee() == this && a.getProject().getProjectLeader() == this) {
 			a.setActivityLeader(e); 
 		} else {
 			throw new OperationNotAllowedException("Assign ActivityLeader is not allowed if not project leader.", 
@@ -113,9 +107,8 @@ public class Employee {
 
 
 	public List<String> getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		List<String> statistics = new ArrayList<String>();
-		if(isProjectLeader) {
+		if(company.getLoggedInEmployee() == this && specificProject.getProjectLeader() == this) {
 			statistics.add("Project Name: " + specificProject.getName());
 			statistics.add("No. of employees assigned: " + specificProject.getEmployees().size());
 			assignedEmployeesInProject(specificProject, statistics);
@@ -131,12 +124,8 @@ public class Employee {
 	private void assignedEmployeesInProject(Project specificProject,
 			List<String> statistics) {
 		for(Employee e : specificProject.getEmployees()) {
-			statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
+			statistics.add("ID: " + e.getID() + "Department: " + e.getDepartment());
 		}
-	}
-
-	public String getName() {
-		return id;
 	}
 
 	private void activitiesInProject(Project specificProject,
@@ -144,14 +133,14 @@ public class Employee {
 		statistics.add("No. of activities: "+ specificProject.getActivities().size());
 		for(Activity a : specificProject.getActivities()) {
 			statistics.add("Activity name: " + a.getName() + "No. of employees: " + a.getEmployees().size());
-			statistics.add("Activity Leader: " + a.getActivityLeader().getName() + a.getActivityLeader().getDepartment());
+			statistics.add("Contact Person: " + a.getContactPerson().getID() + a.getContactPerson().getDepartment());
 			assignedEmployeesInActivity(statistics, a);
 		}
 	}
 
 	private void assignedEmployeesInActivity(List<String> statistics, Activity a) {
 		for(Employee e : a.getEmployees()) {
-			statistics.add("ID: " + e.getName() + "Department: " + e.getDepartment());
+			statistics.add("ID: " + e.getID() + "Department: " + e.getDepartment());
 		}
 	}
 
@@ -269,10 +258,5 @@ public class Employee {
 			}
 		}
 		return time;
-	}
-
-	public void setProjectLeader(boolean b) {
-		// TODO Auto-generated method stub
-		isProjectLeader = b;
 	}
 }

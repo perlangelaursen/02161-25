@@ -53,7 +53,7 @@ public class Activity {
 		return assignedEmployees;
 	}
 
-	public Employee getActivityLeader() {
+	public Employee getContactPerson() {
 		// TODO Auto-generated method stub
 		return activityLeader;
 	}
