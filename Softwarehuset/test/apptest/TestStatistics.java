@@ -81,7 +81,7 @@ public class TestStatistics {
 	
 	@Test
 	public void testgetStatisticsNotPL() throws OperationNotAllowedException {
-		Employee test3 = new Employee("Test4", "password", company, "RandD");
+		Employee test3 = company.createEmployee("Test4", "password", "RandD");
 		company.employeeLogin(test3.getID(), "password");
 		try {
 			test3.getStatisticsProject(company.getSpecificProject("Project01"));
