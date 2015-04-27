@@ -271,6 +271,7 @@ public class Employee {
 		return time;
 	}
 
+
 	public void needForAssistanceWithActivity(Employee selected,
 			Activity specificActivity) throws OperationNotAllowedException {
 		if(company.getLoggedInEmployee() == this) {
@@ -290,4 +291,18 @@ public class Employee {
 					"Remove Assisting Employee from activity");
 		}
 	}
+
+	public int getSpentTime(String activityName) throws OperationNotAllowedException {
+		int time = -1;
+		for(Activity a: activities.keySet()){
+			if (a.getName().equals(activityName)){
+				time = activities.get(a);
+			}
+		}
+		if(time == -1){
+			throw new OperationNotAllowedException("Employee is not assigned to the activity", 
+					"See registered spent time");
+		}
+		return time;
+		}
 }

@@ -97,4 +97,9 @@ public class Company {
 	public void setDateServer(DateServer dateServer) {
 		this.dateServer = dateServer;
 	}
+
+	public void employeeLogout() {
+		executiveLoggedIn = false;
+		loggedInEmployee = null;
+	}
 }
