@@ -104,10 +104,9 @@ public class Employee {
 		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
 			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
 		}
-		if(!project.getActivities().contains(activity)){
+		if(activity==null) {
 			throw new OperationNotAllowedException("Unable to view progress, nonexistant activity", "View Progress");
 		}
-		//Add if activity not in project
 		return activity.getAllSpentTime();
 	}
 	
@@ -115,7 +114,7 @@ public class Employee {
 		if(project==null){
 			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
 		}
-		if(company.getLoggedInEmployee() != this){
+		if(company.getLoggedInEmployee() != this) {
 			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
 		}
 		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
@@ -137,7 +136,20 @@ public class Employee {
 		}
 		return statistics;
 	}
-
+	public void writeReport(Project project) throws OperationNotAllowedException{
+		if(project==null){
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		}
+		if(company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
+		}
+		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
+			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
+		}
+		//Insert code to make report
+		Report report = null;
+		project.addReport(report);
+	}
 	private void assignedEmployeesInProject(Project specificProject,
 			List<String> statistics) {
 		for(Employee e : specificProject.getEmployees()) {

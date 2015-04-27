@@ -1,5 +1,6 @@
 package softwarehuset;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
@@ -10,6 +11,7 @@ public class Project {
 	private Employee projectLeader;
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
 	private List<Activity> activities = new ArrayList<Activity>();
+	private List<Report> reports = new ArrayList<Report>();
 	
 	public Project(String name) {
 		this.name = name;
@@ -85,9 +87,20 @@ public class Project {
 
 	public Activity getSpecificActivityByName(String activityName) throws OperationNotAllowedException {
 		for(Activity a : activities){
-			if(a.getName()==activityName);
+			if(a.getName().equals(activityName));
 			return a;
 		}
 		return null;
+	}
+	
+	public Report getReport (int i){
+		return reports.get(i);
+	}
+	
+	public List<Report> getAllReports(){
+		return reports;
+	}
+	public void addReport(Report report){
+		reports.add(report);
 	}
 }

@@ -56,7 +56,7 @@ public class testProgressProjectActivity {
 		}
 	@Test
 	public void testProgressActivity() throws OperationNotAllowedException {
-		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivity(0)));
+		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("Activity01")));
 	}
 	@Test
 	public void testProgressProject() throws OperationNotAllowedException {
@@ -66,7 +66,7 @@ public class testProgressProjectActivity {
 	@Test
 	public void testProgressNonexistantActivity() throws OperationNotAllowedException {
 		try{
-			projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("ActivityXX"));
+			projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("ActivityXX")); //Mangler at færdiggøre
 			fail("OperationNotAllowedException expected");
 	
 		} catch (OperationNotAllowedException e){
