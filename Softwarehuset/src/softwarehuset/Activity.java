@@ -12,6 +12,7 @@ public class Activity {
 	private Project project;
 	private HashMap<Employee, Integer> employees = new HashMap<>();
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
+	private List<Employee> assistingEmployees = new ArrayList<Employee>();
 
 	public Activity(GregorianCalendar start, GregorianCalendar end, String type) {
 		this.start = start;
@@ -89,5 +90,28 @@ public class Activity {
 
 	public void setStart(GregorianCalendar newDate) {
 		start = newDate;		
+	}
+
+	public void assignAssistingEmployee(Employee selected) {
+		assistingEmployees.add(selected);
+	}
+
+	public List<Employee> getAssistingEmployees() {
+		// TODO Auto-generated method stub
+		return assistingEmployees;
+	}
+
+	public Employee getSpecificAssitingEmployee(Employee selected) {
+		for(Employee e: assistingEmployees) {
+			if(e.getID().equals(selected.getID())) {
+				return e;
+			}
+		}
+		return null;
+	}
+
+	public void removeAssistingEmployee(Employee selected) {
+		assistingEmployees.remove(selected);
+		
 	}
 }

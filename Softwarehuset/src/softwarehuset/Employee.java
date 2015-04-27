@@ -110,14 +110,14 @@ public class Employee {
 	}
 	
 	public int viewProgress(Project project) throws OperationNotAllowedException {
+		if(project==null){
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		}
 		if(company.getLoggedInEmployee() != this){
 			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
 		}
 		if(!id.equals(project.getProjectLeader().getID())){
 			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
-		}
-		if(company.getSpecificProject(project.getName())==null){
-			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
 		}
 		return project.getSpentTime();
 	}
@@ -272,6 +272,27 @@ public class Employee {
 			}
 		}
 		return time;
+	}
+
+
+	public void needForAssistanceWithActivity(Employee selected,
+			Activity specificActivity) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			specificActivity.assignAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", "Need For Assistance");
+		}
+		
+	}
+
+	public void removeSpecificAssistingEmployee(Employee selected, Activity a)
+	throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			a.removeAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", 
+					"Remove Assisting Employee from activity");
+		}
 	}
 
 	public int getSpentTime(String activityName) throws OperationNotAllowedException {
