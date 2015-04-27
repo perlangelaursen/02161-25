@@ -266,4 +266,14 @@ public class Employee {
 		}
 		return time;
 	}
+
+	public boolean isAvailable(GregorianCalendar start, GregorianCalendar end) {
+		Activity act = new Activity(start, end, "work");
+		for (Activity a : activities.keySet()) {
+			if (a.isOverlapping(act)) {
+				return false; 
+			}
+		}
+		return true;
+	}
 }

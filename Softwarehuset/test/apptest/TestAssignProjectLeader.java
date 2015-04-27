@@ -5,30 +5,39 @@ import static org.junit.Assert.*;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import softwarehuset.*;
 
 public class TestAssignProjectLeader {
 
+	private Address add;
+	private Company com;
+	private Executive ex;
+	private GregorianCalendar d1, d2;
+	private Employee em;
+	private Project p1;
+	
+	@Before
+	public void setUp() throws Exception {
+		add = new Address("roskildevej 2", "roskilde");
+		com = new Company("SoftwareHuset", add);
+		ex = new Executive("name","Department1", com, "password");
+		em = new Employee("Anders", "password", com, "Project Department");
+		d1 = new GregorianCalendar();
+		d2 = new GregorianCalendar();
+	}
+	
 	@Test
 	public void testAssignProjectLeader() throws Exception {
-		Address add = new Address("roskildevej 2", "roskilde");
-		Company com = new Company("SoftwareHuset", add);
-		Executive ex = new Executive("name","Department1", com, "password");
-		
-		GregorianCalendar d1 = new GregorianCalendar();
-		GregorianCalendar d2 = new GregorianCalendar();
-		
 		assertFalse(com.executiveIsLoggedIn());
 		com.executiveLogin("password");
 		assertTrue(com.executiveIsLoggedIn());
 		
 		com.createProject("p1", d1, d2);
-		Project p1 = com.getSpecificProject("p1");
+		p1 = com.getSpecificProject("p1");
 		assertEquals(com.getProjects().size(),1);
-		
-		Employee em = new Employee("Anders", "password", com, "Project Department");
 		
 		ex.assignProjectLeader(em, p1);
 		
@@ -38,15 +47,6 @@ public class TestAssignProjectLeader {
 	
 	@Test
 	public void testNotLoggedIn() throws Exception {
-		Address add = new Address("Roskildevej", "Roskilde");
-		Company com = new Company("Softwarehus", add);
-		Executive ex = new Executive("Anders", "Department", com, "password");
-		Employee em = new Employee("Anders", "password", com, "Department");
-		Project p1 = new Project("p1");
-		
-		GregorianCalendar d1 = new GregorianCalendar();
-		GregorianCalendar d2 = new GregorianCalendar();
-		
 		try {
 			com.createProject("p1", d1, d2);
 			fail("OperationNotAllowedException exception should have been thrown");
@@ -69,14 +69,6 @@ public class TestAssignProjectLeader {
 	
 	@Test
 	public void testEmployeeNotFound() throws Exception {
-		
-		Address add = new Address("roskildevej 2", "roskilde");
-		Company com = new Company("SoftwareHuset", add);
-		Executive ex = new Executive("name","Department1", com, "password");
-		
-		GregorianCalendar d1 = new GregorianCalendar();
-		GregorianCalendar d2 = new GregorianCalendar();
-		
 		assertFalse(com.executiveIsLoggedIn());
 		com.executiveLogin("password");
 		assertTrue(com.executiveIsLoggedIn());
@@ -85,10 +77,10 @@ public class TestAssignProjectLeader {
 		Project p1 = com.getSpecificProject("p1");
 		assertEquals(com.getProjects().size(),1);
 		
-		Employee em = null;
+		Employee em2 = null;
 		
 		try {
-			ex.assignProjectLeader(em, p1);
+			ex.assignProjectLeader(em2, p1);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch(OperationNotAllowedException e) {
 			assertEquals("Employee not found",e.getMessage());
@@ -99,23 +91,12 @@ public class TestAssignProjectLeader {
 
 	@Test
 	public void testProjectNotFound() throws Exception {
-		Address add = new Address("roskildevej 2", "roskilde");
-		Company com = new Company("SoftwareHuset", add);
-		
 		assertEquals(com.getSpecificProject("p1"), null);
 		
 	}
 	
 	@Test
 	public void testChangeProjectLeader() throws Exception {
-		
-		Address add = new Address("roskildevej 2", "roskilde");
-		Company com = new Company("SoftwareHuset", add);
-		Executive ex = new Executive("name","Department1", com, "password");
-		
-		GregorianCalendar d1 = new GregorianCalendar();
-		GregorianCalendar d2 = new GregorianCalendar();
-		
 		assertFalse(com.executiveIsLoggedIn());
 		com.executiveLogin("password");
 		assertTrue(com.executiveIsLoggedIn());
@@ -123,8 +104,6 @@ public class TestAssignProjectLeader {
 		com.createProject("p1", d1, d2);
 		Project p1 = com.getSpecificProject("p1");
 		assertEquals(com.getProjects().size(),1);
-		
-		Employee em = new Employee("Anders", "password", com, "Project Department");
 		
 		ex.assignProjectLeader(em, p1);
 		
