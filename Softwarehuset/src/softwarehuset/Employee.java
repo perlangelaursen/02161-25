@@ -94,7 +94,26 @@ public class Employee {
 	public String getDepartment() {
 		return department;
 	}
-
+	public int viewProgress(Project project, Activity activity) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
+		}
+		if (!id.equals(project.getProjectLeader().getID())){
+			throw new OperationNotAllowedException("Viewing progress is not allowed if not project leader","View Progress");
+		}
+		//Add if activity not in project
+		return activity.getTimeSpan();
+	}
+	
+	public int viewProgress(Project project) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
+		}
+		if(!activities.containsKey(project)){
+			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
+		}
+		return project.getSpentTime();
+	}
 
 	public List<String> getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
 		List<String> statistics = new ArrayList<String>();
@@ -108,7 +127,6 @@ public class Employee {
 					"Get statistics");
 		}
 		return statistics;
-		
 	}
 
 	private void assignedEmployeesInProject(Project specificProject,

@@ -75,4 +75,11 @@ public class Project {
 		}
 		return null;
 	}
+	public int getSpentTime() {
+		int sum = 0;
+		for(Activity i : activities) {
+			sum=+i.getAllSpentTime();
+		}
+		return sum;
+	}
 }

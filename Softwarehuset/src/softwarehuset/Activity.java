@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 public class Activity {
 	private String activityName, type;
@@ -55,7 +56,13 @@ public class Activity {
 	public int getSpentTime(Employee e) {
 		return employees.get(e);
 	}
-
+	public int getAllSpentTime() {
+		int sum = 0;
+		for(Entry<Employee, Integer> e: employees.entrySet()){
+			sum=+getSpentTime((Employee) e);
+		}
+		return sum;
+	}
 	public void setTime(Employee e, int time) {
 		employees.put(e, time);
 	}
