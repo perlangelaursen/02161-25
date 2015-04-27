@@ -270,4 +270,39 @@ public class Employee {
 		}
 		return time;
 	}
+
+
+	public void needForAssistanceWithActivity(Employee selected,
+			Activity specificActivity) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			specificActivity.assignAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", "Need For Assistance");
+		}
+		
+	}
+
+	public void removeSpecificAssistingEmployee(Employee selected, Activity a)
+	throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			a.removeAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", 
+					"Remove Assisting Employee from activity");
+		}
+	}
+
+	public int getSpentTime(String activityName) throws OperationNotAllowedException {
+		int time = -1;
+		for(Activity a: activities.keySet()){
+			if (a.getName().equals(activityName)){
+				time = activities.get(a);
+			}
+		}
+		if(time == -1){
+			throw new OperationNotAllowedException("Employee is not assigned to the activity", 
+					"See registered spent time");
+		}
+		return time;
+		}
 }
