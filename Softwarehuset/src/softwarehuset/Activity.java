@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class Activity {
 	private String activityName, type;
@@ -58,15 +57,14 @@ public class Activity {
 	}
 	public int getAllSpentTime() {
 		int sum = 0;
-		for(Entry<Employee, Integer> e: employees.entrySet()){
-			sum=+getSpentTime((Employee) e);
-		}
+			for(Employee e : assignedEmployees){
+				sum += employees.get(e);
+			}
 		return sum;
 	}
 	public void setTime(Employee e, int time) {
 		employees.put(e, time);
 	}
-
 	public boolean isOverlapping(Activity activity) {
 		return (activity.getStart().after(start) && activity.getEnd().before(end)||
 				activity.getStart().before(start) && activity.getEnd().after(end)||
