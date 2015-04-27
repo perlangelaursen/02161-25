@@ -97,7 +97,7 @@ public class testProgressProjectActivity {
 	@Test
 	public void testProgressActivityNotAssigned() throws OperationNotAllowedException {
 		try{
-			projectLeader.viewProgress(company.getSpecificProject("Project02"), company.getSpecificProject("Project02").getSpecificActivity(0));
+			projectLeader.viewProgress(company.getSpecificProject("Project02"), company.getSpecificProject("Project02").getSpecificActivityByName("ActivityXX"));
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e){
 			assertEquals("Project Leader is not assigned to the chosen project", e.getMessage());

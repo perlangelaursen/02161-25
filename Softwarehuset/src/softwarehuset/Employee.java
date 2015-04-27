@@ -92,15 +92,17 @@ public class Employee {
 		return department;
 	}
 	public int viewProgress(Project project, Activity activity) throws OperationNotAllowedException {
+		if(project==null){
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		}
 		if(company.getLoggedInEmployee() != this){
 			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
 		}
-		if (!id.equals(project.getProjectLeader().getID())){
-			throw new OperationNotAllowedException("Viewing progress is not allowed if not project leader","View Progress");
+		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
+			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
 		}
-				
-		if(!company.getProjects().contains(project)){
-			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		if(!project.getActivities().contains(activity)){
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant activity", "View Progress");
 		}
 		//Add if activity not in project
 		return activity.getAllSpentTime();
@@ -113,7 +115,7 @@ public class Employee {
 		if(company.getLoggedInEmployee() != this){
 			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
 		}
-		if(!id.equals(project.getProjectLeader().getID())){
+		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
 			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
 		}
 		return project.getSpentTime();
