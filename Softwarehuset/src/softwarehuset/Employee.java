@@ -107,14 +107,14 @@ public class Employee {
 	}
 	
 	public int viewProgress(Project project) throws OperationNotAllowedException {
+		if(project==null){
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		}
 		if(company.getLoggedInEmployee() != this){
 			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
 		}
 		if(!id.equals(project.getProjectLeader().getID())){
 			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
-		}
-		if(company.getSpecificProject(project.getName())==null){
-			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
 		}
 		return project.getSpentTime();
 	}
