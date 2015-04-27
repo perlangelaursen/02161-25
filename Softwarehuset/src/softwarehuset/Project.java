@@ -77,9 +77,17 @@ public class Project {
 	}
 	public int getSpentTime() {
 		int sum = 0;
-		for(Activity i : activities) {
-			sum=+i.getAllSpentTime();
+		for(Activity a : activities) {
+			sum=+a.getAllSpentTime();
 		}
 		return sum;
+	}
+
+	public Activity getSpecificActivityByName(String activityName) throws OperationNotAllowedException {
+		for(Activity a : activities){
+			if(a.getName()==activityName);
+			return a;
+		}
+		return null;
 	}
 }
