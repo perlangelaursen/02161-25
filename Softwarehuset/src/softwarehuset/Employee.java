@@ -266,4 +266,24 @@ public class Employee {
 		}
 		return time;
 	}
+
+	public void needForAssistanceWithActivity(Employee selected,
+			Activity specificActivity) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			specificActivity.assignAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", "Need For Assistance");
+		}
+		
+	}
+
+	public void removeSpecificAssistingEmployee(Employee selected, Activity a)
+	throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			a.removeAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", 
+					"Remove Assisting Employee from activity");
+		}
+	}
 }
