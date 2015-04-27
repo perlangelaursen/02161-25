@@ -84,6 +84,9 @@ public class Employee {
 		if(time<0){
 			throw new OperationNotAllowedException("Invalid time", "Register spent time");
 		}
+		if(!activities.containsKey(activity)){
+			throw new OperationNotAllowedException("Employee is not assigned to the chosen activity", "Register spent time");
+		}
 			activities.put(activity, time);
 			activity.setTime(this, time);
 	}
