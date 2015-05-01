@@ -295,4 +295,17 @@ public class Employee {
 		}
 		return time;
 		}
+
+	public Report getSpecificReport(Project project, int num) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee()!= this){
+			throw new OperationNotAllowedException("Unable to read report, not assigned project leader",	"Read report");
+		}
+		return company.getSpecificProject(project.getName()).getSpecificReport(num);
+	}
+	public Report getSpecificReportByName(Project project, String name) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee()!= this){
+			throw new OperationNotAllowedException("Unable to read report, not assigned project leader", "Read report");
+		}
+		return company.getSpecificProject(project.getName()).getSpecificReportByName(name);
+	}
 }
