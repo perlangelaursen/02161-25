@@ -113,4 +113,10 @@ public class Activity {
 		assistingEmployees.remove(selected);
 		
 	}
+
+	public void assignedEmployeesInActivity(List<String> statistics) {
+		for(Employee e : assignedEmployees) {
+			statistics.add("ID: " + e.getID() + " Department: " + e.getDepartment());
+		}
+	}
 }

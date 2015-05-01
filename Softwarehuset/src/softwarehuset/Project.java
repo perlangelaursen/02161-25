@@ -1,6 +1,5 @@
 package softwarehuset;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
@@ -102,5 +101,29 @@ public class Project {
 	}
 	public void addReport(Report report){
 		reports.add(report);
+	}
+
+	public void getProjectDetails(List<String> statistics) {
+		statistics.add("Project Name: " + name);
+		statistics.add("Project Leader ID: " + projectLeader.getID() +
+				" Department " + projectLeader.getDepartment());
+		statistics.add("No. of employees assigned: " + assignedEmployees.size());
+		assignedEmployeesInProject(statistics);
+		activitiesInProject(statistics);
+	}
+
+	public void assignedEmployeesInProject(List<String> statistics) {
+		for(Employee e : assignedEmployees) {
+			statistics.add("ID: " + e.getID() + " Department: " + e.getDepartment());
+		}
+	}
+
+	public void activitiesInProject(List<String> statistics) {
+		statistics.add("No. of activities: "+ activities.size());
+		for(Activity a : activities) {
+			statistics.add("Activity name: " + a.getName() + 
+					" No. of employees: " + a.getEmployees().size());
+			a.assignedEmployeesInActivity(statistics);
+		}
 	}
 }

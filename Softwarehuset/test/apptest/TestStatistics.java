@@ -65,18 +65,21 @@ public class TestStatistics {
 	public void testgetStatisticsPL() throws OperationNotAllowedException {
 		List<String> statistics = projectLeader.getStatisticsProject(company.getSpecificProject("Project01"));
 		assertEquals("Project Name: " + company.getSpecificProject("Project01").getName(), statistics.get(0));
-		assertEquals("No. of employees assigned: " + company.getSpecificProject("Project01").getEmployees().size(), statistics.get(1));
-		assertEquals("ID: " + test1.getID() + "Department: " + test1.getDepartment(), statistics.get(2));
-		assertEquals("ID: " + test2.getID() + "Department: " + test2.getDepartment(), statistics.get(3));
-		assertEquals("No. of activities: " + company.getSpecificProject("Project01").getActivities().size(), statistics.get(4));
+		assertEquals("Project Leader ID: " + company.getSpecificProject("Project01").getProjectLeader().getID() +
+				" Department " + company.getSpecificProject("Project01").getProjectLeader().getDepartment(), 
+				statistics.get(1));
+		assertEquals("No. of employees assigned: " + company.getSpecificProject("Project01").getEmployees().size(), statistics.get(2));
+		assertEquals("ID: " + test1.getID() + " Department: " + test1.getDepartment(), statistics.get(3));
+		assertEquals("ID: " + test2.getID() + " Department: " + test2.getDepartment(), statistics.get(4));
+		assertEquals("No. of activities: " + company.getSpecificProject("Project01").getActivities().size(), statistics.get(5));
 		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(0).getName() +
-				"No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(0).getEmployees().size(),
-				statistics.get(5));
-		assertEquals("ID: " + test1.getID() + "Department: " + test1.getDepartment(), statistics.get(6));
+				" No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(0).getEmployees().size(),
+				statistics.get(6));
+		assertEquals("ID: " + test1.getID() + " Department: " + test1.getDepartment(), statistics.get(7));
 		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(1).getName() +
-				"No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(1).getEmployees().size(),
-				statistics.get(7));
-		assertEquals("ID: " + test2.getID() + "Department: " + test2.getDepartment(), statistics.get(8));
+				" No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(1).getEmployees().size(),
+				statistics.get(8));
+		assertEquals("ID: " + test2.getID() + " Department: " + test2.getDepartment(), statistics.get(9));
 	}
 	
 	@Test

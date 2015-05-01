@@ -5,9 +5,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class Employee {
 	private Company company;
@@ -126,16 +123,14 @@ public class Employee {
 	public List<String> getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
 		List<String> statistics = new ArrayList<String>();
 		if(company.getLoggedInEmployee() == this && specificProject.getProjectLeader() == this) {
-			statistics.add("Project Name: " + specificProject.getName());
-			statistics.add("No. of employees assigned: " + specificProject.getEmployees().size());
-			assignedEmployeesInProject(specificProject, statistics);
-			activitiesInProject(specificProject, statistics);
+			specificProject.getProjectDetails(statistics);
 		} else {
 			throw new OperationNotAllowedException("Get statistics is not allowed if not project leader.", 
 					"Get statistics");
 		}
 		return statistics;
 	}
+	
 	public void writeReport(Project project) throws OperationNotAllowedException{
 		if(project==null){
 			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
@@ -150,28 +145,7 @@ public class Employee {
 		Report report = null;
 		project.addReport(report);
 	}
-	private void assignedEmployeesInProject(Project specificProject,
-			List<String> statistics) {
-		for(Employee e : specificProject.getEmployees()) {
-			statistics.add("ID: " + e.getID() + "Department: " + e.getDepartment());
-		}
-	}
-
-	private void activitiesInProject(Project specificProject,
-			List<String> statistics) {
-		statistics.add("No. of activities: "+ specificProject.getActivities().size());
-		for(Activity a : specificProject.getActivities()) {
-			statistics.add("Activity name: " + a.getName() + "No. of employees: " + a.getEmployees().size());
-			assignedEmployeesInActivity(statistics, a);
-		}
-	}
-
-	private void assignedEmployeesInActivity(List<String> statistics, Activity a) {
-		for(Employee e : a.getEmployees()) {
-			statistics.add("ID: " + e.getID() + "Department: " + e.getDepartment());
-		}
-	}
-
+	
 	public void registerVacationTime(int year, int month, int date, int year2, int month2, int date2) throws OperationNotAllowedException {
 		checkForInvalidDate(year, month-1, date, year2, month2-1, date2);
 		Activity vacation = createPersonalActivity(year, month-1, date, year2, month2-1, date2, "Vacation");
