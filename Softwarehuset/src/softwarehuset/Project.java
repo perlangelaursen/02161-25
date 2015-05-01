@@ -126,4 +126,13 @@ public class Project {
 			a.assignedEmployeesInActivity(statistics);
 		}
 	}
+	public Report getSpecificReport(int i){
+		return reports.get(i);
+	}
+	public Report getSpecificReportByName(String name) {
+		for(Report r : reports) {
+			if(r.getName().equals(name)) return r;
+		}
+		return null;
+	}
 }

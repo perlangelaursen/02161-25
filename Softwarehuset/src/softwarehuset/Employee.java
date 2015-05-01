@@ -130,19 +130,18 @@ public class Employee {
 		}
 		return statistics;
 	}
-	
-	public void writeReport(Project project) throws OperationNotAllowedException{
+	public void writeReport(Project project, String name, GregorianCalendar date) throws OperationNotAllowedException{
 		if(project==null){
-			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+			throw new OperationNotAllowedException("Unable to write report, project does not exist", "Write report");
 		}
 		if(company.getLoggedInEmployee() != this){
-			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
+			throw new OperationNotAllowedException("Project leader is not logged in", "Write report");
 		}
 		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
-			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
+			throw new OperationNotAllowedException("Unable to write report, not assigned project leader", "Write report");
 		}
 		//Insert code to make report
-		Report report = null;
+		Report report = new Report(project, name, date);
 		project.addReport(report);
 	}
 	
