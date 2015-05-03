@@ -10,6 +10,7 @@ public class Project {
 	private Employee projectLeader;
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
 	private List<Activity> activities = new ArrayList<Activity>();
+	private List<Report> reports = new ArrayList<Report>();
 	
 	public Project(String name) {
 		this.name = name;
@@ -85,8 +86,52 @@ public class Project {
 
 	public Activity getSpecificActivityByName(String activityName) throws OperationNotAllowedException {
 		for(Activity a : activities){
-			if(a.getName()==activityName);
+			if(a.getName().equals(activityName));
 			return a;
+		}
+		return null;
+	}
+	
+	public Report getReport (int i){
+		return reports.get(i);
+	}
+	
+	public List<Report> getAllReports(){
+		return reports;
+	}
+	public void addReport(Report report){
+		reports.add(report);
+	}
+
+	public void getProjectDetails(List<String> statistics) {
+		statistics.add("Project Name: " + name);
+		statistics.add("Project Leader ID: " + projectLeader.getID() +
+				" Department " + projectLeader.getDepartment());
+		statistics.add("No. of employees assigned: " + assignedEmployees.size());
+		assignedEmployeesInProject(statistics);
+		activitiesInProject(statistics);
+	}
+
+	public void assignedEmployeesInProject(List<String> statistics) {
+		for(Employee e : assignedEmployees) {
+			statistics.add("ID: " + e.getID() + " Department: " + e.getDepartment());
+		}
+	}
+
+	public void activitiesInProject(List<String> statistics) {
+		statistics.add("No. of activities: "+ activities.size());
+		for(Activity a : activities) {
+			statistics.add("Activity name: " + a.getName() + 
+					" No. of employees: " + a.getEmployees().size());
+			a.assignedEmployeesInActivity(statistics);
+		}
+	}
+	public Report getSpecificReport(int i){
+		return reports.get(i);
+	}
+	public Report getSpecificReportByName(String name) {
+		for(Report r : reports) {
+			if(r.getName().equals(name)) return r;
 		}
 		return null;
 	}

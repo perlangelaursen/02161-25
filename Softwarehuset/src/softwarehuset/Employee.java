@@ -5,9 +5,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class Employee {
 	private Company company;
@@ -84,6 +81,9 @@ public class Employee {
 		if(time<0){
 			throw new OperationNotAllowedException("Invalid time", "Register spent time");
 		}
+		if(!activities.containsKey(activity)){
+			throw new OperationNotAllowedException("Employee is not assigned to the chosen activity", "Register spent time");
+		}
 			activities.put(activity, time);
 			activity.setTime(this, time);
 	}
@@ -92,29 +92,30 @@ public class Employee {
 		return department;
 	}
 	public int viewProgress(Project project, Activity activity) throws OperationNotAllowedException {
+		if(project==null){
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		}
 		if(company.getLoggedInEmployee() != this){
 			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
 		}
-		if (!id.equals(project.getProjectLeader().getID())){
-			throw new OperationNotAllowedException("Viewing progress is not allowed if not project leader","View Progress");
+		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
+			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
 		}
-				
-		if(!company.getProjects().contains(project)){
-			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		if(activity==null) {
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant activity", "View Progress");
 		}
-		//Add if activity not in project
 		return activity.getAllSpentTime();
 	}
 	
 	public int viewProgress(Project project) throws OperationNotAllowedException {
-		if(company.getLoggedInEmployee() != this){
+		if(project==null){
+			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
+		}
+		if(company.getLoggedInEmployee() != this) {
 			throw new OperationNotAllowedException("Project leader is not logged in", "View Progress");
 		}
-		if(!id.equals(project.getProjectLeader().getID())){
+		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
 			throw new OperationNotAllowedException("Project Leader is not assigned to the chosen project", "View Progress");
-		}
-		if(company.getSpecificProject(project.getName())==null){
-			throw new OperationNotAllowedException("Unable to view progress, nonexistant project", "View Progress");
 		}
 		return project.getSpentTime();
 	}
@@ -122,39 +123,28 @@ public class Employee {
 	public List<String> getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
 		List<String> statistics = new ArrayList<String>();
 		if(company.getLoggedInEmployee() == this && specificProject.getProjectLeader() == this) {
-			statistics.add("Project Name: " + specificProject.getName());
-			statistics.add("No. of employees assigned: " + specificProject.getEmployees().size());
-			assignedEmployeesInProject(specificProject, statistics);
-			activitiesInProject(specificProject, statistics);
+			specificProject.getProjectDetails(statistics);
 		} else {
 			throw new OperationNotAllowedException("Get statistics is not allowed if not project leader.", 
 					"Get statistics");
 		}
 		return statistics;
 	}
-
-	private void assignedEmployeesInProject(Project specificProject,
-			List<String> statistics) {
-		for(Employee e : specificProject.getEmployees()) {
-			statistics.add("ID: " + e.getID() + "Department: " + e.getDepartment());
+	public void writeReport(Project project, String name, GregorianCalendar date) throws OperationNotAllowedException{
+		if(project==null){
+			throw new OperationNotAllowedException("Unable to write report, project does not exist", "Write report");
 		}
-	}
-
-	private void activitiesInProject(Project specificProject,
-			List<String> statistics) {
-		statistics.add("No. of activities: "+ specificProject.getActivities().size());
-		for(Activity a : specificProject.getActivities()) {
-			statistics.add("Activity name: " + a.getName() + "No. of employees: " + a.getEmployees().size());
-			assignedEmployeesInActivity(statistics, a);
+		if(company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Project leader is not logged in", "Write report");
 		}
-	}
-
-	private void assignedEmployeesInActivity(List<String> statistics, Activity a) {
-		for(Employee e : a.getEmployees()) {
-			statistics.add("ID: " + e.getID() + "Department: " + e.getDepartment());
+		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
+			throw new OperationNotAllowedException("Unable to write report, not assigned project leader", "Write report");
 		}
+		//Insert code to make report
+		Report report = new Report(project, name, date);
+		project.addReport(report);
 	}
-
+	
 	public void registerVacationTime(int year, int month, int date, int year2, int month2, int date2) throws OperationNotAllowedException {
 		checkForInvalidDate(year, month-1, date, year2, month2-1, date2);
 		Activity vacation = createPersonalActivity(year, month-1, date, year2, month2-1, date2, "Vacation");
@@ -279,5 +269,52 @@ public class Employee {
 			}
 		}
 		return true;
+	}
+
+	public void needForAssistanceWithActivity(Employee selected,
+			Activity specificActivity) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			specificActivity.assignAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", "Need For Assistance");
+		}
+		
+	}
+
+	public void removeSpecificAssistingEmployee(Employee selected, Activity a)
+	throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee() == this) {
+			a.removeAssistingEmployee(selected);
+		} else {
+			throw new OperationNotAllowedException("User not logged in", 
+					"Remove Assisting Employee from activity");
+		}
+	}
+
+	public int getSpentTime(String activityName) throws OperationNotAllowedException {
+		int time = -1;
+		for(Activity a: activities.keySet()){
+			if (a.getName().equals(activityName)){
+				time = activities.get(a);
+			}
+		}
+		if(time == -1){
+			throw new OperationNotAllowedException("Employee is not assigned to the activity", 
+					"See registered spent time");
+		}
+		return time;
+		}
+
+	public Report getSpecificReport(Project project, int num) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee()!= this){
+			throw new OperationNotAllowedException("Unable to read report, not assigned project leader",	"Read report");
+		}
+		return company.getSpecificProject(project.getName()).getSpecificReport(num);
+	}
+	public Report getSpecificReportByName(Project project, String name) throws OperationNotAllowedException {
+		if(company.getLoggedInEmployee()!= this){
+			throw new OperationNotAllowedException("Unable to read report, not assigned project leader", "Read report");
+		}
+		return company.getSpecificProject(project.getName()).getSpecificReportByName(name);
 	}
 }

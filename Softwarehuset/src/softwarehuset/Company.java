@@ -111,4 +111,8 @@ public class Company {
 		
 	}
 
+	public void employeeLogout() {
+		executiveLoggedIn = false;
+		loggedInEmployee = null;
+	}
 }

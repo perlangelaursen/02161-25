@@ -1,7 +1,6 @@
 package softwarehuset;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,7 @@ public class Activity {
 	private Project project;
 	private HashMap<Employee, Integer> employees = new HashMap<>();
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
+	private List<Employee> assistingEmployees = new ArrayList<Employee>();
 
 	public Activity(GregorianCalendar start, GregorianCalendar end, String type) {
 		this.start = start;
@@ -21,7 +21,7 @@ public class Activity {
 	
 	public Activity(String activityName, GregorianCalendar start, GregorianCalendar end, Project project) {
 		this(start, end, "Work");
-		this.activityName = activityName;
+		this.activityName = project.getName()+"-"+activityName;
 		this.project = project;
 	}
 
@@ -89,5 +89,34 @@ public class Activity {
 
 	public void setStart(GregorianCalendar newDate) {
 		start = newDate;		
+	}
+
+	public void assignAssistingEmployee(Employee selected) {
+		assistingEmployees.add(selected);
+	}
+
+	public List<Employee> getAssistingEmployees() {
+		// TODO Auto-generated method stub
+		return assistingEmployees;
+	}
+
+	public Employee getSpecificAssitingEmployee(Employee selected) {
+		for(Employee e: assistingEmployees) {
+			if(e.getID().equals(selected.getID())) {
+				return e;
+			}
+		}
+		return null;
+	}
+
+	public void removeAssistingEmployee(Employee selected) {
+		assistingEmployees.remove(selected);
+		
+	}
+
+	public void assignedEmployeesInActivity(List<String> statistics) {
+		for(Employee e : assignedEmployees) {
+			statistics.add("ID: " + e.getID() + " Department: " + e.getDepartment());
+		}
 	}
 }
