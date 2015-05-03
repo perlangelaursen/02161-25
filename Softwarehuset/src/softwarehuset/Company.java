@@ -100,15 +100,12 @@ public class Company {
 	}
 
 	public List<Employee> getAvailableEmployees(GregorianCalendar d1, GregorianCalendar d2) {
-		
 		for (Employee e : employees) {
 			if (e.isAvailable(d1,d2)) {
 				availableEmployees.add(e);
 			}
 		}
-		
 		return availableEmployees;
-		
 	}
 
 	public void employeeLogout() {

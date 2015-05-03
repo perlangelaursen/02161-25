@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Employee {
 	private Company company;
@@ -316,5 +317,9 @@ public class Employee {
 			throw new OperationNotAllowedException("Unable to read report, not assigned project leader", "Read report");
 		}
 		return company.getSpecificProject(project.getName()).getSpecificReportByName(name);
+	}
+	
+	public Set<Activity> getActivities() {
+		return activities.keySet();
 	}
 }

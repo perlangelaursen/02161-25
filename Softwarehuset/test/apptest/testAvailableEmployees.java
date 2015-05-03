@@ -12,6 +12,7 @@ import softwarehuset.Address;
 import softwarehuset.Company;
 import softwarehuset.Employee;
 import softwarehuset.Executive;
+import softwarehuset.OperationNotAllowedException;
 import softwarehuset.Project;
 
 public class testAvailableEmployees {
@@ -74,8 +75,8 @@ public class testAvailableEmployees {
 		
 	}
 	
+	@Test
 	public void testAvailableEmployeesThreePersons() throws Exception {
-		
 		ex.assignProjectLeader(em, p1);
 		assertEquals(p1.getProjectLeader(), em);
 		
@@ -102,30 +103,22 @@ public class testAvailableEmployees {
 		ex.assignProjectLeader(em, p1);
 		assertEquals(p1.getProjectLeader(), em);
 		
-		d1.set(2000, 3, 1, 0, 0, 0);
-		d2.set(2000, 4, 1, 0, 0, 0);
-		d3.set(2000, 5, 1, 0, 0, 0);
-		d4.set(2000, 6, 1, 0, 0, 0);
+		d1.set(2000, 3, 1);
+		d2.set(2000, 4, 1);
+		d3.set(2000, 5, 1);
+		d4.set(2000, 6, 1);
 		
-		em.createActivity(p1, "activity1", d1, d2);
+		//em.createActivity(p1, "activity1", d1, d2);
 		em.createActivity(p1, "activity2", d3, d4);
 		em.assignEmployeeActivity(em2, p1.getSpecificActivityByName("activity1"));
-		em.assignEmployeeActivity(em2, p1.getSpecificActivityByName("activity2"));
+		assertTrue(em2.getActivities().contains(p1.getSpecificActivityByName("activity1")));
+//		em.assignEmployeeActivity(em2, p1.getSpecificActivityByName("activity2"));
+//		assertTrue(em2.getActivities().contains(p1.getSpecificActivityByName("activity2")));
+//		
+		d5.set(2000, 5, 5);
+		d6.set(2000, 5, 20);
 		
-		d5.set(2000, 5, 5, 0, 0, 0);
-		d6.set(2000, 5, 20, 0, 0, 0);
-		//isOplaping fucker
 		assertFalse(com.getAvailableEmployees(d5, d6).contains(em2));
-		
-	}
-	
-	@Test
-	public void testAvaiableEmployeesNoProject() throws Exception {
-		
-	}
-	
-	@Test
-	public void testAvaiableEmployeesWithProject() throws Exception {
 		
 	}
 

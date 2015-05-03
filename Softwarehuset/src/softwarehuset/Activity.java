@@ -96,7 +96,6 @@ public class Activity {
 	}
 
 	public List<Employee> getAssistingEmployees() {
-		// TODO Auto-generated method stub
 		return assistingEmployees;
 	}
 
