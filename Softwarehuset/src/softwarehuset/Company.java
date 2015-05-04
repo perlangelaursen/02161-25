@@ -13,6 +13,7 @@ public class Company {
 	private Employee loggedInEmployee;
 	private List<Project> projects = new ArrayList<>();
 	private List<Employee> employees = new ArrayList<>();
+	private List<Employee> availableEmployees = new ArrayList<>();
 	private DateServer dateServer;
 
 	public Company(String name, Address address) {
@@ -96,6 +97,15 @@ public class Company {
 	
 	public void setDateServer(DateServer dateServer) {
 		this.dateServer = dateServer;
+	}
+
+	public List<Employee> getAvailableEmployees(GregorianCalendar d1, GregorianCalendar d2) {
+		for (Employee e : employees) {
+			if (e.isAvailable(d1,d2)) {
+				availableEmployees.add(e);
+			}
+		}
+		return availableEmployees;
 	}
 
 	public void employeeLogout() {

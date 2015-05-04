@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Employee {
 	private Company company;
@@ -261,6 +262,15 @@ public class Employee {
 		return time;
 	}
 
+	public boolean isAvailable(GregorianCalendar start, GregorianCalendar end) {
+		Activity act = new Activity(start, end, "work");
+		for (Activity a : activities.keySet()) {
+			if (a.isOverlapping(act)) {
+				return false; 
+			}
+		}
+		return true;
+	}
 
 	public void needForAssistanceWithActivity(Employee selected,
 			Activity specificActivity) throws OperationNotAllowedException {
@@ -307,5 +317,9 @@ public class Employee {
 			throw new OperationNotAllowedException("Unable to read report, not assigned project leader", "Read report");
 		}
 		return company.getSpecificProject(project.getName()).getSpecificReportByName(name);
+	}
+	
+	public Set<Activity> getActivities() {
+		return activities.keySet();
 	}
 }
