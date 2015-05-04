@@ -67,20 +67,11 @@ public class TestEditData {
 		}
 	}
 	@Test
-	public void testEditDataNonexistantProject() {
-		try {
-			projectLeader.editActivityDescription(company.getSpecificProject("Project02").getSpecificActivity(0), "description");
-		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to change activity description, project does not exist", e.getMessage());
-			assertEquals("Edit activity description", e.getOperation());
-		}
-	}
-	@Test
 	public void testEditDataNonexistantActivity() {
 		try {
 			projectLeader.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivityByName("Activity02"), "description");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to change activity description, activity does not exist", e.getMessage());
+			assertEquals("Unable to edit activity description, activity does not exist", e.getMessage());
 			assertEquals("Edit activity description", e.getOperation());
 		}
 	}
@@ -89,16 +80,16 @@ public class TestEditData {
 		try {
 			projectLeader.editActivityStart(company.getSpecificProject("Project01").getSpecificActivity(0), new GregorianCalendar(2015, Calendar.JANUARY, 35));
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to change activity end date, invalid date", e.getMessage());
+			assertEquals("Unable to edit activity end date, invalid date", e.getMessage());
 			assertEquals("Edit activity start date", e.getOperation());
 		}
 	}
 	@Test
 	public void testEditDataInvalidDescription() {
 		try {
-			test1.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivity(0), "");
+			projectLeader.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivity(0), "");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to change activity description, description cannot be blank", e.getMessage());
+			assertEquals("Unable to edit activity description, description cannot be blank", e.getMessage());
 			assertEquals("Edit activity description", e.getOperation());
 		}
 	}

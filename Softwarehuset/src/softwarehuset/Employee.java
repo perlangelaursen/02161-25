@@ -344,19 +344,50 @@ public class Employee {
 		return activities.keySet();
 	}
 
-	public void editActivityStart(Activity activity, GregorianCalendar start) {
-		//Add conditions
+	public void editActivityStart(Activity activity, GregorianCalendar start) throws OperationNotAllowedException {
+		
+		if(activity==null){
+			throw new OperationNotAllowedException("Unable to edit activity start date, activity does not exist", "Edit activity start date");
+		}
+		if(activity.getProject()==null){
+			throw new OperationNotAllowedException("Unable to edit activity start date, project does not exist", "Edit activity start date");
+		}
+		if(activity.getProject().getProjectLeader()==null || !activity.getProject().getEmployees().contains(this)){
+			throw new OperationNotAllowedException("Unable to edit activity start date, not assigned to project", "Edit activity start date");
+		}
+		//Extra conditions
 		activity.setStart(start);
 	}
 
-	public void editActivityEnd(Activity activity, GregorianCalendar end) {
-		//Add conditions
+	public void editActivityEnd(Activity activity, GregorianCalendar end) throws OperationNotAllowedException {
+		if(activity==null){
+			throw new OperationNotAllowedException("Unable to edit activity end date, activity does not exist", "Edit activity end date");
+		}
+		if(activity.getProject()==null){
+			throw new OperationNotAllowedException("Unable to edit activity end date, project does not exist", "Edit activity end date");
+		}
+		if(activity.getProject().getProjectLeader()==null || !activity.getProject().getEmployees().contains(this)){
+			throw new OperationNotAllowedException("Unable to edit activity end date, not assigned to project", "Edit activity end date");
+		}
+		//Extra conditions
 		activity.setEnd(end);
 
 	}
 
-	public void editActivityDescription(Activity activity, String description) {
-		//Add conditions
+	public void editActivityDescription(Activity activity, String description) throws OperationNotAllowedException {
+		if(activity==null){
+			throw new OperationNotAllowedException("Unable to edit activity description, activity does not exist", "Edit activity description");
+		}
+		if(activity.getProject()==null){
+			throw new OperationNotAllowedException("Unable to edit activity description, project does not exist", "Edit activity description");
+		}
+		if(activity.getProject().getProjectLeader()==null || !activity.getProject().getEmployees().contains(this)){
+			throw new OperationNotAllowedException("Unable to edit activity description, not assigned to project", "Edit activity description");
+		}
+		if(description.length()<1) {
+			throw new OperationNotAllowedException("Unable to edit activity description, description cannot be blank", "Edit activity description");
+		}
+		//Extra conditions
 		activity.setDescription(description);
 	}
 }
