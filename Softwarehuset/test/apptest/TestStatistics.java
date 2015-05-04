@@ -83,6 +83,19 @@ public class TestStatistics {
 	}
 	
 	@Test
+	public void testgetStatisticsNotLoggedIn() throws OperationNotAllowedException {
+		company.employeeLogout();
+		
+		try {
+			projectLeader.getStatisticsProject(company.getSpecificProject("Project01"));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Get statistics is not allowed if not logged in.",e.getMessage());
+			assertEquals("Get statistics",e.getOperation());
+		}
+	}
+	
+	@Test
 	public void testgetStatisticsNotPL() throws OperationNotAllowedException {
 		Employee test3 = company.createEmployee("HAMB", "password", "RandD");
 		company.employeeLogin(test3.getID(), "password");

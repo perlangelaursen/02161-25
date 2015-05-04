@@ -104,9 +104,6 @@ public class Project {
 	public Activity getSpecificActivityByName(String activityName) throws OperationNotAllowedException {
 		for(Activity a : activities){
 			if(a.getName().equals(activityName)) return a;
-			if(a.getName().equals(activityName)) {
-				return a;
-			}
 		}
 		return null;
 	}

@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Activity {
-	private String activityName, type;
+	private String activityName, type, description;
 	private GregorianCalendar start, end;
 	private Project project;
 	private HashMap<Employee, Integer> employees = new HashMap<>();
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
 	private List<Employee> assistingEmployees = new ArrayList<Employee>();
-
+	
 	public Activity(GregorianCalendar start, GregorianCalendar end, String type) {
 		this.start = start;
 		this.end = end;
@@ -117,5 +117,9 @@ public class Activity {
 		for(Employee e : assignedEmployees) {
 			statistics.add("ID: " + e.getID() + " Department: " + e.getDepartment());
 		}
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
