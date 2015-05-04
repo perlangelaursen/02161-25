@@ -17,7 +17,7 @@ import softwarehuset.OperationNotAllowedException;
 import softwarehuset.Project;
 
 /**
- * @author Gruppe 25
+ * @author Per Lange Laursen - s144456
  *
  */
 public class WRTcmdinterface {
@@ -37,7 +37,6 @@ public class WRTcmdinterface {
 	}
 	
 	private void executiveScreen() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.println("Executive logged in");
 		System.out.println("Executive options");
 		System.out.println("- Add Employee (Company Database)");
@@ -67,7 +66,6 @@ public class WRTcmdinterface {
 	}
 	
 	private void assignProjectLeader() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.print("Enter Employee ID: ");
 		String id = input.readLine();
 		Employee projectLeader = company.getEmployee(id);
@@ -86,7 +84,6 @@ public class WRTcmdinterface {
 	}
 
 	private void createProject() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.print("Enter project name: ");
 		String projectName = input.readLine();
 		
@@ -118,7 +115,6 @@ public class WRTcmdinterface {
 	}
 
 	private void addEmployee() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.print("Enter Employee ID: ");
 		String id = input.readLine();
 		
@@ -156,7 +152,6 @@ public class WRTcmdinterface {
 	}
 
 	private void employeeScreen() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.println("User: " + company.getLoggedInEmployee().getID() 
 				+ company.getLoggedInEmployee().getDepartment());
 		System.out.println("Employee options");
@@ -191,7 +186,7 @@ public class WRTcmdinterface {
 			registerVSC();
 		}
 		if(userChoise.equals("See registered spent time")) {
-			
+			registeredSpentTime();
 		}
 		if(userChoise.equals("Assign employee to project")) {
 			assignEmployeeProject();
@@ -209,7 +204,7 @@ public class WRTcmdinterface {
 			relieveEmployeeProject();
 		}
 		if(userChoise.equals("See available employees")) {
-			
+			seeAvailableEmployees();
 		}
 		if(userChoise.equals("Reports on project meetings")) {
 			
@@ -220,8 +215,51 @@ public class WRTcmdinterface {
 		}
 	}
 
-	private void removeAssistingColleague() throws IOException, OperationNotAllowedException {
+	private void seeAvailableEmployees() throws IOException, OperationNotAllowedException {
 		// TODO Auto-generated method stub
+		System.out.print("Enter Period Start Date: ");
+		int startDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period Start Month: ");
+		int startMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period Start Year: ");
+		int startYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDate);
+		
+		System.out.print("Enter Period End Date: ");
+		int endDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period End Month: ");
+		int endMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period End Year: ");
+		int endYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDate);
+		
+		List<Employee> employees = company.getAvailableEmployees(start, end);
+		
+		System.out.println("Available Employees with period:" + startDate + "/"+ startMonth
+				+ "/" + startYear + " " + endDate + "/" + endMonth + "/" + endYear);
+		for(Employee e : employees) {
+			System.out.println("ID: " + e.getID() + " Department: " + e.getDepartment());
+		}
+		
+		employeeScreen();
+	}
+
+	private void registeredSpentTime() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.println(activity + " " + company.getLoggedInEmployee().getSpentTime(activity));
+		
+		employeeScreen();
+	}
+
+	private void removeAssistingColleague() throws IOException, OperationNotAllowedException {
 		System.out.print("Enter Project ID: ");
 		String project = input.readLine();
 		
