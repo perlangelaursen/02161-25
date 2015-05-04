@@ -67,27 +67,83 @@ public class TestAssignEmployeePA {
 	}
 	
 	@Test
-	public void testNotProjectLeader() throws OperationNotAllowedException {
+	public void testNotLoggedIn() throws OperationNotAllowedException {
 		Employee test2 = company.createEmployee("HFBJ", "password", "Department1");
 		try {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Assign Employee is not allowed if not project leader.",e.getMessage());
+			assertEquals("Assign Employee is not allowed if not logged in",e.getMessage());
 			assertEquals("Assign Employee",e.getOperation());
 		}
 	}
 	
 	@Test
+	public void testNotProjectLeader() throws OperationNotAllowedException {
+		Employee test2 = company.createEmployee("KKKK", "password", "Department1");
+		company.employeeLogin("KKKK", "password");
+		try {
+			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Assign Employee is not allowed if not project leader",e.getMessage());
+			assertEquals("Assign Employee",e.getOperation());
+		}
+	}
+	
+	//Assign to activity
+	@Test
 	public void testAssignEmployeeActivity() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 25);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 25);
 		
 		company.employeeLogin(projectLeader.getID(), "password");
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		projectLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
+	}
+	
+	@Test
+	public void testNotLoggedInActivity() throws OperationNotAllowedException {
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 25);
+		
+		company.employeeLogin(projectLeader.getID(), "password");
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		
+		company.employeeLogout();
+		
+		try {
+			projectLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Assign Employee is not allowed if not logged in",e.getMessage());
+			assertEquals("Assign Employee",e.getOperation());
+		}
+	}
+	
+	@Test
+	public void testNotProjectLeaderActivity() throws OperationNotAllowedException {
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 25);
+		
+		company.employeeLogin(projectLeader.getID(), "password");
+		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		
+		Employee test2 = company.createEmployee("KKKK", "password", "Department1");
+		company.employeeLogin("KKKK", "password");
+		try {
+			test2.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Assign Employee is not allowed if not project leader",e.getMessage());
+			assertEquals("Assign Employee",e.getOperation());
+		}
 	}
 }
