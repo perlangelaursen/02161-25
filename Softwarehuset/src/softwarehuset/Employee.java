@@ -337,4 +337,20 @@ public class Employee {
 	public Set<Activity> getActivities() {
 		return activities.keySet();
 	}
+
+	public void editActivityStart(Activity activity, GregorianCalendar start) {
+		//Add conditions
+		activity.setStart(start);
+	}
+
+	public void editActivityEnd(Activity activity, GregorianCalendar end) {
+		//Add conditions
+		activity.setEnd(end);
+
+	}
+
+	public void editActivityDescription(Activity activity, String description) {
+		//Add conditions
+		activity.setDescription(description);
+	}
 }
