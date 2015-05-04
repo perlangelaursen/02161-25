@@ -161,6 +161,7 @@ public class WRTcmdinterface {
 				+ company.getLoggedInEmployee().getDepartment());
 		System.out.println("Employee options");
 		System.out.println("- Ask colleague for assistance");
+		System.out.println("- Remove assisting colleague");
 		System.out.println("- Register spent time");
 		System.out.println("- Register vacation, sick-days and course attendance");
 		System.out.println("- See registered spent time");
@@ -181,7 +182,10 @@ public class WRTcmdinterface {
 			registerSpentTime();
 		}
 		if(userChoise.equals("Ask colleague for assistance")) {
-			
+			askColleagueForAssistance();
+		}
+		if(userChoise.equals("Remove assisting colleague")) {
+			removeAssistingColleague();
 		}
 		if(userChoise.equals("Register vacation, sick-days and course attendance")) {
 			registerVSC();
@@ -214,6 +218,47 @@ public class WRTcmdinterface {
 			company.employeeLogout();
 			initialScreen();
 		}
+	}
+
+	private void removeAssistingColleague() throws IOException, OperationNotAllowedException {
+		// TODO Auto-generated method stub
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee em = company.getEmployee(id);
+		
+		if(em != null) {
+			company.getLoggedInEmployee().removeSpecificAssistingEmployee(em, company.getSpecificProject(project)
+					.getSpecificActivityByName(activity));
+			System.out.println("Employee added to assist.");
+		}
+		
+		employeeScreen();
+	}
+
+	private void askColleagueForAssistance() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee em = company.getEmployee(id);
+		
+		if(em != null) {
+			company.getLoggedInEmployee().needForAssistanceWithActivity(em, company.getSpecificProject(project)
+					.getSpecificActivityByName(activity));
+			System.out.println("Employee added to assist.");
+		}
+		
+		employeeScreen();
 	}
 
 	private void registerVSC() throws IOException, OperationNotAllowedException {
