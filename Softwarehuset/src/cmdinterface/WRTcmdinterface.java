@@ -1,6 +1,3 @@
-/**
- * 
- */
 package cmdinterface;
 
 import java.io.BufferedReader;
@@ -24,8 +21,10 @@ public class WRTcmdinterface {
 
 	/**
 	 * @param args
-	 * @throws IOException 
+	 * @throws IOException
+	 * @throws OperationNotAllowedException 
 	 */
+	
 	Address address = new Address("Kongens Lyngby", "Anker Engelunds Vej");
 	Company company = new Company("Softwarehuset A/S", address);
 	Executive executive = new Executive("ex01", "Executive", company, "password");

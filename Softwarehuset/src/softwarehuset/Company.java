@@ -32,7 +32,7 @@ public class Company {
 	}
 
 	public void executiveLogin(String password) {
-		if (password == executive.getPassword()) {
+		if (password.equals(executive.getPassword())) {
 			executiveLoggedIn = true;
 			executive.setLoginStatus(executiveLoggedIn);
 		}
