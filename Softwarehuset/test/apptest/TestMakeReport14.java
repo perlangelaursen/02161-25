@@ -14,7 +14,7 @@ import softwarehuset.Employee;
 import softwarehuset.Executive;
 import softwarehuset.OperationNotAllowedException;
 
-public class TestMakeReport14 {
+public class TestMakeReport14 { 
 	Company company;
 	Employee projectLeader;
 	Employee employee;
@@ -37,8 +37,8 @@ public class TestMakeReport14 {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02", start, end);
 		//Create employee and assign as project leader
-		projectLeader = company.createEmployee("Test", "password", "RandD");
-		employee = company.createEmployee("Test01", "password01", "RandD");
+		projectLeader = company.createEmployee("KHBJ", "password", "RandD");
+		employee = company.createEmployee("JSHD", "password01", "RandD");
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		company.employeeLogin(projectLeader.getID(), "password");
 		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
@@ -89,7 +89,7 @@ public class TestMakeReport14 {
 	@Test
 	public void testReadReportNonexistantReport(){
 		try{
-			//Undgå at null opfanges som gyldigt input
+			//Undgï¿½ at null opfanges som gyldigt input
 			projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
 			company.getSpecificProject("Project01").getSpecificReportByName("Wrong name");
 			fail("OperationNotAllowedException expected");

@@ -59,7 +59,13 @@ public class Company {
 		projects.add(p);
 		
 	}
-	public Employee createEmployee(String id, String password, String department) {
+	public Employee createEmployee(String id, String password, String department) throws OperationNotAllowedException {
+		if (id.length() != 4) {
+			throw new OperationNotAllowedException("Employee ID must be the length of 4 letters","Create employee");
+		}
+		if (id.matches(".*[0-9].*")) {
+			throw new OperationNotAllowedException("Employee ID must not contain any numbers","Create employee");
+		}
 		Employee e = new Employee(id, password, this, department);
 		employees.add(e);
 		return e;

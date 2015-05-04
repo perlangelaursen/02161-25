@@ -43,10 +43,10 @@ public class TestCreateActivity {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = company.createEmployee("ProjectLeader", "password", "RanD");
+		projectLeader = company.createEmployee("BAMS", "password", "RanD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = company.createEmployee("Employee1", "password", "RanD");
+		test1 = company.createEmployee("LAMP", "password", "RanD");
 	}
 	//Successfully created activity
 	@Test
@@ -57,7 +57,7 @@ public class TestCreateActivity {
 		end.set(2015, Calendar.JANUARY, 25);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
-		company.employeeLogin("ProjectLeader", "password");
+		company.employeeLogin("BAMS", "password");
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		assertEquals(1, company.getSpecificProject("Project01").getActivities().size());
 	}
@@ -72,8 +72,8 @@ public class TestCreateActivity {
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		
-		Employee test2 = company.createEmployee("Test2", "password", "RanD");
-		company.employeeLogin("Test2", "password");
+		Employee test2 = company.createEmployee("JANU", "password", "RanD");
+		company.employeeLogin("JANU", "password");
 		try {
 			test2.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");
@@ -92,7 +92,7 @@ public class TestCreateActivity {
 		end.set(2015, Calendar.JANUARY, 25);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
-		company.employeeLogin("ProjectLeader", "password");
+		company.employeeLogin("BAMS", "password");
 		try {
 			projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");

@@ -40,7 +40,7 @@ public class TestColleaguesAssistance {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.FEBRUARY, 23);
 		company.createProject("Project01", start, end);
-		projectLeader = company.createEmployee("Test", "password", "RandD");
+		projectLeader = company.createEmployee("ABCS", "password", "RandD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 	}
@@ -48,8 +48,8 @@ public class TestColleaguesAssistance {
 	@Test
 	public void testAskColleague() throws OperationNotAllowedException {
 		company.employeeLogin(projectLeader.getID(), "password");
-		Employee asker = company.createEmployee("test1", "password", "RandD");
-		Employee selected = company.createEmployee("test2", "password", "RandD");
+		Employee asker = company.createEmployee("HABC", "password", "RandD");
+		Employee selected = company.createEmployee("SJKO", "password", "RandD");
 		
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
@@ -69,8 +69,8 @@ public class TestColleaguesAssistance {
 	@Test
 	public void testEmployeeNotLoggedIn() throws OperationNotAllowedException {
 		company.employeeLogin(projectLeader.getID(), "password");
-		Employee asker = company.createEmployee("test1", "password", "RandD");
-		Employee selected = company.createEmployee("test2", "password", "RandD");
+		Employee asker = company.createEmployee("HABC", "password", "RandD");
+		Employee selected = company.createEmployee("SJKO", "password", "RandD");
 		
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
@@ -93,8 +93,8 @@ public class TestColleaguesAssistance {
 	@Test
 	public void testRemoveSpecificAssistingEmployee() throws OperationNotAllowedException {
 		company.employeeLogin(projectLeader.getID(), "password");
-		Employee asker = company.createEmployee("test1", "password", "RandD");
-		Employee selected = company.createEmployee("test2", "password", "RandD");
+		Employee asker = company.createEmployee("HABC", "password", "RandD");
+		Employee selected = company.createEmployee("SJKO", "password", "RandD");
 		
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
@@ -119,8 +119,8 @@ public class TestColleaguesAssistance {
 	@Test
 	public void testEmployeeNotLoggedInRemoveSpecificAssistingEmployee() throws OperationNotAllowedException {
 		company.employeeLogin(projectLeader.getID(), "password");
-		Employee asker = company.createEmployee("test1", "password", "RandD");
-		Employee selected = company.createEmployee("test2", "password", "RandD");
+		Employee asker = company.createEmployee("HABC", "password", "RandD");
+		Employee selected = company.createEmployee("SJKO", "password", "RandD");
 		
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();

@@ -42,10 +42,10 @@ public class testProgressProjectActivity {
 		company.createProject("Project02", start, end);
 		
 		//Create employee and assign as project leader
-		projectLeader = company.createEmployee("Test", "password", "RandD");
+		projectLeader = company.createEmployee("HALO", "password", "RandD");
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		
-		test1 = company.createEmployee("Test2", "password", "RandD");
+		test1 = company.createEmployee("MUHA", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
 		
 		
@@ -66,7 +66,7 @@ public class testProgressProjectActivity {
 	@Test
 	public void testProgressNonexistantActivity() throws OperationNotAllowedException {
 		try{
-			projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("ActivityXX")); //Mangler at færdiggøre
+			projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("ActivityXX")); //Mangler at fï¿½rdiggï¿½re
 			fail("OperationNotAllowedException expected");
 	
 		} catch (OperationNotAllowedException e){

@@ -31,10 +31,10 @@ public class testAvailableEmployees {
 		ex = new Executive("name","Department1", com, "password");
 		com.setExecutive(ex);
 		
-		em = com.createEmployee("Anders", "password", "Project Department");
-		em2 = com.createEmployee("Andreas", "password", "Project Department");
-		em3 = com.createEmployee("Allan", "password", "Project Department");
-		em4 = com.createEmployee("Adam", "password", "Project Department");
+		em = com.createEmployee("ANDS", "password", "Project Department");
+		em2 = com.createEmployee("HENR", "password", "Project Department");
+		em3 = com.createEmployee("KLIS", "password", "Project Department");
+		em4 = com.createEmployee("HSNF", "password", "Project Department");
 		
 		d1 = new GregorianCalendar();
 		d2 = new GregorianCalendar();
