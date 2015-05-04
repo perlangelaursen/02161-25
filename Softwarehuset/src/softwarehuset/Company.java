@@ -83,16 +83,7 @@ public class Company {
 		return null;
 	}
 	
-	public Project getSpecificProject(int ID){
-		for (Project p : projects) {
-			if (p.getID() == ID) {
-				return p;
-			}
-		}
-		return null;
-	}
-	
-	public void employeeLogin(String id, String password) {
+	public void employeeLogin(String id, String password) throws OperationNotAllowedException {
 		for(Employee e: employees){
 			if (e.getID().equals(id)){
 				if(e.getPassword().equals(password)){

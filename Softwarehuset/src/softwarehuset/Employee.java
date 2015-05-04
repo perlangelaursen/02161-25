@@ -147,7 +147,6 @@ public class Employee {
 		if(project.getProjectLeader()==null || !id.equals(project.getProjectLeader().getID())){
 			throw new OperationNotAllowedException("Unable to write report, not assigned project leader", "Write report");
 		}
-		//Insert code to make report
 		Report report = new Report(project, name, date);
 		project.addReport(report);
 	}
@@ -324,8 +323,40 @@ public class Employee {
 		}
 		return company.getSpecificProject(project.getName()).getSpecificReportByName(name);
 	}
+
+	public void editReport(Report report, String content) throws OperationNotAllowedException {
+		if(report==null){
+			throw new OperationNotAllowedException("Unable to edit report, report does not exist", "Edit report");
+		}
+		if(report.getProject()==null){
+			throw new OperationNotAllowedException("Unable to edit report, project does not exist", "Edit report");
+		}
+		if(report.getProject().getProjectLeader()==null || !id.equals(report.getProject().getProjectLeader().getID())){
+			throw new OperationNotAllowedException("Unable to edit report, not assigned project leader", "Edit report");
+		}
+		if(company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Project leader is not logged in", "Edit report");
+		}
+		report.setContent(content);
+	}
 	
 	public Set<Activity> getActivities() {
 		return activities.keySet();
+	}
+
+	public void editActivityStart(Activity activity, GregorianCalendar start) {
+		//Add conditions
+		activity.setStart(start);
+	}
+
+	public void editActivityEnd(Activity activity, GregorianCalendar end) {
+		//Add conditions
+		activity.setEnd(end);
+
+	}
+
+	public void editActivityDescription(Activity activity, String description) {
+		//Add conditions
+		activity.setDescription(description);
 	}
 }
