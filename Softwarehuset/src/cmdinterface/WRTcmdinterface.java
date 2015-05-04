@@ -130,14 +130,14 @@ public class WRTcmdinterface {
 		}
 	}
 
-	private void employeeScreen() {
+	private void employeeScreen() throws IOException, OperationNotAllowedException {
 		// TODO Auto-generated method stub
 		System.out.println("User: " + company.getLoggedInEmployee().getID() 
 				+ company.getLoggedInEmployee().getDepartment());
 		System.out.println("Employee options");
-		System.out.println("- Register spent time");
 		System.out.println("- Ask colleague for assistance");
-		System.out.println("- Regitster vacation, sick-days and course attendance");
+		System.out.println("- Register spent time");
+		System.out.println("- Register vacation, sick-days and course attendance");
 		System.out.println("- See registered spent time");
 		System.out.println();
 		System.out.println("Project Leader options");
@@ -148,6 +148,47 @@ public class WRTcmdinterface {
 		System.out.println("- Relieve Employee from project");
 		System.out.println("- See available employees");
 		System.out.println("- Reports on project meetings");
+		System.out.println();
+		System.out.println("Log out");
+		
+		String userChoise = input.readLine();
+		if(userChoise.equals("Register spent time")) {
+			
+		}
+		if(userChoise.equals("Ask colleague for assistance")) {
+			
+		}
+		if(userChoise.equals("Register vacation, sick-days and course attendance")) {
+			
+		}
+		if(userChoise.equals("See registered spent time")) {
+			
+		}
+		if(userChoise.equals("Assign employee to project")) {
+			
+		}
+		if(userChoise.equals("Assign employee to activity")) {
+			
+		}
+		if(userChoise.equals("Create An Activity")) {
+			
+		}
+		if(userChoise.equals("Get Project Statistics")) {
+			
+		}
+		if(userChoise.equals("Relieve Employee from project")) {
+			
+		}
+		if(userChoise.equals("See available employees")) {
+			
+		}
+		if(userChoise.equals("Reports on project meetings")) {
+			
+		}
+		if(userChoise.equals("Log out")) {
+			company.employeeLogout();
+			initialScreen();
+		}
 	}
 
 }
