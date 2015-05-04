@@ -69,6 +69,19 @@ public class TestRelieveEmployee {
 	}
 	
 	@Test
+	public void testNotLoggedIn() throws OperationNotAllowedException {
+		company.employeeLogout();
+		
+		try {
+			projectLeader.relieveEmployeeProject(test1, company.getSpecificProject("Project01"));
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Relieve Employee is not allowed if not logged in",e.getMessage());
+			assertEquals("Relieve Employee",e.getOperation());
+		}
+	}
+	
+	@Test
 	public void testNotProjectLeader() throws OperationNotAllowedException {
 		assertEquals(1, company.getSpecificProject("Project01").getEmployees().size());
 		Employee test2 = company.createEmployee("HANS", "password", "RandD");

@@ -6,6 +6,8 @@ package cmdinterface;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import softwarehuset.Address;
 import softwarehuset.Company;
@@ -15,7 +17,7 @@ import softwarehuset.OperationNotAllowedException;
 import softwarehuset.Project;
 
 /**
- * @author Gruppe 25
+ * @author Per Lange Laursen - s144456
  *
  */
 public class WRTcmdinterface {
@@ -35,7 +37,6 @@ public class WRTcmdinterface {
 	}
 	
 	private void executiveScreen() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.println("Executive logged in");
 		System.out.println("Executive options");
 		System.out.println("- Add Employee (Company Database)");
@@ -65,7 +66,6 @@ public class WRTcmdinterface {
 	}
 	
 	private void assignProjectLeader() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.print("Enter Employee ID: ");
 		String id = input.readLine();
 		Employee projectLeader = company.getEmployee(id);
@@ -84,16 +84,37 @@ public class WRTcmdinterface {
 	}
 
 	private void createProject() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.print("Enter project name: ");
 		String projectName = input.readLine();
-		company.createProject(projectName);
+		
+		System.out.print("Enter Start Date: ");
+		int startDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Month: ");
+		int startMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Year: ");
+		int startYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDate);
+		
+		System.out.print("Enter End Date: ");
+		int endDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Month: ");
+		int endMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Year: ");
+		int endYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDate);
+		
+		company.createProject(projectName, start, end);
 		System.out.println("Project created");
 		executiveScreen();
 	}
 
 	private void addEmployee() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.print("Enter Employee ID: ");
 		String id = input.readLine();
 		
@@ -130,14 +151,14 @@ public class WRTcmdinterface {
 		}
 	}
 
-	private void employeeScreen() {
-		// TODO Auto-generated method stub
+	private void employeeScreen() throws IOException, OperationNotAllowedException {
 		System.out.println("User: " + company.getLoggedInEmployee().getID() 
 				+ company.getLoggedInEmployee().getDepartment());
 		System.out.println("Employee options");
-		System.out.println("- Register spent time");
 		System.out.println("- Ask colleague for assistance");
-		System.out.println("- Regitster vacation, sick-days and course attendance");
+		System.out.println("- Remove assisting colleague");
+		System.out.println("- Register spent time");
+		System.out.println("- Register vacation, sick-days and course attendance");
 		System.out.println("- See registered spent time");
 		System.out.println();
 		System.out.println("Project Leader options");
@@ -148,6 +169,291 @@ public class WRTcmdinterface {
 		System.out.println("- Relieve Employee from project");
 		System.out.println("- See available employees");
 		System.out.println("- Reports on project meetings");
+		System.out.println();
+		System.out.println("Log out");
+		
+		String userChoise = input.readLine();
+		if(userChoise.equals("Register spent time")) {
+			registerSpentTime();
+		}
+		if(userChoise.equals("Ask colleague for assistance")) {
+			askColleagueForAssistance();
+		}
+		if(userChoise.equals("Remove assisting colleague")) {
+			removeAssistingColleague();
+		}
+		if(userChoise.equals("Register vacation, sick-days and course attendance")) {
+			registerVSC();
+		}
+		if(userChoise.equals("See registered spent time")) {
+			registeredSpentTime();
+		}
+		if(userChoise.equals("Assign employee to project")) {
+			assignEmployeeProject();
+		}
+		if(userChoise.equals("Assign employee to activity")) {
+			assignEmployeeActivity();
+		}
+		if(userChoise.equals("Create An Activity")) {
+			createActivity();
+		}
+		if(userChoise.equals("Get Project Statistics")) {
+			getStatistics();
+		}
+		if(userChoise.equals("Relieve Employee from project")) {
+			relieveEmployeeProject();
+		}
+		if(userChoise.equals("See available employees")) {
+			seeAvailableEmployees();
+		}
+		if(userChoise.equals("Reports on project meetings")) {
+			
+		}
+		if(userChoise.equals("Log out")) {
+			company.employeeLogout();
+			initialScreen();
+		}
+	}
+
+	private void seeAvailableEmployees() throws IOException, OperationNotAllowedException {
+		// TODO Auto-generated method stub
+		System.out.print("Enter Period Start Date: ");
+		int startDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period Start Month: ");
+		int startMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period Start Year: ");
+		int startYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDate);
+		
+		System.out.print("Enter Period End Date: ");
+		int endDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period End Month: ");
+		int endMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Period End Year: ");
+		int endYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDate);
+		
+		List<Employee> employees = company.getAvailableEmployees(start, end);
+		
+		System.out.println("Available Employees with period:" + startDate + "/"+ startMonth
+				+ "/" + startYear + " " + endDate + "/" + endMonth + "/" + endYear);
+		for(Employee e : employees) {
+			System.out.println("ID: " + e.getID() + " Department: " + e.getDepartment());
+		}
+		
+		employeeScreen();
+	}
+
+	private void registeredSpentTime() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.println(activity + " " + company.getLoggedInEmployee().getSpentTime(activity));
+		
+		employeeScreen();
+	}
+
+	private void removeAssistingColleague() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee em = company.getEmployee(id);
+		
+		if(em != null) {
+			company.getLoggedInEmployee().removeSpecificAssistingEmployee(em, company.getSpecificProject(project)
+					.getSpecificActivityByName(activity));
+			System.out.println("Employee added to assist.");
+		}
+		
+		employeeScreen();
+	}
+
+	private void askColleagueForAssistance() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee em = company.getEmployee(id);
+		
+		if(em != null) {
+			company.getLoggedInEmployee().needForAssistanceWithActivity(em, company.getSpecificProject(project)
+					.getSpecificActivityByName(activity));
+			System.out.println("Employee added to assist.");
+		}
+		
+		employeeScreen();
+	}
+
+	private void registerVSC() throws IOException, OperationNotAllowedException {
+		System.out.println("Avaliable types of Activity:");
+		System.out.println("- Vacation");
+		System.out.println("- Sick");
+		System.out.println("- Course");
+		System.out.println();
+		System.out.print("Enter type of Activity: ");
+		
+		String type = input.readLine();
+		
+		System.out.print("Enter Start Date: ");
+		int startDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Month: ");
+		int startMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Year: ");
+		int startYear = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Date: ");
+		int endDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Month: ");
+		int endMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Year: ");
+		int endYear = Integer.parseInt(input.readLine()); 
+		
+		if(type.equals("Vacation")) {
+			company.getLoggedInEmployee().registerVacationTime(startYear, startMonth, startDate, endYear, endMonth, endDate);
+		}
+		
+		if(type.equals("Sick")) {
+			company.getLoggedInEmployee().registerSickTime(startYear, startMonth, startDate, endYear, endMonth, endDate);
+		}
+		
+		if(type.equals("Course")) {
+			company.getLoggedInEmployee().registerCourseTime(startYear, startMonth, startDate, endYear, endMonth, endDate);
+		}
+		
+		employeeScreen();
+	}
+
+	private void registerSpentTime() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.print("Enter the number of total hours: ");
+		int time = Integer.parseInt(input.readLine());
+		
+		company.getLoggedInEmployee().registerSpentTime(company.getSpecificProject(project)
+				.getSpecificActivityByName(activity), time);
+		
+		employeeScreen();
+	}
+
+	private void relieveEmployeeProject() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee em = company.getEmployee(id);
+		
+		if(em != null) {
+			company.getLoggedInEmployee().relieveEmployeeProject(em, company.getSpecificProject(project));
+			System.out.println("Employee relieved form project");
+		}
+		employeeScreen();
+	}
+
+	private void getStatistics() throws OperationNotAllowedException, IOException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		List<String> statistics = company.getLoggedInEmployee().
+				getStatisticsProject(company.getSpecificProject(project));
+		
+		for(String s : statistics) {
+			System.out.println(s);
+		}
+		employeeScreen();
+	}
+
+	private void createActivity() throws NumberFormatException, IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		System.out.print("Enter Start Date: ");
+		int startDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Month: ");
+		int startMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Year: ");
+		int startYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDate);
+		
+		System.out.print("Enter End Date: ");
+		int endDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Month: ");
+		int endMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Year: ");
+		int endYear = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDate);
+		
+		company.getLoggedInEmployee().createActivity(
+				company.getSpecificProject(project), activity, start, end);
+		
+		employeeScreen();
+		
+	}
+
+	private void assignEmployeeActivity() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee em = company.getEmployee(id);
+		
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Activity ID: ");
+		String activity = input.readLine();
+		
+		if(em != null) {
+			company.getLoggedInEmployee().assignEmployeeActivity(em, 
+					company.getSpecificProject(project).getSpecificActivityByName(activity));
+			System.out.println("Employee Assigned");
+		}
+		employeeScreen();
+				
+	}
+
+	private void assignEmployeeProject() throws OperationNotAllowedException, IOException {
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee em = company.getEmployee(id);
+		
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		if(em != null) {
+			company.getLoggedInEmployee().assignEmployeeProject(em, company.getSpecificProject(project));
+			System.out.println("Employee Assigned");
+		}
+		employeeScreen();
 	}
 
 }

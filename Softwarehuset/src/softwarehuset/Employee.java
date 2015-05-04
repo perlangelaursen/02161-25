@@ -22,11 +22,13 @@ public class Employee {
 	}
 	
 	public void assignEmployeeProject(Employee e, Project p) throws OperationNotAllowedException {
-		if(company.getLoggedInEmployee() == this && p.getProjectLeader() == this) {
-			p.addEmployeeToProject(e);
-		} else {
-			throw new OperationNotAllowedException("Assign Employee is not allowed if not project leader.", "Assign Employee");
+		if (company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Assign Employee is not allowed if not logged in", "Assign Employee");
 		}
+		if(p.getProjectLeader() != this){
+			throw new OperationNotAllowedException("Assign Employee is not allowed if not project leader", "Assign Employee");
+		}
+		p.addEmployeeToProject(e);
 	}
 	
 
@@ -45,13 +47,14 @@ public class Employee {
 	}
 
 	public void assignEmployeeActivity(Employee e, Activity a) throws OperationNotAllowedException {
-		if(company.getLoggedInEmployee() == this && a.getProject().getProjectLeader() == this) {
-			a.addEmployeeToActivity(e);
-			e.addActivity(a);
-		} else {
-			throw new OperationNotAllowedException("Assign Employee is not allowed if not activity leader.", 
-					"Assign Employee");
+		if (company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Assign Employee is not allowed if not logged in", "Assign Employee");
 		}
+		if(a.getProject().getProjectLeader() != this){
+			throw new OperationNotAllowedException("Assign Employee is not allowed if not project leader", "Assign Employee");
+		}
+		a.addEmployeeToActivity(e);
+		e.addActivity(a);
 	}
 	
 	private void addActivity(Activity a) {
@@ -59,12 +62,13 @@ public class Employee {
 	}
 
 	public void relieveEmployeeProject(Employee e, Project specificProject) throws OperationNotAllowedException {
-		if(company.getLoggedInEmployee() == this && specificProject.getProjectLeader() == this) {
-			specificProject.relieveEmployee(e);
-		} else {
-			throw new OperationNotAllowedException("Relieve Employee if not projectleader", 
-					"Relieve Employee");
+		if (company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Relieve Employee is not allowed if not logged in", "Relieve Employee");
 		}
+		if(specificProject.getProjectLeader() != this){
+			throw new OperationNotAllowedException("Relieve Employee if not projectleader", "Relieve Employee");
+		}
+		specificProject.relieveEmployee(e);
 	}
 
 	public String getID() {
@@ -122,13 +126,15 @@ public class Employee {
 	}
 
 	public List<String> getStatisticsProject(Project specificProject) throws OperationNotAllowedException {
-		List<String> statistics = new ArrayList<String>();
-		if(company.getLoggedInEmployee() == this && specificProject.getProjectLeader() == this) {
-			specificProject.getProjectDetails(statistics);
-		} else {
-			throw new OperationNotAllowedException("Get statistics is not allowed if not project leader.", 
-					"Get statistics");
+		if (company.getLoggedInEmployee() != this){
+			throw new OperationNotAllowedException("Get statistics is not allowed if not logged in.", "Get statistics");
 		}
+		if(specificProject.getProjectLeader() != this){
+			throw new OperationNotAllowedException("Get statistics is not allowed if not project leader.", "Get statistics");
+		}
+		
+		List<String> statistics = new ArrayList<String>();
+		specificProject.getProjectDetails(statistics);
 		return statistics;
 	}
 	public void writeReport(Project project, String name, GregorianCalendar date) throws OperationNotAllowedException{
@@ -336,5 +342,21 @@ public class Employee {
 	
 	public Set<Activity> getActivities() {
 		return activities.keySet();
+	}
+
+	public void editActivityStart(Activity activity, GregorianCalendar start) {
+		//Add conditions
+		activity.setStart(start);
+	}
+
+	public void editActivityEnd(Activity activity, GregorianCalendar end) {
+		//Add conditions
+		activity.setEnd(end);
+
+	}
+
+	public void editActivityDescription(Activity activity, String description) {
+		//Add conditions
+		activity.setDescription(description);
 	}
 }
