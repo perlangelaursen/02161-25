@@ -68,9 +68,9 @@ public class TestSeeRegisteredSpentTime {
 		company.employeeLogin("Employee2", "empassword2");
 
 		// See spent time
-		assertEquals(100, employee.getSpentTime("Project01-Designing"));
-		assertEquals(50, employee.getSpentTime("Project01-Refactoring"));
-		assertEquals(0, employee.getSpentTime("Project01-Programming"));
+		assertEquals(100, employee.getSpentTime(project.getID() + "-Designing"));
+		assertEquals(50, employee.getSpentTime(project.getID() + "-Refactoring"));
+		assertEquals(0, employee.getSpentTime(project.getID() + "-Programming"));
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class TestSeeRegisteredSpentTime {
 		company.employeeLogin("Employee2", "empassword2");
 
 		try {
-			assertEquals(100, employee.getSpentTime("Project05-Designing"));
+			assertEquals(100, employee.getSpentTime("150309-Designing"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Employee is not assigned to the activity", e.getMessage());

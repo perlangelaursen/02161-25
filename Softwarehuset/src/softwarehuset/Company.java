@@ -15,6 +15,7 @@ public class Company {
 	private List<Employee> employees = new ArrayList<>();
 	private List<Employee> availableEmployees = new ArrayList<>();
 	private DateServer dateServer;
+	private int counter = 0;
 
 	public Company(String name, Address address) {
 		this.name = name;
@@ -41,7 +42,7 @@ public class Company {
 		if (!executiveIsLoggedIn()) {
 			throw new OperationNotAllowedException("Create project operation is not allowed if not executive.", "Create project");
 		}
-		Project p = new Project(name);
+		Project p = new Project(name, this);
 		projects.add(p);
 		return p;
 	}
@@ -53,7 +54,8 @@ public class Company {
 		if (start.after(end)){
 			throw new OperationNotAllowedException("The end date is set before the start date", "Create project");
 		}
-		Project p = new Project(name, start, end);
+		counter++;
+		Project p = new Project(name, start, end, this);
 		projects.add(p);
 		
 	}
@@ -74,7 +76,16 @@ public class Company {
 		}
 		return null;
 	}
-
+	
+	public Project getSpecificProject(int ID){
+		for (Project p : projects) {
+			if (p.getID() == ID) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
 	public void employeeLogin(String id, String password) {
 		for(Employee e: employees){
 			if (e.getID().equals(id)){
@@ -111,5 +122,9 @@ public class Company {
 	public void employeeLogout() {
 		executiveLoggedIn = false;
 		loggedInEmployee = null;
+	}
+
+	public int getProjectCounter() {
+		return counter;
 	}
 }

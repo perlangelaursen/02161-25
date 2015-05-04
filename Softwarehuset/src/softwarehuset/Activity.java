@@ -21,7 +21,7 @@ public class Activity {
 	
 	public Activity(String activityName, GregorianCalendar start, GregorianCalendar end, Project project) {
 		this(start, end, "Work");
-		this.activityName = project.getName()+"-"+activityName;
+		this.activityName = project.getID()+"-"+activityName;
 		this.project = project;
 	}
 

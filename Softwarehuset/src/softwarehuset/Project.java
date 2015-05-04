@@ -1,29 +1,43 @@
 package softwarehuset;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.GregorianCalendar;
 
 public class Project {
 	private String name;
+	private int ID;
 	private GregorianCalendar start, end;
 	private Employee projectLeader;
 	private List<Employee> assignedEmployees = new ArrayList<Employee>();
 	private List<Activity> activities = new ArrayList<Activity>();
 	private List<Report> reports = new ArrayList<Report>();
+	private Company com;
 	
-	public Project(String name) {
+	public Project(String name, Company com) {
 		this.name = name;
+		this.com = com;
+		setID();
 	}
 	
-	public Project(String name, GregorianCalendar start, GregorianCalendar end) {
-		this(name);
+	public Project(String name, GregorianCalendar start, GregorianCalendar end, Company com) {
+		this(name, com);
 		this.start = start;
 		this.end = end;
 	}
 	
 	public String getName() {
 		return name;
+	}
+	
+	private void setID() {
+		int year = com.getCurrentTime().get(Calendar.YEAR) % 100 * 10000;
+		this.ID = year + com.getProjectCounter();
+	}
+	
+	public int getID() {
+		return ID;
 	}
 	
 	public void assignProjectLeader(Employee e) {
@@ -86,8 +100,9 @@ public class Project {
 
 	public Activity getSpecificActivityByName(String activityName) throws OperationNotAllowedException {
 		for(Activity a : activities){
-			if(a.getName().equals(activityName));
-			return a;
+			if(a.getName().equals(activityName)) {
+				return a;
+			}
 		}
 		return null;
 	}
