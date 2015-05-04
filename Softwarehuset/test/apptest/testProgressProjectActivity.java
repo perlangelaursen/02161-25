@@ -1,23 +1,19 @@
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import softwarehuset.Address;
-import softwarehuset.Company;
-import softwarehuset.Employee;
-import softwarehuset.Executive;
-import softwarehuset.OperationNotAllowedException;
+import softwarehuset.*;
+
 	//Mathias
 public class testProgressProjectActivity {
 	Employee projectLeader;
 	Employee test1;
 	Company company;
+	Project p1, p2;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
@@ -30,16 +26,15 @@ public class testProgressProjectActivity {
 		// Log in as executive
 		company.executiveLogin("password");
 		
-		//Set date
-		
+		//Set date	
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.FEBRUARY, 23);
 		
 		//Create projects
-		company.createProject("Project01", start, end);
-		company.createProject("Project02", start, end);
+		p1 = company.createProject("Project01", start, end);
+		p2 = company.createProject("Project02", start, end);
 		
 		//Create employee and assign as project leader
 		projectLeader = company.createEmployee("HALO", "password", "RandD");
@@ -55,56 +50,58 @@ public class testProgressProjectActivity {
 		projectLeader.registerSpentTime(company.getSpecificProject("Project01").getSpecificActivity(0), 100);
 		}
 	
-	//Der er stadig problemer med at hente informationer om aktiviteter ved at bruge deres navn, og ikke deres indeks.
+	
 	@Test
 	public void testProgressActivity() throws OperationNotAllowedException {
-		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivity(0)));
-		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("Activity01")));
+		Activity a = p1.getActivities().get(0);
+		projectLeader.viewProgress(p1, a);
+		assertEquals(100, projectLeader.viewProgress(p1, a));
 	}
 	@Test
 	public void testProgressProject() throws OperationNotAllowedException {
-		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01")));
+		assertEquals(100, projectLeader.viewProgress(p1));
 	}
 	
 	@Test
-	public void testProgressNonexistantActivity() throws OperationNotAllowedException {
+	public void testProgressNotLoggedIn() throws OperationNotAllowedException {
+		Activity a = p1.getActivities().get(0);
+		company.employeeLogout();
 		try{
-			projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("ActivityXX")); //Mangler at f�rdigg�re
+			projectLeader.viewProgress(p1, a);
 			fail("OperationNotAllowedException expected");
+		} catch (OperationNotAllowedException e){
+			assertEquals("View progress is not allowed if not logged in", e.getMessage());
+			assertEquals("View progress", e.getOperation());
+		}
+		try{
+			projectLeader.viewProgress(p1);
+			fail("OperationNotAllowedException expected");
+		} catch (OperationNotAllowedException e){
+			assertEquals("View progress is not allowed if not logged in", e.getMessage());
+			assertEquals("View progress", e.getOperation());
+		}
+	}
 	
-		} catch (OperationNotAllowedException e){
-			assertEquals("Unable to view progress, nonexistant activity", e.getMessage());
-			assertEquals("View Progress", e.getOperation());
-		}
-	}
 	@Test
-	public void testProgressNonexistantProject() throws OperationNotAllowedException {
+	public void testProgressNotProjectLeader() throws OperationNotAllowedException {
+		Activity a = p1.getActivities().get(0);
+		Employee em = company.createEmployee("JLBD", "password", "Department");
+		company.employeeLogin("JLBD", "password");
 		try{
-			projectLeader.viewProgress(company.getSpecificProject("ProjectXX"));
+			em.viewProgress(p1, a);
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e){
-			assertEquals("Unable to view progress, nonexistant project", e.getMessage());
-			assertEquals("View Progress", e.getOperation());
+			assertEquals("View progress is not allowed if not project leader", e.getMessage());
+			assertEquals("View progress", e.getOperation());
 		}
-	}
-	@Test
-	public void testProgressProjectNotAssigned() throws OperationNotAllowedException {
+		
 		try{
-			projectLeader.viewProgress(company.getSpecificProject("Project02"));
+			em.viewProgress(p1);
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e){
-			assertEquals("Project Leader is not assigned to the chosen project", e.getMessage());
-			assertEquals("View Progress", e.getOperation());
-		}
-	}
-	@Test
-	public void testProgressActivityNotAssigned() throws OperationNotAllowedException {
-		try{
-			projectLeader.viewProgress(company.getSpecificProject("Project02"), company.getSpecificProject("Project02").getSpecificActivityByName("ActivityXX"));
-			fail("OperationNotAllowedException expected");
-		} catch (OperationNotAllowedException e){
-			assertEquals("Project Leader is not assigned to the chosen project", e.getMessage());
-			assertEquals("View Progress", e.getOperation());
+			assertEquals("View progress is not allowed if not project leader", e.getMessage());
+			assertEquals("View progress", e.getOperation());
 		}
 	}
 }
+

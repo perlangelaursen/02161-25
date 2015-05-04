@@ -1,6 +1,3 @@
-/**
- * 
- */
 package cmdinterface;
 
 import java.io.BufferedReader;
@@ -24,8 +21,10 @@ public class WRTcmdinterface {
 
 	/**
 	 * @param args
-	 * @throws IOException 
+	 * @throws IOException
+	 * @throws OperationNotAllowedException 
 	 */
+	
 	Address address = new Address("Kongens Lyngby", "Anker Engelunds Vej");
 	Company company = new Company("Softwarehuset A/S", address);
 	Executive executive = new Executive("ex01", "Executive", company, "password");
@@ -168,7 +167,8 @@ public class WRTcmdinterface {
 		System.out.println("- Get Project Statistics");
 		System.out.println("- Relieve Employee from project");
 		System.out.println("- See available employees");
-		System.out.println("- Reports on project meetings");
+		System.out.println("- Create Reports on project meetings");
+		System.out.println("- View report from project meeting");
 		System.out.println();
 		System.out.println("Log out");
 		
@@ -206,8 +206,11 @@ public class WRTcmdinterface {
 		if(userChoise.equals("See available employees")) {
 			seeAvailableEmployees();
 		}
-		if(userChoise.equals("Reports on project meetings")) {
-			
+		if(userChoise.equals("Create Reports on project meetings")) {
+			reportsOnProjectMeetings();
+		}
+		if(userChoise.equals("View report from project meeting")) {
+			viewReport();
 		}
 		if(userChoise.equals("Log out")) {
 			company.employeeLogout();
@@ -215,8 +218,49 @@ public class WRTcmdinterface {
 		}
 	}
 
+	private void viewReport() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Report ID: ");
+		String report = input.readLine();
+		
+		System.out.println(company.getLoggedInEmployee().getSpecificReportByName(
+				company.getSpecificProject(project), report).getContent());
+		
+		employeeScreen();
+	}
+
+	private void reportsOnProjectMeetings() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		
+		System.out.print("Enter Report ID: ");
+		String report = input.readLine();
+		
+		System.out.print("Enter Report Date: ");
+		int date = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Report Month: ");
+		int month = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Report Year: ");
+		int year = Integer.parseInt(input.readLine());
+		
+		GregorianCalendar dateCalendar = new GregorianCalendar(year, month, date);
+		
+		company.getLoggedInEmployee().writeReport(company.getSpecificProject(project), report, dateCalendar);
+		System.out.println("Report created");
+		
+		System.out.println("Enter Report Content:");
+		String content = input.readLine();
+		
+		company.getLoggedInEmployee().editReport(company.getSpecificProject(project).getSpecificReportByName(report), content);
+		
+		employeeScreen();
+	}
+
 	private void seeAvailableEmployees() throws IOException, OperationNotAllowedException {
-		// TODO Auto-generated method stub
 		System.out.print("Enter Period Start Date: ");
 		int startDate = Integer.parseInt(input.readLine());
 		
@@ -273,7 +317,7 @@ public class WRTcmdinterface {
 		if(em != null) {
 			company.getLoggedInEmployee().removeSpecificAssistingEmployee(em, company.getSpecificProject(project)
 					.getSpecificActivityByName(activity));
-			System.out.println("Employee added to assist.");
+			System.out.println("Assisting Employee Removed");
 		}
 		
 		employeeScreen();
