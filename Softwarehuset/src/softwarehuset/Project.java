@@ -61,13 +61,6 @@ public class Project {
 	public List<Activity> getActivities() {
 		return activities;
 	}
-	
-	public Activity getSpecificActivity(int i) throws OperationNotAllowedException {
-		if(i>=activities.size()){
-			throw new OperationNotAllowedException("Activity does not exist", "Get activity");
-		}
-		return activities.get(i);
-	}
 
 	public List<Employee> getEmployees() {
 		return assignedEmployees;
@@ -93,20 +86,15 @@ public class Project {
 		return sum;
 	}
 
-	public Activity getSpecificActivityByName(String activityName) throws OperationNotAllowedException {
+	public Activity getActivity(String activityName) throws OperationNotAllowedException {
 		for(Activity a : activities){
-			if(a.getName().equals(activityName)) return a;
+			if(a.getName().equals(activityName)){
+				return a;
+			}
 		}
 		return null;
 	}
-	
-	public Report getReport (int i){
-		return reports.get(i);
-	}
-	
-	public List<Report> getAllReports(){
-		return reports;
-	}
+
 	public void addReport(Report report){
 		reports.add(report);
 	}
@@ -128,18 +116,15 @@ public class Project {
 	public void activitiesInProject(List<String> statistics) {
 		statistics.add("No. of activities: "+ activities.size());
 		for(Activity a : activities) {
-			statistics.add("Activity name: " + a.getName() + 
-					" No. of employees: " + a.getEmployees().size());
+			statistics.add("Activity name: " + a.getName() + " No. of employees: " + a.getEmployees().size());
 			a.assignedEmployeesInActivity(statistics);
 		}
 	}
-	public Report getSpecificReport(int i) throws OperationNotAllowedException{
-		if(i>=reports.size()){
-			throw new OperationNotAllowedException("Report does not exist", "Get report");
+
+	public Report getSpecificReportByName(String name) throws OperationNotAllowedException {
+		if(com.getLoggedInEmployee() == null){
+			throw new OperationNotAllowedException("Get report is not allowed if not logged in", "Get report"); 
 		}
-		return reports.get(i);
-	}
-	public Report getSpecificReportByName(String name) {
 		for(Report r : reports) {
 			if(r.getName().equals(name)) return r;
 		}

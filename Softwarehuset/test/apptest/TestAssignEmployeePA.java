@@ -8,11 +8,7 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
-import softwarehuset.Address;
-import softwarehuset.Company;
-import softwarehuset.Employee;
-import softwarehuset.Executive;
-import softwarehuset.OperationNotAllowedException;
+import softwarehuset.*;
 
 /*
 * Test created by Per Lange Laursen - s144486 DTU
@@ -32,6 +28,7 @@ public class TestAssignEmployeePA {
 	Employee projectLeader;
 	Employee test1;
 	Company company;
+	Project p1, p2;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
@@ -49,8 +46,8 @@ public class TestAssignEmployeePA {
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.FEBRUARY, 23);
-		company.createProject("Project01", start, end);
-		company.createProject("Project02");
+		p1 = company.createProject("Project01", start, end);
+		p2 = company.createProject("Project02");
 		
 		projectLeader = company.createEmployee("ABCD", "password", "Department1");
 		
@@ -73,8 +70,8 @@ public class TestAssignEmployeePA {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Assign Employee is not allowed if not logged in",e.getMessage());
-			assertEquals("Assign Employee",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 	}
 	
@@ -86,8 +83,8 @@ public class TestAssignEmployeePA {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Assign Employee is not allowed if not project leader",e.getMessage());
-			assertEquals("Assign Employee",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 	}
 	
@@ -102,7 +99,8 @@ public class TestAssignEmployeePA {
 		company.employeeLogin(projectLeader.getID(), "password");
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
-		projectLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
+		Activity a = p1.getActivity(p1.getID()+"-TestActivity");
+		projectLeader.assignEmployeeActivity(test1, a);
 	}
 	
 	@Test
@@ -113,16 +111,17 @@ public class TestAssignEmployeePA {
 		end.set(2016, Calendar.JANUARY, 25);
 		
 		company.employeeLogin(projectLeader.getID(), "password");
-		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+		projectLeader.createActivity(p1, "TestActivity", start, end);
 		
 		company.employeeLogout();
 		
 		try {
-			projectLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
+			Activity a = p1.getActivity(p1.getID()+"-TestActivity");
+			projectLeader.assignEmployeeActivity(test1, a);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Assign Employee is not allowed if not logged in",e.getMessage());
-			assertEquals("Assign Employee",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 	}
 	
@@ -139,11 +138,12 @@ public class TestAssignEmployeePA {
 		Employee test2 = company.createEmployee("KKKK", "password", "Department1");
 		company.employeeLogin("KKKK", "password");
 		try {
-			test2.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
+			Activity a = p1.getActivity(p1.getID()+"-TestActivity");
+			test2.assignEmployeeActivity(test1, a);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Assign Employee is not allowed if not project leader",e.getMessage());
-			assertEquals("Assign Employee",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 	}
 }

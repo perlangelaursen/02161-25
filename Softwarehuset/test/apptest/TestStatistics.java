@@ -19,6 +19,8 @@ public class TestStatistics {
 	Employee projectLeader;
 	Employee test1, test2;
 	Company company;
+	Project p1, p2;
+	Activity a1, a2;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
@@ -36,8 +38,8 @@ public class TestStatistics {
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.FEBRUARY, 23);
-		company.createProject("Project01", start, end);
-		company.createProject("Project02");
+		p1 = company.createProject("Project01", start, end);
+		p2 = company.createProject("Project02");
 		
 		projectLeader = company.createEmployee("LISN", "password", "RandD");
 		
@@ -53,8 +55,10 @@ public class TestStatistics {
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "AO1", start, end);
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "AO2", start, end);
 		
-		projectLeader.assignEmployeeActivity(test1, company.getSpecificProject("Project01").getSpecificActivity(0));
-		projectLeader.assignEmployeeActivity(test2, company.getSpecificProject("Project01").getSpecificActivity(1));
+		a1 = company.getSpecificProject("Project01").getActivity(p1.getID()+"-AO1");
+		a2 = company.getSpecificProject("Project01").getActivity(p1.getID()+"-AO2");
+		projectLeader.assignEmployeeActivity(test1, a1);
+		projectLeader.assignEmployeeActivity(test2, a2);
 	}
 	
 	@Test
@@ -68,12 +72,12 @@ public class TestStatistics {
 		assertEquals("ID: " + test1.getID() + " Department: " + test1.getDepartment(), statistics.get(3));
 		assertEquals("ID: " + test2.getID() + " Department: " + test2.getDepartment(), statistics.get(4));
 		assertEquals("No. of activities: " + company.getSpecificProject("Project01").getActivities().size(), statistics.get(5));
-		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(0).getName() +
-				" No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(0).getEmployees().size(),
+		assertEquals("Activity name: " + a1.getName() +
+				" No. of employees: " + a1.getEmployees().size(),
 				statistics.get(6));
 		assertEquals("ID: " + test1.getID() + " Department: " + test1.getDepartment(), statistics.get(7));
-		assertEquals("Activity name: " + company.getSpecificProject("Project01").getSpecificActivity(1).getName() +
-				" No. of employees: " + company.getSpecificProject("Project01").getSpecificActivity(1).getEmployees().size(),
+		assertEquals("Activity name: " + a2.getName() +
+				" No. of employees: " + a2.getEmployees().size(),
 				statistics.get(8));
 		assertEquals("ID: " + test2.getID() + " Department: " + test2.getDepartment(), statistics.get(9));
 	}
@@ -86,8 +90,8 @@ public class TestStatistics {
 			projectLeader.getStatisticsProject(company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Get statistics is not allowed if not logged in.",e.getMessage());
-			assertEquals("Get statistics",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader",e.getMessage());
+			assertEquals("Project leader operation",e.getOperation());
 		}
 	}
 	
@@ -99,8 +103,8 @@ public class TestStatistics {
 			test3.getStatisticsProject(company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Get statistics is not allowed if not project leader.",e.getMessage());
-			assertEquals("Get statistics",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader",e.getMessage());
+			assertEquals("Project leader operation",e.getOperation());
 		}
 	}
 

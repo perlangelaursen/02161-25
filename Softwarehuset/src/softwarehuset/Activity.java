@@ -99,7 +99,7 @@ public class Activity {
 		return assistingEmployees;
 	}
 
-	public Employee getSpecificAssitingEmployee(Employee selected) {
+	public Employee getAssistingEmployee(Employee selected) {
 		for(Employee e: assistingEmployees) {
 			if(e.getID().equals(selected.getID())) {
 				return e;
@@ -117,9 +117,5 @@ public class Activity {
 		for(Employee e : assignedEmployees) {
 			statistics.add("ID: " + e.getID() + " Department: " + e.getDepartment());
 		}
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 }

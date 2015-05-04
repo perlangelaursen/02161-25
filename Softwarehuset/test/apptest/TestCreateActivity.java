@@ -78,8 +78,8 @@ public class TestCreateActivity {
 			test2.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Create activity is not allowed if not project leader.",e.getMessage());
-			assertEquals("Create activity",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 	}
 	
@@ -117,8 +117,8 @@ public class TestCreateActivity {
 			projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Project leader must be logged in to create an activity",e.getMessage());
-			assertEquals("Create activity",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 	}

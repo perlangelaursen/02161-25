@@ -8,11 +8,7 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
-import softwarehuset.Address;
-import softwarehuset.Company;
-import softwarehuset.Employee;
-import softwarehuset.Executive;
-import softwarehuset.OperationNotAllowedException;
+import softwarehuset.*;
 
 /*
 * Test created by Per Lange Laursen - s144486 DTU
@@ -28,8 +24,9 @@ public class TestPlanActivity {
 	 * </ol>
 	 * @throws OperationNotAllowedException 
 	 */
-	public Company company;
-	public Employee projectLeader;
+	Company company;
+	Employee projectLeader;
+	Project p1;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
@@ -47,7 +44,7 @@ public class TestPlanActivity {
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.FEBRUARY, 23);
-		company.createProject("Project01", start, end);
+		p1 = company.createProject("Project01", start, end);
 		projectLeader = company.createEmployee("Test", "password", "RandD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
@@ -64,9 +61,10 @@ public class TestPlanActivity {
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		assertEquals(1, company.getSpecificProject("Project01").getActivities().size());
-		assertEquals("TestActivity", company.getSpecificProject("Project01").getSpecificActivity(0).getName());
-		assertEquals(start, company.getSpecificProject("Project01").getSpecificActivity(0).getStart());
-		assertEquals(end, company.getSpecificProject("Project01").getSpecificActivity(0).getEnd());
+		Activity a = p1.getActivity(p1.getID()+"-TestActivity");
+		assertEquals(p1.getID()+"-TestActivity", a.getName());
+		assertEquals(start, a.getStart());
+		assertEquals(end, a.getEnd());
 	}
 	
 	@Test
@@ -100,9 +98,8 @@ public class TestPlanActivity {
 			test2.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			// TODO: handle exception
-			assertEquals("Project leader must be logged in to create an activity",e.getMessage());
-			assertEquals("Create activity",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 	}
 }

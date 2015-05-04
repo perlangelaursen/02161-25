@@ -13,26 +13,16 @@ public class Report {
 		this.name = name;
 		this.date = date;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public void setContent(String content){
 		this.content = content;
 	}
-	public void setDate(GregorianCalendar date){
-		this.date = date;
-	}
-	public void setProject(Project project){
-		this.project = project;
-	}
+
 	public String getContent() {
 		return content;
 	}
 	public String getName() {
 		return name;
-	}
-	public GregorianCalendar getDate(){
-		return date;
 	}
 	public Project getProject(){
 		return project;

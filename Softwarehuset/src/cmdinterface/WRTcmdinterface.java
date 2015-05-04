@@ -225,8 +225,8 @@ public class WRTcmdinterface {
 		System.out.print("Enter Report ID: ");
 		String report = input.readLine();
 		
-		System.out.println(company.getLoggedInEmployee().getSpecificReportByName(
-				company.getSpecificProject(project), report).getContent());
+		
+		System.out.println(company.createProject(project).getSpecificReportByName(report).getContent());
 		
 		employeeScreen();
 	}
@@ -247,9 +247,7 @@ public class WRTcmdinterface {
 		System.out.print("Enter Report Year: ");
 		int year = Integer.parseInt(input.readLine());
 		
-		GregorianCalendar dateCalendar = new GregorianCalendar(year, month, date);
-		
-		company.getLoggedInEmployee().writeReport(company.getSpecificProject(project), report, dateCalendar);
+		company.getLoggedInEmployee().writeReport(company.getSpecificProject(project), report, year, month, date);
 		System.out.println("Report created");
 		
 		System.out.println("Enter Report Content:");
@@ -316,7 +314,7 @@ public class WRTcmdinterface {
 		
 		if(em != null) {
 			company.getLoggedInEmployee().removeSpecificAssistingEmployee(em, company.getSpecificProject(project)
-					.getSpecificActivityByName(activity));
+					.getActivity(activity));
 			System.out.println("Assisting Employee Removed");
 		}
 		
@@ -336,7 +334,7 @@ public class WRTcmdinterface {
 		
 		if(em != null) {
 			company.getLoggedInEmployee().needForAssistanceWithActivity(em, company.getSpecificProject(project)
-					.getSpecificActivityByName(activity));
+					.getActivity(activity));
 			System.out.println("Employee added to assist.");
 		}
 		
@@ -397,7 +395,7 @@ public class WRTcmdinterface {
 		int time = Integer.parseInt(input.readLine());
 		
 		company.getLoggedInEmployee().registerSpentTime(company.getSpecificProject(project)
-				.getSpecificActivityByName(activity), time);
+				.getActivity(activity), time);
 		
 		employeeScreen();
 	}
@@ -479,7 +477,7 @@ public class WRTcmdinterface {
 		
 		if(em != null) {
 			company.getLoggedInEmployee().assignEmployeeActivity(em, 
-					company.getSpecificProject(project).getSpecificActivityByName(activity));
+					company.getSpecificProject(project).getActivity(activity));
 			System.out.println("Employee Assigned");
 		}
 		employeeScreen();

@@ -8,16 +8,13 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
-import softwarehuset.Address;
-import softwarehuset.Company;
-import softwarehuset.Employee;
-import softwarehuset.Executive;
-import softwarehuset.OperationNotAllowedException;
+import softwarehuset.*;
 
 public class TestMakeReport14 {
 	Employee projectLeader;
 	Employee employee;
 	Company company;
+	Project p1, p2;
 	@Before
 	public void setup() throws OperationNotAllowedException {
 		// Create company and executive
@@ -33,114 +30,107 @@ public class TestMakeReport14 {
 		start.set(2015, Calendar.JANUARY, 23);
 		end.set(2015, Calendar.FEBRUARY, 23);
 		//Create projects
-		company.createProject("Project01", start, end);
-		company.createProject("Project02", start, end);
+		p1 = company.createProject("Project01", start, end);
+		p2 = company.createProject("Project02", start, end);
 		//Create employee and assign as project leader
 		projectLeader = company.createEmployee("Test", "password", "RandD");
-		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
+		executive.assignProjectLeader(projectLeader,p1);
 		employee = company.createEmployee("Tess", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
-		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
-		projectLeader.assignEmployeeProject(projectLeader, company.getSpecificProject("Project01"));
-		projectLeader.assignEmployeeActivity(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
-		projectLeader.registerSpentTime(company.getSpecificProject("Project01").getSpecificActivity(0), 100);
-		projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
+		p1.createActivity("Activity01", start, end, p1);
+		projectLeader.assignEmployeeProject(projectLeader, p1);
+		projectLeader.assignEmployeeActivity(projectLeader, p1.getActivity(p1.getID()+"-Activity01"));
+		projectLeader.registerSpentTime(p1.getActivity(p1.getID()+"-Activity01"), 100);
+		projectLeader.writeReport(p1, "Changes to Project", 2015, 1, 23);
 	}
 	@Test
 	public void testWriteReport() throws OperationNotAllowedException {
-		assertEquals("Changes to Project", company.getSpecificProject("Project01").getSpecificReportByName("Changes to Project").getName());
-		assertEquals("Changes to Project", company.getSpecificProject("Project01").getSpecificReport(0).getName());
+		
+		assertEquals("Changes to Project", p1.getSpecificReportByName("Changes to Project").getName());
+		assertNull(p1.getSpecificReportByName("Non-existing project"));
 	}
+//	@Test
+//	public void testReadReport() throws OperationNotAllowedException {
+//		projectLeader.writeReport(p1, "Changes to Project", 2015, 1, 23);
+//		assertEquals(p1.getSpecificReportByName("Changes to Project").getName(), "Changes to Project");
+//	}
+//	
 	@Test
-	public void testReadReport() throws OperationNotAllowedException {
-		projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
-		assertEquals(company.getSpecificProject("Project01").getSpecificReport(0).getName(), "Changes to Project");
-	}
-	@Test
-	public void testWriteReportNotProjectLeader(){
+	public void testWriteReportNotLoggedIn() throws OperationNotAllowedException{
+		company.employeeLogout();
+		
 		try{
-			projectLeader.writeReport(company.getSpecificProject("Project02"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
+			projectLeader.writeReport(company.getSpecificProject("Project02"), "Changes to Project", 2015, 1, 23);
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to write report, not assigned project leader", e.getMessage());
-			assertEquals("Write report", e.getOperation());
+			assertEquals("Operation is not allowed if not project leader",e.getMessage());
+			assertEquals("Project leader operation",e.getOperation());
 		}
 	}
+	
 	@Test
-	public void testWriteReportNonexistantProject(){
+	public void testWriteReportNotProjectLeader() throws OperationNotAllowedException{
+		Employee em = company.createEmployee("AAKS", "password", "department");
+		company.employeeLogin("AAKS", "password");
+		
 		try{
-			projectLeader.writeReport(company.getSpecificProject("Project03"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
+			em.writeReport(company.getSpecificProject("Project02"), "Changes to Project", 2015,1 ,23);
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to write report, project does not exist", e.getMessage());
-			assertEquals("Write report", e.getOperation());
+			assertEquals("Operation is not allowed if not project leader",e.getMessage());
+			assertEquals("Project leader operation",e.getOperation());
 		}
 	}
+
 	@Test
 	public void testWriteReportInvalidDate(){
-		//Ikkeeksisterende dato opfanges ikke
 		try{
-			projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 35));
-			fail("OperationNotAllowedException expected"); //TODO: Fix bug
+			projectLeader.writeReport(p1, "Changes to Project", 2015, 1, 35);
+			fail("OperationNotAllowedException expected");
 		} catch(OperationNotAllowedException e) {
-			assertEquals("Unable to write report, invalid date", e.getMessage());
-			assertEquals("Write Report", e.getOperation());
+			assertEquals("Invalid time input", e.getMessage());
 		}
 	}
+	
+
 	@Test
-	public void testReadReportNonexistantReport(){
+	public void testReadReportNotLoggedIn(){
+		company.employeeLogout();
+		
 		try{
-			//Undgå at null opfanges som gyldigt input
-			projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
-			company.getSpecificProject("Project01").getSpecificReportByName("Wrong name"); //TODO: Fix bug
+			p1.getSpecificReportByName("Changes to Project");
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to read report, report does not exist", e.getMessage());
-			assertEquals("Read report", e.getOperation());
+			assertEquals("Get report is not allowed if not logged in", e.getMessage());
+			assertEquals("Get report", e.getOperation());
 		}
 	}
-	@Test
-	public void testReadReportNotProjectLeader(){
-		try{
-			projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
-			employee.getSpecificReportByName(company.getSpecificProject("Project01"), "Changes to Project");
-		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to read report, not assigned project leader", e.getMessage());
-			assertEquals("Read report", e.getOperation());
-		}
-	}
+	
 	@Test
 	public void testEditReport() throws OperationNotAllowedException{
-		projectLeader.editReport(company.getSpecificProject("Project01").getSpecificReportByName("Changes to Project"), "New content");
+		projectLeader.editReport(p1.getSpecificReportByName("Changes to Project"), "New content");
+		assertEquals("New content", p1.getSpecificReportByName("Changes to Project").getContent());
 	}
+	
 	@Test
 	public void testEditReportNotProjectLeader(){
 		try{
-			projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
-			employee.editReport(company.getSpecificProject("Project01").getSpecificReportByName("Changes to Project"), "New content");
+			employee.editReport(p1.getSpecificReportByName("Changes to Project"), "New content");
+			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to edit report, not assigned project leader", e.getMessage());
-			assertEquals("Edit report", e.getOperation());
+			assertEquals("Operation is not allowed if not project leader", e.getMessage());
+			assertEquals("Project leader operation", e.getOperation());
 		}
 	}
+	
 	@Test
-	public void testEditReportNonexistantReport(){
+	public void testEditNullReport() throws OperationNotAllowedException{
 		try{
-			projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
-			projectLeader.editReport(company.getSpecificProject("Project01").getSpecificReportByName("Wrong Report"), "New content");
-		} catch (OperationNotAllowedException e) {
-			assertEquals("Unable to edit report, report does not exist", e.getMessage());
-			assertEquals("Edit report", e.getOperation());
-		}
-	}
-	@Test
-	public void testEditReportNonexistantProject(){
-		try{
-			projectLeader.writeReport(company.getSpecificProject("Project01"), "Changes to Project", new GregorianCalendar(2015, Calendar.JANUARY, 23));
-			projectLeader.editReport(company.getSpecificProject("Project02").getSpecificReport(0), "New content");
+			projectLeader.editReport(p1.getSpecificReportByName("Non-existing report"), "New content");
+			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Report does not exist", e.getMessage());
-			assertEquals("Get report", e.getOperation());
+			assertEquals("Edit report", e.getOperation());
 		}
 	}
 }

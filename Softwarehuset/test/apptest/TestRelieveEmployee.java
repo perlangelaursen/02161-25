@@ -76,8 +76,8 @@ public class TestRelieveEmployee {
 			projectLeader.relieveEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Relieve Employee is not allowed if not logged in",e.getMessage());
-			assertEquals("Relieve Employee",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader",e.getMessage());
+			assertEquals("Project leader operation",e.getOperation());
 		}
 	}
 	
@@ -90,8 +90,8 @@ public class TestRelieveEmployee {
 			test2.relieveEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
-			assertEquals("Relieve Employee if not projectleader",e.getMessage());
-			assertEquals("Relieve Employee",e.getOperation());
+			assertEquals("Operation is not allowed if not project leader",e.getMessage());
+			assertEquals("Project leader operation",e.getOperation());
 		}
 	}
 

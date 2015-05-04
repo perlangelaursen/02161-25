@@ -125,7 +125,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -134,7 +134,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -143,7 +143,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -152,7 +152,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -161,7 +161,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -170,7 +170,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -179,7 +179,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -188,7 +188,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -197,7 +197,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -206,7 +206,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -215,7 +215,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 		
@@ -224,7 +224,7 @@ public class TestRegisterOtherTime {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time input", e.getMessage());
-			assertEquals("Register other time", e.getOperation());
+			assertEquals("Choose date", e.getOperation());
 		}
 		assertEquals(0, employee.getOtherTime("Course"));
 	}

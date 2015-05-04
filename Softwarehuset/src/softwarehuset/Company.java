@@ -133,4 +133,8 @@ public class Company {
 		}
 		return null;
 	}
+
+	public void clearProjects() {
+		projects.clear();
+	}
 }
