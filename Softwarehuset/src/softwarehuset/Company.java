@@ -47,7 +47,7 @@ public class Company {
 		return p;
 	}
 	
-	public void createProject(String name, GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
+	public Project createProject(String name, GregorianCalendar start, GregorianCalendar end) throws OperationNotAllowedException {
 		if (!executiveIsLoggedIn()) {
 			throw new OperationNotAllowedException("Create project operation is not allowed if not executive.", "Create project");
 		}
@@ -57,7 +57,7 @@ public class Company {
 		counter++;
 		Project p = new Project(name, start, end, this);
 		projects.add(p);
-		
+		return p;
 	}
 	public Employee createEmployee(String id, String password, String department) throws OperationNotAllowedException {
 		if (id.length() != 4) {
