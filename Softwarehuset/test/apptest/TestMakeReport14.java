@@ -38,7 +38,7 @@ public class TestMakeReport14 {
 		//Create employee and assign as project leader
 		projectLeader = company.createEmployee("Test", "password", "RandD");
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		employee = company.createEmployee("Test2", "password", "RandD");
+		employee = company.createEmployee("Tess", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
 		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(projectLeader, company.getSpecificProject("Project01"));
