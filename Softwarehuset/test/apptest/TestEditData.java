@@ -46,7 +46,6 @@ public class TestEditData {
 		
 		test1 = company.createEmployee("EFGH", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
-		
 		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(projectLeader, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeActivity(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
@@ -54,14 +53,14 @@ public class TestEditData {
 		}
 	@Test
 	public void testEditData() throws OperationNotAllowedException {
-		projectLeader.editActivityStart(company.getSpecificProject("Project01").getSpecificActivityByName("Activity01"), new GregorianCalendar(2015, Calendar.JANUARY, 25));
-		projectLeader.editActivityEnd(company.getSpecificProject("Project01").getSpecificActivityByName("Activity01"), new GregorianCalendar(2015, Calendar.JANUARY, 30));
-		projectLeader.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivityByName("Activity01"), "Activity description");
+		projectLeader.editActivityStart(company.getSpecificProject("Project01").getSpecificActivity(0), new GregorianCalendar(2015, Calendar.JANUARY, 25));
+		projectLeader.editActivityEnd(company.getSpecificProject("Project01").getSpecificActivity(0), new GregorianCalendar(2015, Calendar.JANUARY, 30));
+		projectLeader.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivity(0), "Activity description");
 	}
 	@Test
 	public void testEditDateNotAssignedToProject() {
 		try {
-			test1.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivityByName("Activity01"), "description");
+			test1.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivity(0), "description");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Unable to edit activity description, not assigned to project", e.getMessage());
 			assertEquals("Edit activity description", e.getOperation());
@@ -70,7 +69,7 @@ public class TestEditData {
 	@Test
 	public void testEditDataNonexistantProject() {
 		try {
-			projectLeader.editActivityDescription(company.getSpecificProject("Project02").getSpecificActivityByName("Activity01"), "description");
+			projectLeader.editActivityDescription(company.getSpecificProject("Project02").getSpecificActivity(0), "description");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Unable to change activity description, project does not exist", e.getMessage());
 			assertEquals("Edit activity description", e.getOperation());
@@ -88,7 +87,7 @@ public class TestEditData {
 	@Test
 	public void testEditDataInvalidDate() {
 		try {
-			projectLeader.editActivityStart(company.getSpecificProject("Project01").getSpecificActivityByName("Activity01"), new GregorianCalendar(2015, Calendar.JANUARY, 35));
+			projectLeader.editActivityStart(company.getSpecificProject("Project01").getSpecificActivity(0), new GregorianCalendar(2015, Calendar.JANUARY, 35));
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Unable to change activity end date, invalid date", e.getMessage());
 			assertEquals("Edit activity start date", e.getOperation());
@@ -97,7 +96,7 @@ public class TestEditData {
 	@Test
 	public void testEditDataInvalidDescription() {
 		try {
-			test1.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivityByName("Activity01"), "");
+			test1.editActivityDescription(company.getSpecificProject("Project01").getSpecificActivity(0), "");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Unable to change activity description, description cannot be blank", e.getMessage());
 			assertEquals("Edit activity description", e.getOperation());
