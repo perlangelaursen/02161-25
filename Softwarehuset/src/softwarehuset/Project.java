@@ -70,7 +70,10 @@ public class Project {
 		return activities;
 	}
 	
-	public Activity getSpecificActivity(int i) {
+	public Activity getSpecificActivity(int i) throws OperationNotAllowedException {
+		if(i>=activities.size()){
+			throw new OperationNotAllowedException("Activity does not exist", "Get activity");
+		}
 		return activities.get(i);
 	}
 
@@ -100,6 +103,7 @@ public class Project {
 
 	public Activity getSpecificActivityByName(String activityName) throws OperationNotAllowedException {
 		for(Activity a : activities){
+			if(a.getName().equals(activityName)) return a;
 			if(a.getName().equals(activityName)) {
 				return a;
 			}
@@ -117,7 +121,6 @@ public class Project {
 	public void addReport(Report report){
 		reports.add(report);
 	}
-
 	public void getProjectDetails(List<String> statistics) {
 		statistics.add("Project Name: " + name);
 		statistics.add("Project Leader ID: " + projectLeader.getID() +
@@ -141,7 +144,10 @@ public class Project {
 			a.assignedEmployeesInActivity(statistics);
 		}
 	}
-	public Report getSpecificReport(int i){
+	public Report getSpecificReport(int i) throws OperationNotAllowedException{
+		if(i>=reports.size()){
+			throw new OperationNotAllowedException("Report does not exist", "Get report");
+		}
 		return reports.get(i);
 	}
 	public Report getSpecificReportByName(String name) {

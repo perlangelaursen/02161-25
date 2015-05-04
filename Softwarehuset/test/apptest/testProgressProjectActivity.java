@@ -54,8 +54,11 @@ public class testProgressProjectActivity {
 		projectLeader.assignEmployeeActivity(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
 		projectLeader.registerSpentTime(company.getSpecificProject("Project01").getSpecificActivity(0), 100);
 		}
+	
+	//Der er stadig problemer med at hente informationer om aktiviteter ved at bruge deres navn, og ikke deres indeks.
 	@Test
 	public void testProgressActivity() throws OperationNotAllowedException {
+		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivity(0)));
 		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("Activity01")));
 	}
 	@Test
