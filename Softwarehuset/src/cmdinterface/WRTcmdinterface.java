@@ -15,7 +15,7 @@ import softwarehuset.OperationNotAllowedException;
 import softwarehuset.Project;
 
 /**
- * @author Per Lange Laursen - s144456
+ * @author Gruppe 25
  *
  */
 public class WRTcmdinterface {
@@ -117,7 +117,8 @@ public class WRTcmdinterface {
 		String inputString = input.readLine();
 		String[] commands = inputString.split(" ");
 		if(commands[0].equals("Login") && commands.length == 3) {
-			
+			company.employeeLogin(commands[1], commands[2]);
+			employeeScreen();
 		}
 		if(commands[0].equals("Login") && commands.length == 2) {
 			company.executiveLogin(commands[1]);
@@ -127,6 +128,26 @@ public class WRTcmdinterface {
 		if(commands[0].equals("Exit")) {
 			System.exit(0);
 		}
+	}
+
+	private void employeeScreen() {
+		// TODO Auto-generated method stub
+		System.out.println("User: " + company.getLoggedInEmployee().getID() 
+				+ company.getLoggedInEmployee().getDepartment());
+		System.out.println("Employee options");
+		System.out.println("- Register spent time");
+		System.out.println("- Ask colleague for assistance");
+		System.out.println("- Regitster vacation, sick-days and course attendance");
+		System.out.println("- See registered spent time");
+		System.out.println();
+		System.out.println("Project Leader options");
+		System.out.println("- Assign employee to project");
+		System.out.println("- Assign employee to activity");
+		System.out.println("- Create An Activity");
+		System.out.println("- Get Project Statistics");
+		System.out.println("- Relieve Employee from project");
+		System.out.println("- See available employees");
+		System.out.println("- Reports on project meetings");
 	}
 
 }
