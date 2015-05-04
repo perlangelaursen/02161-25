@@ -58,14 +58,6 @@ public class Project {
 		return a;
 	}
 	
-	public void addEmployeeToActivity(Employee e, Activity a) {
-		for(Activity i : activities) {
-			if(i.getName() == a.getName()) {
-				i.addEmployeeToActivity(e);
-			}
-		}
-	}
-	
 	public List<Activity> getActivities() {
 		return activities;
 	}

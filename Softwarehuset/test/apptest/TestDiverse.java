@@ -42,7 +42,8 @@ public class TestDiverse {
 		d2.set(2015, 2, 1);
 		d3.set(2015, 3, 1);
 		d4.set(2015, 4, 1);
-		
+	
+		em2 = company.createEmployee("BAMS", "password", "department");
 	}
 	
 	@Test
@@ -72,8 +73,6 @@ public class TestDiverse {
 		company.employeeLogin("HAVD", "password");
 		assertTrue(company.executiveIsLoggedIn());
 		
-		em2 = company.createEmployee("BAMS", "password", "department");
-		
 		company.employeeLogin("BAMS", "password2");
 		assertTrue(company.executiveIsLoggedIn());
 		
@@ -84,25 +83,21 @@ public class TestDiverse {
 		em3 = company.createEmployee("LAVT", "password", "department");
 		
 		assertEquals(company.getEmployee("LAVT"), em3);
-		assertEquals(company.getEmployee("HAVD"), em2);
+		assertEquals(company.getEmployee("BAMS"), em2);
 		assertNull(company.getEmployee("MIST"));
 		
 		
 	}
 	
 	@Test
-	public void testAddEmployeeToActivity() throws Exception {
-		company.employeeLogin(pro.getID(), pro.getPassword());
-		assertEquals(company.getLoggedInEmployee(), pro);
+	public void testgetEmployee() throws Exception {
+		company.employeeLogin("PROJ", "password");
+		Employee em10 = company.createEmployee("ANDS", "password", "department");
 		
-		pro.createActivity(p, "activity1", d1, d2);
-		pro.createActivity(p, "activity2", d3, d4);
+		assertNull(p.getEmployee("ANDS"));
 		
-		pro.assignEmployeeActivity(em2, p.getSpecificActivityByName(p.getID() + "-activity1"));
-		p.addEmployeeToActivity(em2, p.getSpecificActivityByName(p.getID() + "-activity1"));
-		assertTrue(p.getSpecificActivityByName(p.getID() + "-activity1").getEmployees().contains(em2));
-		p.addEmployeeToActivity(em3, p.getSpecificActivityByName(p.getID() + "-activity2"));
-		assertTrue(p.getSpecificActivityByName(p.getID() + "-activity2").getEmployees().contains(em3));
+		pro.assignEmployeeProject(em10, p);
+		assertNull(p.getEmployee("STEF"));
 		
 	}
 	
