@@ -112,4 +112,13 @@ public class Company {
 		executiveLoggedIn = false;
 		loggedInEmployee = null;
 	}
+
+	public Employee getEmployee(String id) {
+		for(Employee e : employees) {
+			if(e.getID().equals(id)) {
+				return e;
+			}
+		}
+		return null;
+	}
 }

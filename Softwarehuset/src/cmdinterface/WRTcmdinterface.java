@@ -3,18 +3,130 @@
  */
 package cmdinterface;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import softwarehuset.Address;
+import softwarehuset.Company;
+import softwarehuset.Employee;
+import softwarehuset.Executive;
+import softwarehuset.OperationNotAllowedException;
+import softwarehuset.Project;
+
 /**
- * @author perlangelaursen
+ * @author Per Lange Laursen - s144456
  *
  */
 public class WRTcmdinterface {
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	Address address = new Address("Kongens Lyngby", "Anker Engelunds Vej");
+	Company company = new Company("Softwarehuset A/S", address);
+	Executive executive = new Executive("ex01", "Executive", company, "password");
+	static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+	
+	public static void main(String[] args) throws IOException, OperationNotAllowedException {
+		//Print initial UI
+		new WRTcmdinterface().initialScreen();
+	}
+	
+	private void executiveScreen() throws IOException, OperationNotAllowedException {
 		// TODO Auto-generated method stub
+		System.out.println("Executive logged in");
+		System.out.println("Executive options");
+		System.out.println("- Add Employee (Company Database)");
+		System.out.println("- Create Project");
+		System.out.println("- Assign Project Leader");
+		System.out.println("- Log out");
+		System.out.println();
+		String inputString = input.readLine();
+		String[] commands = inputString.split(" ");
+		if(commands[0].equals("Add") && commands[1].equals("Employee")) {
+			addEmployee();
+		}
+		
+		if(commands[0].equals("Create") && commands[1].equals("Project")) {
+			createProject();
+		}
+		
+		if(commands[0].equals("Assign") && commands[1].equals("Project") 
+				&& commands[2].equals("Leader")) {
+			assignProjectLeader();
+		}
+		
+		if(commands[0].equals("Log") && commands[1].equals("out")) {
+			initialScreen();
+		}
+		
+	}
+	
+	private void assignProjectLeader() throws IOException, OperationNotAllowedException {
+		// TODO Auto-generated method stub
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		Employee projectLeader = company.getEmployee(id);
+		
+		System.out.print("Enter Project ID: ");
+		String project = input.readLine();
+		Project currentProject = company.getSpecificProject(project);
+		
+		if(projectLeader != null && currentProject != null) {
+			executive.assignProjectLeader(projectLeader, currentProject);
+			System.out.println("Assignment Complete");
+		}
+		
+		executiveScreen();
+		
+	}
 
+	private void createProject() throws IOException, OperationNotAllowedException {
+		// TODO Auto-generated method stub
+		System.out.print("Enter project name: ");
+		String projectName = input.readLine();
+		company.createProject(projectName);
+		System.out.println("Project created");
+		executiveScreen();
+	}
+
+	private void addEmployee() throws IOException, OperationNotAllowedException {
+		// TODO Auto-generated method stub
+		System.out.print("Enter Employee ID: ");
+		String id = input.readLine();
+		
+		System.out.print("Enter Deparment: ");
+		String department = input.readLine();
+		
+		System.out.println("Default password for " + id + " is password");
+		company.createEmployee(id, "password", department);
+		System.out.println();
+		
+		executiveScreen();
+	}
+
+	private void initialScreen() throws IOException, OperationNotAllowedException {
+		System.out.println("Work Registration Tool 0.1");
+		System.out.println("Softwarehuset A/S 2015");
+		System.out.println("To login type \"Login\" with the username and a password (Regular user)");
+		System.out.println("To login as executive type \"Login\" with just a password");
+		System.out.println("To exit the system. Type \"Exit\"");
+		System.out.println();
+		String inputString = input.readLine();
+		String[] commands = inputString.split(" ");
+		if(commands[0].equals("Login") && commands.length == 3) {
+			
+		}
+		if(commands[0].equals("Login") && commands.length == 2) {
+			company.executiveLogin(commands[1]);
+			executiveScreen();
+			
+		}
+		if(commands[0].equals("Exit")) {
+			System.exit(0);
+		}
 	}
 
 }
