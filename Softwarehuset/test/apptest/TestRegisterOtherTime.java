@@ -21,7 +21,7 @@ public class TestRegisterOtherTime {
 		// assigned to the project
 		Address address = new Address("City", "Street");
 		company = new Company("Softwarehuset", address);
-		employee = company.createEmployee("Employee", "empassword",	"Department1");
+		employee = company.createEmployee("LINK", "empassword",	"Department1");
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class TestRegisterOtherTime {
 	 */
 	@Test
 	public void testRegisterOtherTime() throws OperationNotAllowedException {
-		company.employeeLogin("Employee", "empassword");
+		company.employeeLogin("LINK", "empassword");
 
 		// Register vacation, sick time and course attendance (all days are included)
 		employee.registerVacationTime(2015, 12, 23, 2016, 1, 3);
@@ -60,7 +60,7 @@ public class TestRegisterOtherTime {
 	 */
 	@Test
 	public void testRegisterInvalidTimes() throws OperationNotAllowedException {
-		company.employeeLogin("Employee", "empassword");
+		company.employeeLogin("LINK", "empassword");
 
 		// Vacation on days that have passed
 		try {
@@ -117,7 +117,7 @@ public class TestRegisterOtherTime {
 	 */
 	@Test
 	public void testRegisterNonExistingDates() throws OperationNotAllowedException {
-		company.employeeLogin("Employee", "empassword");
+		company.employeeLogin("LINK", "empassword");
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		try {
@@ -241,7 +241,7 @@ public class TestRegisterOtherTime {
 	 */
 	@Test
 	public void testRegisteronOccupiedDates() throws OperationNotAllowedException {
-		company.employeeLogin("Employee", "empassword");
+		company.employeeLogin("LINK", "empassword");
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016
@@ -274,7 +274,7 @@ public class TestRegisterOtherTime {
 	
 	@Test
 	public void testRegisteronOccupiedDates2() throws OperationNotAllowedException {
-		company.employeeLogin("Employee", "empassword");
+		company.employeeLogin("LINK", "empassword");
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016
@@ -292,7 +292,7 @@ public class TestRegisterOtherTime {
 	}
 	@Test
 	public void testRegisteronOccupiedDates3() throws OperationNotAllowedException {
-		company.employeeLogin("Employee", "empassword");
+		company.employeeLogin("LINK", "empassword");
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016
@@ -305,7 +305,7 @@ public class TestRegisterOtherTime {
 	}
 	@Test
 	public void testRegisteronOccupiedDates4() throws OperationNotAllowedException {
-		company.employeeLogin("Employee", "empassword");
+		company.employeeLogin("LINK", "empassword");
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016

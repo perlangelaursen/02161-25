@@ -42,10 +42,10 @@ public class testProgressProjectActivity {
 		company.createProject("Project02", start, end);
 		
 		//Create employee and assign as project leader
-		projectLeader = company.createEmployee("Test", "password", "RandD");
+		projectLeader = company.createEmployee("HALO", "password", "RandD");
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		
-		test1 = company.createEmployee("Test2", "password", "RandD");
+		test1 = company.createEmployee("MUHA", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
 		
 		
@@ -54,8 +54,11 @@ public class testProgressProjectActivity {
 		projectLeader.assignEmployeeActivity(projectLeader, company.getSpecificProject("Project01").getSpecificActivity(0));
 		projectLeader.registerSpentTime(company.getSpecificProject("Project01").getSpecificActivity(0), 100);
 		}
+	
+	//Der er stadig problemer med at hente informationer om aktiviteter ved at bruge deres navn, og ikke deres indeks.
 	@Test
 	public void testProgressActivity() throws OperationNotAllowedException {
+		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivity(0)));
 		assertEquals(100, projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("Activity01")));
 	}
 	@Test
@@ -66,7 +69,7 @@ public class testProgressProjectActivity {
 	@Test
 	public void testProgressNonexistantActivity() throws OperationNotAllowedException {
 		try{
-			projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("ActivityXX")); //Mangler at færdiggøre
+			projectLeader.viewProgress(company.getSpecificProject("Project01"), company.getSpecificProject("Project01").getSpecificActivityByName("ActivityXX")); //Mangler at fï¿½rdiggï¿½re
 			fail("OperationNotAllowedException expected");
 	
 		} catch (OperationNotAllowedException e){

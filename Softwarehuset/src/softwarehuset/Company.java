@@ -15,6 +15,7 @@ public class Company {
 	private List<Employee> employees = new ArrayList<>();
 	private List<Employee> availableEmployees = new ArrayList<>();
 	private DateServer dateServer;
+	private int counter = 0;
 
 	public Company(String name, Address address) {
 		this.name = name;
@@ -41,7 +42,7 @@ public class Company {
 		if (!executiveIsLoggedIn()) {
 			throw new OperationNotAllowedException("Create project operation is not allowed if not executive.", "Create project");
 		}
-		Project p = new Project(name);
+		Project p = new Project(name, this);
 		projects.add(p);
 		return p;
 	}
@@ -53,11 +54,18 @@ public class Company {
 		if (start.after(end)){
 			throw new OperationNotAllowedException("The end date is set before the start date", "Create project");
 		}
-		Project p = new Project(name, start, end);
+		counter++;
+		Project p = new Project(name, start, end, this);
 		projects.add(p);
 		
 	}
-	public Employee createEmployee(String id, String password, String department) {
+	public Employee createEmployee(String id, String password, String department) throws OperationNotAllowedException {
+		if (id.length() != 4) {
+			throw new OperationNotAllowedException("Employee ID must be the length of 4 letters","Create employee");
+		}
+		if (id.matches(".*[0-9].*")) {
+			throw new OperationNotAllowedException("Employee ID must not contain any numbers","Create employee");
+		}
 		Employee e = new Employee(id, password, this, department);
 		employees.add(e);
 		return e;
@@ -74,8 +82,8 @@ public class Company {
 		}
 		return null;
 	}
-
-	public void employeeLogin(String id, String password) {
+	
+	public void employeeLogin(String id, String password) throws OperationNotAllowedException {
 		for(Employee e: employees){
 			if (e.getID().equals(id)){
 				if(e.getPassword().equals(password)){
@@ -113,6 +121,10 @@ public class Company {
 		loggedInEmployee = null;
 	}
 
+	public int getProjectCounter() {
+		return counter;
+	} 
+	
 	public Employee getEmployee(String id) {
 		for(Employee e : employees) {
 			if(e.getID().equals(id)) {

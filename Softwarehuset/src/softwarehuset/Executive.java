@@ -12,15 +12,7 @@ public class Executive {
 		company.setExecutive(this);
 		this.password = password;
 	}
-	public String getName(){
-		return this.name;
-	}
-	public String getDepartment(){
-		return this.department;
-	}
-	public Company getCompany(){
-		return this.company;
-	}
+
 	public void setLoginStatus(boolean b){
 		executiveLoggedIn = b;
 	}

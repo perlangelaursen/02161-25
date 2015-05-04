@@ -20,8 +20,8 @@ public class TestSeeRegisteredSpentTime {
 		Address address = new Address("City", "Street");
 		company = new Company("Softwarehuset", address);
 		Executive executive = new Executive("Executive", "Department1",	company, "password");
-		projectLeader = company.createEmployee("Employee1", "empassword1", "Department1");
-		employee = company.createEmployee("Employee2", "empassword2", "Department1");
+		projectLeader = company.createEmployee("HABU", "empassword1", "Department1");
+		employee = company.createEmployee("JANK", "empassword2", "Department1");
 
 		// Create project and assign project leader
 		company.executiveLogin("password");
@@ -37,7 +37,7 @@ public class TestSeeRegisteredSpentTime {
 		activity2 = project.createActivity("Refactoring", start, end,	project);
 		activity3 = project.createActivity("Programming", start, end,	project);
 		
-		company.employeeLogin("Employee1", "empassword1");
+		company.employeeLogin("HABU", "empassword1");
 		
 		// Add employee to project and activity
 		projectLeader.assignEmployeeProject(employee, project);
@@ -46,7 +46,7 @@ public class TestSeeRegisteredSpentTime {
 		projectLeader.assignEmployeeActivity(employee, activity3);
 
 		// Register spent time
-		company.employeeLogin("Employee2", "empassword2");
+		company.employeeLogin("JANK", "empassword2");
 		employee.registerSpentTime(activity, 100);
 		employee.registerSpentTime(activity2, 50);
 		
@@ -65,12 +65,12 @@ public class TestSeeRegisteredSpentTime {
 	@Test
 	public void testSeeRegisteredSpentTime() throws OperationNotAllowedException {
 		//Login
-		company.employeeLogin("Employee2", "empassword2");
+		company.employeeLogin("JANK", "empassword2");
 
 		// See spent time
-		assertEquals(100, employee.getSpentTime("Project01-Designing"));
-		assertEquals(50, employee.getSpentTime("Project01-Refactoring"));
-		assertEquals(0, employee.getSpentTime("Project01-Programming"));
+		assertEquals(100, employee.getSpentTime(project.getID() + "-Designing"));
+		assertEquals(50, employee.getSpentTime(project.getID() + "-Refactoring"));
+		assertEquals(0, employee.getSpentTime(project.getID() + "-Programming"));
 	}
 	
 	/**
@@ -85,10 +85,10 @@ public class TestSeeRegisteredSpentTime {
 	@Test
 	public void testSeeRegisteredSpentTimeOnWrongActivity() throws OperationNotAllowedException {
 		//Login
-		company.employeeLogin("Employee2", "empassword2");
+		company.employeeLogin("JANK", "empassword2");
 
 		try {
-			assertEquals(100, employee.getSpentTime("Project05-Designing"));
+			assertEquals(100, employee.getSpentTime("150309-Designing"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Employee is not assigned to the activity", e.getMessage());

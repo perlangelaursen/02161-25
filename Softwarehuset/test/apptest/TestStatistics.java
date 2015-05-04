@@ -43,11 +43,11 @@ public class TestStatistics {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = company.createEmployee("Test", "password", "RandD");
+		projectLeader = company.createEmployee("LISN", "password", "RandD");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = company.createEmployee("Test2", "password", "RandD");
-		test2 = company.createEmployee("Test3", "password", "RandD");
+		test1 = company.createEmployee("MADR", "password", "RandD");
+		test2 = company.createEmployee("FAML", "password", "RandD");
 		
 		company.employeeLogin(projectLeader.getID(), "password");
 		
@@ -84,7 +84,7 @@ public class TestStatistics {
 	
 	@Test
 	public void testgetStatisticsNotPL() throws OperationNotAllowedException {
-		Employee test3 = company.createEmployee("Test4", "password", "RandD");
+		Employee test3 = company.createEmployee("HAMB", "password", "RandD");
 		company.employeeLogin(test3.getID(), "password");
 		try {
 			test3.getStatisticsProject(company.getSpecificProject("Project01"));

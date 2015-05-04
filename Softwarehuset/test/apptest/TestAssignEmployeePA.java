@@ -52,23 +52,23 @@ public class TestAssignEmployeePA {
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
-		projectLeader = company.createEmployee("Test", "password", "Department1");
+		projectLeader = company.createEmployee("ABCD", "password", "Department1");
 		
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
-		test1 = company.createEmployee("Test2", "password", "Department1");
+		test1 = company.createEmployee("HFBJ", "password", "Department1");
 	}
 	
 	@Test
 	public void testAssignEmployeeProject() throws OperationNotAllowedException {
 		company.employeeLogin(projectLeader.getID(), "password");
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
-		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getID(), test1.getID());
-		assertEquals(company.getSpecificProject("Project01").getEmployee("Test2").getDepartment(), test1.getDepartment());
+		assertEquals(company.getSpecificProject("Project01").getEmployee("HFBJ").getID(), test1.getID());
+		assertEquals(company.getSpecificProject("Project01").getEmployee("HFBJ").getDepartment(), test1.getDepartment());
 	}
 	
 	@Test
 	public void testNotProjectLeader() throws OperationNotAllowedException {
-		Employee test2 = company.createEmployee("Test2", "password", "Department1");
+		Employee test2 = company.createEmployee("HFBJ", "password", "Department1");
 		try {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");

@@ -25,8 +25,8 @@ public class TestRegisterSpentTime {
 		Address address = new Address("City", "Street");
 		company = new Company("Softwarehuset", address);
 		Executive executive = new Executive("Executive", "Department1",	company, "password");
-		projectLeader = company.createEmployee("Employee1", "empassword1", "Department1");
-		employee = company.createEmployee("Employee2", "empassword2", "Department1");
+		projectLeader = company.createEmployee("LAND", "empassword1", "Department1");
+		employee = company.createEmployee("KANO", "empassword2", "Department1");
 
 		// Create project and assign project leader
 		company.executiveLogin("password");
@@ -52,13 +52,13 @@ public class TestRegisterSpentTime {
 	 */
 	@Test
 	public void testRegisterSpentTime() throws OperationNotAllowedException {
-		company.employeeLogin("Employee1", "empassword1");
+		company.employeeLogin("LAND", "empassword1");
 		// Add employee to project and activity
 		projectLeader.assignEmployeeProject(employee, project);
 		projectLeader.assignEmployeeActivity(employee, activity);
 
 		// Register spent time
-		company.employeeLogin("Employee2", "empassword2");
+		company.employeeLogin("KANO", "empassword2");
 		employee.registerSpentTime(activity, 100);
 
 		// See spent time
@@ -76,13 +76,13 @@ public class TestRegisterSpentTime {
 	 */
 	@Test
 	public void testRegisterNegativeTime() throws OperationNotAllowedException {
-		company.employeeLogin("Employee1", "empassword1");
+		company.employeeLogin("LAND", "empassword1");
 		// Add employee to project and activity
 		projectLeader.assignEmployeeProject(employee, project);
 		projectLeader.assignEmployeeActivity(employee, activity);
 
 		// Try to register spent time
-		company.employeeLogin("Employee2", "empassword2");
+		company.employeeLogin("KANO", "empassword2");
 		try {
 			employee.registerSpentTime(activity, -1);
 			fail("OperationNotAllowedException exception should have been thrown");
@@ -126,7 +126,7 @@ public class TestRegisterSpentTime {
 	 */
 	@Test
 	public void testRegisterTimeforWrongActivity() throws Exception {
-		company.employeeLogin("Employee2", "empassword2");
+		company.employeeLogin("KANO", "empassword2");
 		
 		try {
 			employee.registerSpentTime(activity, 100);
