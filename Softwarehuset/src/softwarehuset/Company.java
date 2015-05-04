@@ -126,5 +126,14 @@ public class Company {
 
 	public int getProjectCounter() {
 		return counter;
+	} 
+	
+	public Employee getEmployee(String id) {
+		for(Employee e : employees) {
+			if(e.getID().equals(id)) {
+				return e;
+			}
+		}
+		return null;
 	}
 }
