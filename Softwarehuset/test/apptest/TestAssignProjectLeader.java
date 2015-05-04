@@ -1,3 +1,5 @@
+//Test by Anna Ølgaard Nielsen - s144437
+
 package apptest;
 
 import static org.junit.Assert.*;
