@@ -184,7 +184,7 @@ public class WRTcmdinterface {
 			
 		}
 		if(userChoise.equals("Register vacation, sick-days and course attendance")) {
-			
+			registerVSC();
 		}
 		if(userChoise.equals("See registered spent time")) {
 			
@@ -214,6 +214,49 @@ public class WRTcmdinterface {
 			company.employeeLogout();
 			initialScreen();
 		}
+	}
+
+	private void registerVSC() throws IOException, OperationNotAllowedException {
+		System.out.println("Avaliable types of Activity:");
+		System.out.println("- Vacation");
+		System.out.println("- Sick");
+		System.out.println("- Course");
+		System.out.println();
+		System.out.print("Enter type of Activity: ");
+		
+		String type = input.readLine();
+		
+		System.out.print("Enter Start Date: ");
+		int startDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Month: ");
+		int startMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter Start Year: ");
+		int startYear = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Date: ");
+		int endDate = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Month: ");
+		int endMonth = Integer.parseInt(input.readLine());
+		
+		System.out.print("Enter End Year: ");
+		int endYear = Integer.parseInt(input.readLine()); 
+		
+		if(type.equals("Vacation")) {
+			company.getLoggedInEmployee().registerVacationTime(startYear, startMonth, startDate, endYear, endMonth, endDate);
+		}
+		
+		if(type.equals("Sick")) {
+			company.getLoggedInEmployee().registerSickTime(startYear, startMonth, startDate, endYear, endMonth, endDate);
+		}
+		
+		if(type.equals("Course")) {
+			company.getLoggedInEmployee().registerCourseTime(startYear, startMonth, startDate, endYear, endMonth, endDate);
+		}
+		
+		employeeScreen();
 	}
 
 	private void registerSpentTime() throws IOException, OperationNotAllowedException {
