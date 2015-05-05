@@ -46,8 +46,8 @@ public class TestMakeReport {
 	@Test
 	public void testWriteReport() throws OperationNotAllowedException {
 		
-		assertEquals("Changes to Project", p1.getSpecificReportByName("Changes to Project").getName());
-		assertNull(p1.getSpecificReportByName("Non-existing project"));
+		assertEquals("Changes to Project", p1.getSpecificReport("Changes to Project").getName());
+		assertNull(p1.getSpecificReport("Non-existing project"));
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class TestMakeReport {
 		company.employeeLogout();
 		
 		try{
-			p1.getSpecificReportByName("Changes to Project");
+			p1.getSpecificReport("Changes to Project");
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Get report is not allowed if not logged in", e.getMessage());
@@ -103,14 +103,14 @@ public class TestMakeReport {
 	
 	@Test
 	public void testEditReport() throws OperationNotAllowedException{
-		projectLeader.editReport(p1.getSpecificReportByName("Changes to Project"), "New content");
-		assertEquals("New content", p1.getSpecificReportByName("Changes to Project").getContent());
+		projectLeader.editReport(p1.getSpecificReport("Changes to Project"), "New content");
+		assertEquals("New content", p1.getSpecificReport("Changes to Project").getContent());
 	}
 	
 	@Test
 	public void testEditReportNotProjectLeader(){
 		try{
-			employee.editReport(p1.getSpecificReportByName("Changes to Project"), "New content");
+			employee.editReport(p1.getSpecificReport("Changes to Project"), "New content");
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Operation is not allowed if not project leader", e.getMessage());
@@ -121,7 +121,7 @@ public class TestMakeReport {
 	@Test
 	public void testEditNullReport() throws OperationNotAllowedException{
 		try{
-			projectLeader.editReport(p1.getSpecificReportByName("Non-existing report"), "New content");
+			projectLeader.editReport(p1.getSpecificReport("Non-existing report"), "New content");
 			fail("OperationNotAllowedException expected");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Report does not exist", e.getMessage());
