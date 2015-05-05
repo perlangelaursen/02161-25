@@ -119,7 +119,8 @@ public class WRTcmdinterface {
 	}
 
 	private void addEmployee() throws IOException, OperationNotAllowedException {
-		while (true) {
+		boolean isRunning = true;
+		while (isRunning) {
 			try {
 				System.out.print("Enter Employee ID: ");
 				String id = input.readLine();
@@ -131,7 +132,7 @@ public class WRTcmdinterface {
 				System.out.println("Default password for " + id
 						+ " is \"password\"");
 				System.out.println();
-				break;
+				isRunning = false;
 			} catch (Exception e) {
 				System.out.println("The ID must be 4 letters long");
 				System.out.println();
@@ -177,7 +178,8 @@ public class WRTcmdinterface {
 	}
 
 	private void employeeScreen() throws IOException, OperationNotAllowedException {
-		System.out.println("[User: " + company.getLoggedInEmployee().getID()+"]");
+		System.out.println("[User: " + company.getLoggedInEmployee().getID()+
+				" " + company.getLoggedInEmployee().getDepartment() + "]");
 		System.out.println("Employee options");
 		System.out.println("- Ask colleague for assistance");
 		System.out.println("- Remove assisting colleague");
@@ -251,7 +253,7 @@ public class WRTcmdinterface {
 		System.out.print("Enter Report ID: ");
 		String report = input.readLine();
 
-		System.out.println(company.createProject(project)
+		System.out.println(company.getSpecificProject(project)
 				.getSpecificReportByName(report).getContent());
 
 		employeeScreen();
@@ -412,17 +414,17 @@ public class WRTcmdinterface {
 		System.out.print("Enter End Year: ");
 		int endYear = Integer.parseInt(input.readLine());
 
-		if (type.equals("Vacation")) {
+		if (type.equals("Vacation") || type.equals("vacation")) {
 			company.getLoggedInEmployee().registerVacationTime(startYear,
 					startMonth, startDate, endYear, endMonth, endDate);
 		}
 
-		if (type.equals("Sick")) {
+		if (type.equals("Sick") || type.equals("sick")) {
 			company.getLoggedInEmployee().registerSickTime(startYear,
 					startMonth, startDate, endYear, endMonth, endDate);
 		}
 
-		if (type.equals("Course")) {
+		if (type.equals("Course") || type.equals("course")) {
 			company.getLoggedInEmployee().registerCourseTime(startYear,
 					startMonth, startDate, endYear, endMonth, endDate);
 		}
