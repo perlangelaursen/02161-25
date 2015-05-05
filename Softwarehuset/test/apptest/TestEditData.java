@@ -11,7 +11,6 @@ import softwarehuset.*;
 public class TestEditData {
 	private Company company;
 	private Employee projectLeader;
-	private Employee test1;
 	Project p1, p2;
 	
 	@Before
@@ -40,7 +39,6 @@ public class TestEditData {
 		projectLeader = company.createEmployee("ABCD", "password", "RandD");
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		
-		test1 = company.createEmployee("EFGH", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
 		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(projectLeader, p1);
