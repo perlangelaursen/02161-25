@@ -14,7 +14,7 @@ import softwarehuset.OperationNotAllowedException;
 import softwarehuset.Project;
 
 /**
- * @author Per Lange Laursen - s144456
+ * @author Gruppe 25
  *
  */
 public class WRTcmdinterface {
