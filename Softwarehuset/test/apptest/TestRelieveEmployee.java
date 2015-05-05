@@ -1,22 +1,12 @@
+//Per Lange Laursen - s144486
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import softwarehuset.Address;
-import softwarehuset.Company;
-import softwarehuset.Employee;
-import softwarehuset.Executive;
-import softwarehuset.OperationNotAllowedException;
-
-/*
-* Test created by Per Lange Laursen - s144486 DTU
-*/
+import softwarehuset.*;
 
 public class TestRelieveEmployee {
 	/**

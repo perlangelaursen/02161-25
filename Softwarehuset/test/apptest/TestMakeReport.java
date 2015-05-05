@@ -1,13 +1,11 @@
+//Mathias Enggrob Boon - s144484
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
 
 public class TestMakeReport {
@@ -15,6 +13,7 @@ public class TestMakeReport {
 	Employee employee;
 	Company company;
 	Project p1, p2;
+	
 	@Before
 	public void setup() throws OperationNotAllowedException {
 		// Create company and executive
@@ -43,6 +42,7 @@ public class TestMakeReport {
 		projectLeader.registerSpentTime(p1.getID()+"-Activity01", 100);
 		projectLeader.writeReport(p1, "Changes to Project", 2016, 1, 23);
 	}
+	
 	@Test
 	public void testWriteReport() throws OperationNotAllowedException {
 		
@@ -53,7 +53,6 @@ public class TestMakeReport {
 	@Test
 	public void testWriteReportNotLoggedIn() throws OperationNotAllowedException{
 		company.employeeLogout();
-		
 		try{
 			projectLeader.writeReport(company.getSpecificProject("Project02"), "Changes to Project", 2016, 1, 23);
 			fail("OperationNotAllowedException expected");
@@ -87,11 +86,9 @@ public class TestMakeReport {
 		}
 	}
 	
-
 	@Test
 	public void testReadReportNotLoggedIn(){
 		company.employeeLogout();
-		
 		try{
 			p1.getSpecificReport("Changes to Project");
 			fail("OperationNotAllowedException expected");

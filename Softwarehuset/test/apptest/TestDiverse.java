@@ -1,17 +1,13 @@
-//Test by Anna Ã˜lgaard Nieksen - s144437
-package apptest;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+//Anna Ølgaard Nielsen - s144437
 
+package apptest;
+import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
 import static org.junit.Assert.*;
 
 public class TestDiverse {
-	
 	private Company company;
 	private Executive executive;
 	private Employee em2, em3, pro;
@@ -19,7 +15,7 @@ public class TestDiverse {
 	private GregorianCalendar d1, d2, d3, d4;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws OperationNotAllowedException {
 		Address add = new Address("Kagevej 2", "Hundige");
 		company = new Company("Softwarehuset", add);
 		executive = new Executive("Name", "Department1", company, "password");
@@ -47,10 +43,10 @@ public class TestDiverse {
 	}
 	
 	@Test
-	public void testCreateEmployee() throws Exception {
+	public void testCreateEmployee() throws OperationNotAllowedException {
 		try {
 			company.createEmployee("Anders", "password", "department");
-			fail("OperationNotAllowedException exception should have been thrown");
+			fail("OperationNotAllowedOperationNotAllowedException OperationNotAllowedException should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Employee ID must be the length of 4 letters",e.getMessage());
 			assertEquals("Create employee",e.getOperation());
@@ -58,7 +54,7 @@ public class TestDiverse {
 		
 		try {
 			company.createEmployee("AND1", "password", "department");
-			fail("OperationNotAllowedException exception should have been thrown");
+			fail("OperationNotAllowedOperationNotAllowedException OperationNotAllowedException should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Employee ID must not contain any numbers",e.getMessage());
 			assertEquals("Create employee",e.getOperation());
@@ -66,10 +62,8 @@ public class TestDiverse {
 	}
 	
 	@Test
-	public void testEmployeeLogin() throws Exception {
-		
-		Employee em = new Employee("HAVD", "password", company, "department");
-		
+	public void testEmployeeLogin() throws OperationNotAllowedException {
+				
 		company.employeeLogin("HAVD", "password");
 		assertTrue(company.executiveIsLoggedIn());
 		
@@ -79,7 +73,7 @@ public class TestDiverse {
 	}
 	
 	@Test
-	public void testGetEmployee() throws Exception {
+	public void testGetEmployee() throws OperationNotAllowedException {
 		em3 = company.createEmployee("LAVT", "password", "department");
 		
 		assertEquals(company.getEmployee("LAVT"), em3);
@@ -90,7 +84,7 @@ public class TestDiverse {
 	}
 	
 	@Test
-	public void testgetEmployee() throws Exception {
+	public void testgetEmployee() throws OperationNotAllowedException {
 		company.employeeLogin("PROJ", "password");
 		Employee em10 = company.createEmployee("ANDS", "password", "department");
 		

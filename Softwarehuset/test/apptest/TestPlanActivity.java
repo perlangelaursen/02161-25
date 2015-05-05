@@ -1,18 +1,12 @@
+//Per Lange Laursen - s144486
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
-
-/*
-* Test created by Per Lange Laursen - s144486 DTU
-*/
 
 public class TestPlanActivity {
 	/**
@@ -24,6 +18,7 @@ public class TestPlanActivity {
 	 * </ol>
 	 * @throws OperationNotAllowedException 
 	 */
+
 	Company company;
 	Employee projectLeader;
 	Project p1;

@@ -1,33 +1,26 @@
-//Test by Van Anh Thi Trinh - s144449
+//Van Anh Thi Trinh - s144449
 package apptest;
+
+import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
-import static org.junit.Assert.*;
 
 public class TestCreateProject {
-	
 	private Address address;
 	private Company company;
-	private Employee employee;
+	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company and executive
 		address = new Address("City", "Street");
 		company = new Company("Softwarehuset", address);
-		Executive executive = new Executive("Executive", "Department1",	company, "password");
-		employee = company.createEmployee("LINK", "empassword",	"Department1");
-		
 		// Log in as executive
 		company.executiveLogin("password");
-
 	}
-	
 	/**
 	 * Tests the scenario where the executive successfully creates a project
 	 * with start and end date and a project with only a name
@@ -37,6 +30,7 @@ public class TestCreateProject {
 	 * </ol>
 	 * @throws OperationNotAllowedException 
 	 */
+	
 	@Test
 	public void testNewProjectSuccess() throws OperationNotAllowedException {
 		// Create a project
@@ -62,6 +56,7 @@ public class TestCreateProject {
 	 * <li>An exception is thrown
 	 * </ol>
 	 */
+	
 	@Test
 	public void testNewProjectLoggedOut() throws Exception {
 		// Executive is not logged in
@@ -107,6 +102,7 @@ public class TestCreateProject {
 	 * <li>An exception is thrown
 	 * </ol>
 	 */
+	
 	@Test
 	public void testNewProjectDateOrder() throws Exception {
 		// Create a project
@@ -138,6 +134,7 @@ public class TestCreateProject {
 	 * <li>An exception is thrown
 	 * </ol>
 	 */
+	
 	@Test
 	public void testNewProjectPassedDates() throws Exception {
 		// Create dates
