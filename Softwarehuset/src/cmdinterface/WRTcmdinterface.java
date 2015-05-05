@@ -52,6 +52,7 @@ public class WRTcmdinterface {
 		System.out.println("- Create Project");
 		System.out.println("- Assign Project Leader");
 		System.out.println("- Log out");
+		System.out.println("- Shut down the system");
 		System.out.println();
 		String inputString = input.readLine();
 		String[] commands = inputString.split(" ");
@@ -71,6 +72,10 @@ public class WRTcmdinterface {
 		if (commands[0].toLowerCase().equals("log") && commands[1].toLowerCase().equals("out")) {
 			company.employeeLogout();
 			initialScreen();
+		}
+		if (commands[0].toLowerCase().equals("shut") && commands[1].toLowerCase().equals("down")
+				&& commands[2].toLowerCase().equals("the") && commands[3].toLowerCase().equals("system")) {
+			System.exit(0);
 		}
 
 	}
@@ -154,7 +159,6 @@ public class WRTcmdinterface {
 				.println("To login type \"Login\" with the username and a password (Regular user)");
 		System.out
 				.println("To login as executive type \"Login\" with just a password");
-		System.out.println("To exit the system. Type \"Exit\"");
 		System.out.println();
 		String inputString = input.readLine();
 		String[] commands = inputString.split(" ");
@@ -177,9 +181,6 @@ public class WRTcmdinterface {
 			System.out.println("Incorrect password");
 			System.out.println();
 			initialScreen();
-		}
-		if (commands[0].toLowerCase().equals("exit")) {
-			System.exit(0);
 		}
 	}
 
