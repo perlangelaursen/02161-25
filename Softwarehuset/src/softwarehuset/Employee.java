@@ -23,7 +23,9 @@ public class Employee {
 	
 	public void assignEmployeeProject(Employee e, Project p) throws OperationNotAllowedException {
 		checkIfLoggedInProjectLeader(p);
-		p.addEmployeeToProject(e);
+		if(!p.getEmployees().contains(e)){
+			p.addEmployeeToProject(e);
+		}
 	}
 	
 
@@ -35,8 +37,17 @@ public class Employee {
 		project.createActivity(activityName, start, end, project);
 	}
 
-	public void assignEmployeeActivity(Employee e, Activity a) throws OperationNotAllowedException {
+	public void assignEmployeeActivity(String employee, String activity) throws OperationNotAllowedException {
+		Activity a = getActivity(activity);
 		checkIfLoggedInProjectLeader(a.getProject());
+		
+		Employee e = company.getEmployee(employee);
+		if (e == null){
+			throw new OperationNotAllowedException("Employee does not exist", "Assign employee to activity");
+		}
+		
+		Project p = a.getProject();
+		assignEmployeeProject(e, p);
 		a.addEmployeeToActivity(e);
 		e.addActivity(a);
 	}
@@ -58,18 +69,19 @@ public class Employee {
 		return password;
 	}
 
-	public void registerSpentTime(Activity activity, int time) throws OperationNotAllowedException {
+	public void registerSpentTime(String activity, int time) throws OperationNotAllowedException {
+		Activity a = getActivity(activity);
 		if(company.getLoggedInEmployee() != this){
 			throw new OperationNotAllowedException("Employee is not logged in", "Register spent time");
 		}
 		if(time<0){
 			throw new OperationNotAllowedException("Invalid time", "Register spent time");
 		}
-		if(!activities.containsKey(activity)){
+		if(!activities.containsKey(a)){
 			throw new OperationNotAllowedException("Employee is not assigned to the chosen activity", "Register spent time");
 		}
-			activities.put(activity, time);
-			activity.setTime(this, time);
+			activities.put(a, time);
+			a.setTime(this, time);
 	}
 
 	public String getDepartment() {
@@ -99,7 +111,7 @@ public class Employee {
 		return statistics;
 	}
 	public void writeReport(Project project, String name, int year, int month, int date) throws OperationNotAllowedException{
-		checkForInvalidDate(year, month-1, date);
+		company.checkForInvalidDate(year, month-1, date);
 		GregorianCalendar day = new GregorianCalendar();
 		day.set(year, month, date, 0, 0, 0);
 		
@@ -109,8 +121,8 @@ public class Employee {
 	}
 	
 	public void registerVacationTime(int year, int month, int date, int year2, int month2, int date2) throws OperationNotAllowedException {
-		checkForInvalidDate(year, month-1, date);
-		checkForInvalidDate(year2, month2-1, date2);
+		company.checkForInvalidDate(year, month-1, date);
+		company.checkForInvalidDate(year2, month2-1, date2);
 		Activity vacation = createPersonalActivity(year, month-1, date, year2, month2-1, date2, "Vacation");
 		
 		if(!vacation.getStart().after(company.getCurrentTime())){
@@ -122,8 +134,8 @@ public class Employee {
 	}
 
 	public void registerSickTime(int year, int month, int date, int year2, int month2, int date2) throws OperationNotAllowedException {
-		checkForInvalidDate(year, month-1, date);
-		checkForInvalidDate(year2, month2-1, date2);
+		company.checkForInvalidDate(year, month-1, date);
+		company.checkForInvalidDate(year2, month2-1, date2);
 		Activity sick = createPersonalActivity(year, month-1, date, year2, month2-1, date2, "Sick");
 		
 		if(sick.getEnd().after(company.getCurrentTime())){
@@ -135,8 +147,8 @@ public class Employee {
 	}
 	
 	public void registerCourseTime(int year, int month, int date, int year2, int month2, int date2) throws OperationNotAllowedException {
-		checkForInvalidDate(year, month-1, date);
-		checkForInvalidDate(year2, month2-1, date2);
+		company.checkForInvalidDate(year, month-1, date);
+		company.checkForInvalidDate(year2, month2-1, date2);
 		Activity course = createPersonalActivity(year, month-1, date, year2, month2-1, date2, "Course");
 		
 		if(!course.getStart().after(company.getCurrentTime())){
@@ -173,26 +185,6 @@ public class Employee {
 		return activity;
 	}
 
-	private void checkForInvalidDate(int year, int month, int date) throws OperationNotAllowedException {
-		//Find max year
-		GregorianCalendar newYear = new GregorianCalendar();
-		newYear.setTime(company.getCurrentTime().getTime());
-		newYear.add(Calendar.YEAR, 5);
-		int maxYear = newYear.get(Calendar.YEAR);
-		
-		//Check if valid date
-		if(year<1980 || year > maxYear || month< 0 || month > 11){
-			throw new OperationNotAllowedException("Invalid time input", "Choose date");
-		}
-		
-		//Check if date exists in the chosen month
-		GregorianCalendar cal = new GregorianCalendar(year, month, 1,0,0,0);
-		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		if (date < 1 || date > daysInMonth){
-			throw new OperationNotAllowedException("Invalid time input", "Choose date");
-		}
-	}
-
 	public void updateOldPlans(Activity newActivity, Activity oldActivity) {
 		GregorianCalendar newStart = new GregorianCalendar();
 		GregorianCalendar newEnd = new GregorianCalendar();
@@ -221,7 +213,7 @@ public class Employee {
 		}
 	}
 	
-	public int getOtherTime(String type) {
+	public int getTimeForPersonalActivity(String type) {
 		int time = 0;
 		for(Activity activity: calendar.keySet()){
 			if (activity.getType().equals(type)){
@@ -241,7 +233,7 @@ public class Employee {
 		return true;
 	}
 
-	public void needForAssistanceWithActivity(Employee selected, Activity specificActivity) throws OperationNotAllowedException {
+	public void requestAssistance(Employee selected, Activity specificActivity) throws OperationNotAllowedException {
 		if(company.getLoggedInEmployee() == this) {
 			specificActivity.assignAssistingEmployee(selected);
 		} else {
@@ -250,7 +242,7 @@ public class Employee {
 		
 	}
 
-	public void removeSpecificAssistingEmployee(Employee selected, Activity a)
+	public void removeAssistingEmployee(Employee selected, Activity a)
 	throws OperationNotAllowedException {
 		if(company.getLoggedInEmployee() == this) {
 			a.removeAssistingEmployee(selected);
@@ -295,9 +287,9 @@ public class Employee {
 
 	public void editActivityStart(String activity, int year, int month, int date) throws OperationNotAllowedException {
 		Activity a = getActivity(activity);
-		//checkIfLoggedInProjectLeader(a.getProject());
+		checkIfLoggedInProjectLeader(a.getProject());
 		
-		checkForInvalidDate(year, month-1, date);
+		company.checkForInvalidDate(year, month-1, date);
 		GregorianCalendar start = new GregorianCalendar();
 		start.set(year, month-1, date, 0, 0, 0);
 		a.setStart(start);
@@ -307,7 +299,7 @@ public class Employee {
 		Activity a = getActivity(activity);
 		checkIfLoggedInProjectLeader(a.getProject());
 		
-		checkForInvalidDate(year, month-1, date);
+		company.checkForInvalidDate(year, month-1, date);
 		GregorianCalendar end = new GregorianCalendar();
 		end.set(year, month-1, date, 0, 0, 0);
 		a.setEnd(end);
@@ -317,9 +309,10 @@ public class Employee {
 		Activity a = null;
 		for (Project p: company.getProjects()){
 			a = p.getActivity(activity);
-			break;
+			if(a!=null){
+				break;
+			}
 		}
-
 		if (a == null){
 			throw new OperationNotAllowedException("Activity does not exist", "Edit activity");
 		}

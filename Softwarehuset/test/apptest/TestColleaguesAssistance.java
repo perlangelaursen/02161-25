@@ -34,8 +34,8 @@ public class TestColleaguesAssistance {
 				
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.FEBRUARY, 23);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.FEBRUARY, 23);
 		p1 = company.createProject("Project01", start, end);
 		projectLeader = company.createEmployee("ABCS", "password", "RandD");
 		
@@ -51,15 +51,15 @@ public class TestColleaguesAssistance {
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 24);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 24);
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "A", start, end);
-		projectLeader.assignEmployeeActivity(asker, p1.getActivity(p1.getID()+"-A"));
+		projectLeader.assignEmployeeActivity(asker.getID(), p1.getID()+"-A");
 		
 		company.employeeLogin(asker.getID(), "password");
 		assertNull(p1.getActivity(p1.getID()+"-A").getAssistingEmployee(selected));
 		
-		asker.needForAssistanceWithActivity(selected, p1.getActivity(p1.getID()+"-A"));
+		asker.requestAssistance(selected, p1.getActivity(p1.getID()+"-A"));
 		assertEquals(1, p1.getActivity(p1.getID()+"-A").getAssistingEmployees().size());
 		assertEquals(selected.getID(), p1.getActivity(p1.getID()+"-A").getAssistingEmployee(selected).getID());
 	}
@@ -73,13 +73,13 @@ public class TestColleaguesAssistance {
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 24);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 24);
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "A", start, end);
-		projectLeader.assignEmployeeActivity(asker, p1.getActivity(p1.getID()+"-A"));
+		projectLeader.assignEmployeeActivity(asker.getID(), p1.getID()+"-A");
 		
 		try {
-			asker.needForAssistanceWithActivity(selected, p1.getActivity(p1.getID()+"-A"));
+			asker.requestAssistance(selected, p1.getActivity(p1.getID()+"-A"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("User not logged in",e.getMessage());
@@ -97,18 +97,18 @@ public class TestColleaguesAssistance {
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 24);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 24);
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "A", start, end);
-		projectLeader.assignEmployeeActivity(asker, p1.getActivity(p1.getID()+"-A"));
+		projectLeader.assignEmployeeActivity(asker.getID(),p1.getID()+"-A");
 		
 		company.employeeLogin(asker.getID(), "password");
-		asker.needForAssistanceWithActivity(selected, p1.getActivity(p1.getID()+"-A"));
+		asker.requestAssistance(selected, p1.getActivity(p1.getID()+"-A"));
 		assertEquals(1, p1.getActivity(p1.getID()+"-A").getAssistingEmployees().size());
 		assertEquals(selected.getID(), p1.getActivity(p1.getID()+"-A").getAssistingEmployee(selected).getID());
 		
 		company.employeeLogin(asker.getID(), "password");
-		asker.removeSpecificAssistingEmployee(selected, p1.getActivity(p1.getID()+"-A"));
+		asker.removeAssistingEmployee(selected, p1.getActivity(p1.getID()+"-A"));
 		
 		assertEquals(0, p1.getActivity(p1.getID()+"-A").getAssistingEmployees().size());
 		
@@ -123,13 +123,13 @@ public class TestColleaguesAssistance {
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 24);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 24);
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "A", start, end);
-		projectLeader.assignEmployeeActivity(asker, p1.getActivity(p1.getID()+"-A"));
+		projectLeader.assignEmployeeActivity(asker.getID(), p1.getID()+"-A");
 		
 		try {
-			asker.removeSpecificAssistingEmployee(selected, p1.getActivity(p1.getID()+"-A"));
+			asker.removeAssistingEmployee(selected, p1.getActivity(p1.getID()+"-A"));
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("User not logged in",e.getMessage());
@@ -148,13 +148,13 @@ public class TestColleaguesAssistance {
 		projectLeader.assignEmployeeProject(asker, company.getSpecificProject("Project01"));
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 24);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 24);
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "A", start, end);
-		projectLeader.assignEmployeeActivity(asker, p1.getActivity(p1.getID()+"-A"));
+		projectLeader.assignEmployeeActivity(asker.getID(), p1.getID()+"-A");
 		
 		company.employeeLogin(asker.getID(), "password");
-		asker.needForAssistanceWithActivity(selected, p1.getActivity(p1.getID()+"-A"));
+		asker.requestAssistance(selected, p1.getActivity(p1.getID()+"-A"));
 		assertNull(p1.getActivity(p1.getID()+"-A").getAssistingEmployee(wrong));
 
 	}

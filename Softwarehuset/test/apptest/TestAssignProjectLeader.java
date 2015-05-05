@@ -4,6 +4,7 @@ package apptest;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -29,6 +30,8 @@ public class TestAssignProjectLeader {
 		em = new Employee("Anders", "password", com, "Project Department");
 		d1 = new GregorianCalendar();
 		d2 = new GregorianCalendar();
+		d1.add(Calendar.YEAR, 1);
+		d2.add(Calendar.YEAR, 1);
 	}
 	
 	@Test
@@ -40,11 +43,12 @@ public class TestAssignProjectLeader {
 		com.createProject("p1", d1, d2);
 		p1 = com.getSpecificProject("p1");
 		assertEquals(com.getProjects().size(),1);
-		
+		p1 = com.getSpecificProject(150001);
+		Project p2 = com.getSpecificProject(150002);
+		assertEquals(com.getProjects().size(),1);
 		ex.assignProjectLeader(em, p1);
 		
 		assertEquals(p1.getProjectLeader(), em);
-		
 	}
 	
 	@Test
@@ -94,7 +98,7 @@ public class TestAssignProjectLeader {
 	@Test
 	public void testProjectNotFound() throws Exception {
 		assertEquals(com.getSpecificProject("p1"), null);
-		
+		assertEquals(com.getSpecificProject(150502), null);
 	}
 	
 	@Test

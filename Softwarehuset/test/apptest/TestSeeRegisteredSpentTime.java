@@ -41,14 +41,14 @@ public class TestSeeRegisteredSpentTime {
 		
 		// Add employee to project and activity
 		projectLeader.assignEmployeeProject(employee, project);
-		projectLeader.assignEmployeeActivity(employee, activity);
-		projectLeader.assignEmployeeActivity(employee, activity2);
-		projectLeader.assignEmployeeActivity(employee, activity3);
+		projectLeader.assignEmployeeActivity(employee.getID(), activity.getName());
+		projectLeader.assignEmployeeActivity(employee.getID(), activity2.getName());
+		projectLeader.assignEmployeeActivity(employee.getID(), activity3.getName());
 
 		// Register spent time
 		company.employeeLogin("JANK", "empassword2");
-		employee.registerSpentTime(activity, 100);
-		employee.registerSpentTime(activity2, 50);
+		employee.registerSpentTime(project.getID()+"-Designing", 100);
+		employee.registerSpentTime(project.getID()+"-Refactoring", 50);
 		
 		//Log out
 		company.employeeLogout();

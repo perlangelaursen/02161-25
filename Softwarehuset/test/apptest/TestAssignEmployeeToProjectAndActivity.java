@@ -14,7 +14,7 @@ import softwarehuset.*;
 * Test created by Per Lange Laursen - s144486 DTU
 */
 
-public class TestAssignEmployeePA {
+public class TestAssignEmployeeToProjectAndActivity {
 	/**
 	 * Tests the scenario where a project or activity is created
 	 * then a projectleader or activityleader is assigned.
@@ -44,8 +44,8 @@ public class TestAssignEmployeePA {
 		
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.FEBRUARY, 23);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.FEBRUARY, 23);
 		p1 = company.createProject("Project01", start, end);
 		p2 = company.createProject("Project02");
 		
@@ -100,7 +100,7 @@ public class TestAssignEmployeePA {
 		projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
 		
 		Activity a = p1.getActivity(p1.getID()+"-TestActivity");
-		projectLeader.assignEmployeeActivity(test1, a);
+		projectLeader.assignEmployeeActivity(test1.getID(), a.getName());
 	}
 	
 	@Test
@@ -117,7 +117,7 @@ public class TestAssignEmployeePA {
 		
 		try {
 			Activity a = p1.getActivity(p1.getID()+"-TestActivity");
-			projectLeader.assignEmployeeActivity(test1, a);
+			projectLeader.assignEmployeeActivity(test1.getID(), a.getName());
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Operation is not allowed if not project leader", e.getMessage());
@@ -139,11 +139,32 @@ public class TestAssignEmployeePA {
 		company.employeeLogin("KKKK", "password");
 		try {
 			Activity a = p1.getActivity(p1.getID()+"-TestActivity");
-			test2.assignEmployeeActivity(test1, a);
+			test2.assignEmployeeActivity(test1.getID(), a.getName());
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Operation is not allowed if not project leader", e.getMessage());
 			assertEquals("Project leader operation", e.getOperation());
+		}
+	}
+	
+	@Test
+	public void testAssignWrongEmployee() throws OperationNotAllowedException {
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 25);
+		Employee test2 = new Employee("KKKK", "password", company, "Department1");
+		
+		company.employeeLogin(projectLeader.getID(), "password");
+		
+		try {
+			projectLeader.createActivity(company.getSpecificProject("Project01"), "TestActivity", start, end);
+			Activity a = p1.getActivity(p1.getID()+"-TestActivity");
+			projectLeader.assignEmployeeActivity(test2.getID(), a.getName());
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Employee does not exist", e.getMessage());
+			assertEquals("Assign employee to activity", e.getOperation());
 		}
 	}
 }

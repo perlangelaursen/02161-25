@@ -42,6 +42,7 @@ public class Company {
 		if (!executiveIsLoggedIn()) {
 			throw new OperationNotAllowedException("Create project operation is not allowed if not executive.", "Create project");
 		}
+		counter++;
 		Project p = new Project(name, this);
 		projects.add(p);
 		return p;
@@ -51,6 +52,11 @@ public class Company {
 		if (!executiveIsLoggedIn()) {
 			throw new OperationNotAllowedException("Create project operation is not allowed if not executive.", "Create project");
 		}
+		
+		if (!start.after(getCurrentTime())){
+			throw new OperationNotAllowedException("The start date has already been passed", "Create project");
+		}
+		
 		if (start.after(end)){
 			throw new OperationNotAllowedException("The end date is set before the start date", "Create project");
 		}
@@ -83,7 +89,16 @@ public class Company {
 		return null;
 	}
 	
-	public void employeeLogin(String id, String password) throws OperationNotAllowedException {
+	public Project getSpecificProject(int ID){
+		for (Project p : projects) {
+			if (p.getID() == ID) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	public void employeeLogin(String id, String password) {
 		for(Employee e: employees){
 			if (e.getID().equals(id)){
 				if(e.getPassword().equals(password)){
@@ -136,5 +151,25 @@ public class Company {
 
 	public void clearProjects() {
 		projects.clear();
+	}
+	
+	public void checkForInvalidDate(int year, int month, int date) throws OperationNotAllowedException {
+		//Find max year
+		GregorianCalendar newYear = new GregorianCalendar();
+		newYear.setTime(getCurrentTime().getTime());
+		newYear.add(Calendar.YEAR, 5);
+		int maxYear = newYear.get(Calendar.YEAR);
+		
+		//Check if valid date
+		if(year<1980 || year > maxYear || month< 0 || month > 11){
+			throw new OperationNotAllowedException("Invalid time input", "Choose date");
+		}
+		
+		//Check if date exists in the chosen month
+		GregorianCalendar cal = new GregorianCalendar(year, month, 1,0,0,0);
+		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		if (date < 1 || date > daysInMonth){
+			throw new OperationNotAllowedException("Invalid time input", "Choose date");
+		}
 	}
 }

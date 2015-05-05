@@ -38,8 +38,8 @@ public class TestCreateActivity {
 		
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.FEBRUARY, 23);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.FEBRUARY, 23);
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 		
@@ -53,8 +53,8 @@ public class TestCreateActivity {
 	public void testCreateActivity01() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 25);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 25);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		company.employeeLogin("BAMS", "password");
@@ -67,8 +67,8 @@ public class TestCreateActivity {
 	public void testCreateActivity02() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 25);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 25);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		
@@ -88,8 +88,8 @@ public class TestCreateActivity {
 	public void testCreateActivity03() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 29);
-		end.set(2015, Calendar.JANUARY, 25);
+		start.set(2016, Calendar.JANUARY, 29);
+		end.set(2016, Calendar.JANUARY, 25);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		company.employeeLogin("BAMS", "password");
@@ -109,8 +109,8 @@ public class TestCreateActivity {
 	public void testCreateActivity04() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.JANUARY, 25);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.JANUARY, 25);
 		
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 		try {

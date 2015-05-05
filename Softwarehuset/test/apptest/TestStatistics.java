@@ -36,8 +36,8 @@ public class TestStatistics {
 		
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.FEBRUARY, 23);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.FEBRUARY, 23);
 		p1 = company.createProject("Project01", start, end);
 		p2 = company.createProject("Project02");
 		
@@ -57,8 +57,8 @@ public class TestStatistics {
 		
 		a1 = company.getSpecificProject("Project01").getActivity(p1.getID()+"-AO1");
 		a2 = company.getSpecificProject("Project01").getActivity(p1.getID()+"-AO2");
-		projectLeader.assignEmployeeActivity(test1, a1);
-		projectLeader.assignEmployeeActivity(test2, a2);
+		projectLeader.assignEmployeeActivity(test1.getID(), a1.getName());
+		projectLeader.assignEmployeeActivity(test2.getID(), a2.getName());
 	}
 	
 	@Test

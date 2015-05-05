@@ -11,7 +11,7 @@ import org.junit.Test;
 import softwarehuset.*;
 
 	//Mathias
-public class testProgressProjectActivity {
+public class TestGetProgressForProjectAndActivity {
 	Employee projectLeader;
 	Employee test1;
 	Company company;
@@ -31,8 +31,8 @@ public class testProgressProjectActivity {
 		//Set date	
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.FEBRUARY, 23);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.FEBRUARY, 23);
 		
 		//Create projects
 		p1 = company.createProject("Project01", start, end);
@@ -49,8 +49,8 @@ public class testProgressProjectActivity {
 		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(projectLeader, company.getSpecificProject("Project01"));
 
-		projectLeader.assignEmployeeActivity(projectLeader, p1.getActivity(p1.getID()+"-Activity01"));
-		projectLeader.registerSpentTime(p1.getActivity(p1.getID()+"-Activity01"), 100);
+		projectLeader.assignEmployeeActivity(projectLeader.getID(), p1.getID()+"-Activity01");
+		projectLeader.registerSpentTime(p1.getID()+"-Activity01", 100);
 		}
 	
 	

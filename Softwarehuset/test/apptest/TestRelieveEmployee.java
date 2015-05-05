@@ -46,8 +46,8 @@ public class TestRelieveEmployee {
 				
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.FEBRUARY, 23);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.FEBRUARY, 23);
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 				

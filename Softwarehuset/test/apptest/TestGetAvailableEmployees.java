@@ -18,7 +18,7 @@ import softwarehuset.Executive;
 import softwarehuset.OperationNotAllowedException;
 import softwarehuset.Project;
 
-public class testAvailableEmployees {
+public class TestGetAvailableEmployees {
 	private Address add;
 	private Company com;
 	private Executive ex;
@@ -68,8 +68,8 @@ public class testAvailableEmployees {
 		em.createActivity(p1, "activity1", d1, d2);
 		em.createActivity(p1, "activity2", d3, d4);
 		System.out.println(p1.getID());
-		em.assignEmployeeActivity(em2, p1.getActivity(p1.getID() + "-activity1"));
-		em.assignEmployeeActivity(em2, p1.getActivity(p1.getID() + "-activity2"));
+		em.assignEmployeeActivity(em2.getID(), p1.getID() + "-activity1");
+		em.assignEmployeeActivity(em2.getID(), p1.getID() + "-activity2");
 		
 		d5.set(2000, 1, 1);
 		d6.set(2000, 2, 1);
@@ -90,9 +90,9 @@ public class testAvailableEmployees {
 		d4.set(2000, 6, 1);
 		em.createActivity(p1, "activity1", d1, d2);
 		em.createActivity(p1, "activity2", d3, d4);
-		em.assignEmployeeActivity(em2, p1.getActivity(p1.getID() + "-activity1"));
-		em.assignEmployeeActivity(em3, p1.getActivity(p1.getID() + "-activity2"));
-		em.assignEmployeeActivity(em4, p1.getActivity(p1.getID() + "-activity2"));
+		em.assignEmployeeActivity(em2.getID(), p1.getID() + "-activity1");
+		em.assignEmployeeActivity(em3.getID(), p1.getID() + "-activity2");
+		em.assignEmployeeActivity(em4.getID(), p1.getID() + "-activity2");
 		
 		d5.set(2000, 1, 1);
 		d6.set(2000, 2, 1);
@@ -115,9 +115,9 @@ public class testAvailableEmployees {
 		em.createActivity(p1, "activity1", d1, d2);
 		em.createActivity(p1, "activity2", d3, d4);
 		
-		em.assignEmployeeActivity(em2, p1.getActivity(p1.getID() + "-activity1"));
+		em.assignEmployeeActivity(em2.getID(), p1.getID() + "-activity1");
 		assertTrue(em2.getActivities().contains(p1.getActivity(p1.getID() + "-activity1")));
-		em.assignEmployeeActivity(em2, p1.getActivity(p1.getID() + "-activity2"));
+		em.assignEmployeeActivity(em2.getID(), p1.getID() + "-activity2");
 		assertTrue(em2.getActivities().contains(p1.getActivity(p1.getID() + "-activity2")));
 		
 		d5.set(2000, 5, 5);

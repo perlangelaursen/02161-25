@@ -17,8 +17,7 @@ public class TestRegisterOtherTime {
 
 	@Before
 	public void setUp() throws OperationNotAllowedException {
-		// Create company executive, project leader for a project and employee
-		// assigned to the project
+		// Create company, executive, project leader for a project and employee assigned to the project
 		Address address = new Address("City", "Street");
 		company = new Company("Softwarehuset", address);
 		employee = company.createEmployee("LINK", "empassword",	"Department1");
@@ -40,13 +39,13 @@ public class TestRegisterOtherTime {
 
 		// Register vacation, sick time and course attendance (all days are included)
 		employee.registerVacationTime(2015, 12, 23, 2016, 1, 3);
-		assertEquals(12 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(12 * 24, employee.getTimeForPersonalActivity("Vacation"));
 
 		employee.registerSickTime(2015, 3, 25, 2015, 3, 26);
-		assertEquals(2 * 24, employee.getOtherTime("Sick"));
+		assertEquals(2 * 24, employee.getTimeForPersonalActivity("Sick"));
 
 		employee.registerCourseTime(2016, 5, 1, 2016, 5, 1);
-		assertEquals(24, employee.getOtherTime("Course"));
+		assertEquals(24, employee.getTimeForPersonalActivity("Course"));
 	}
 
 	/**
@@ -70,7 +69,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Cannot register vacation in the past", e.getMessage());
 			assertEquals("Register other time", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Vacation"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Vacation"));
 
 		// Course attendance on days that have passed
 		try {
@@ -80,7 +79,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Cannot register course attendance in the past", e.getMessage());
 			assertEquals("Register other time", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 
 		// Sick in the future
 		try {
@@ -90,7 +89,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Cannot register sick days in the future", e.getMessage());
 			assertEquals("Register other time", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Sick"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Sick"));
 
 		// Start date after end date
 		try {
@@ -100,7 +99,7 @@ public class TestRegisterOtherTime {
 			assertEquals("End date cannot be before start date", e.getMessage());
 			assertEquals("Register other time", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		//Non-existing date input
 
@@ -127,7 +126,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2030, 5, 2, 2016, 5, 1);
@@ -136,7 +135,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, -5, 2, 2016, 5, 1);
@@ -145,7 +144,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 50, 2, 2016, 5, 1);
@@ -154,7 +153,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 0, 2016, 5, 1);
@@ -163,7 +162,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 32, 2016, 5, 1);
@@ -172,7 +171,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 2, 1800, 5, 1);
@@ -181,7 +180,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 2, 2030, 5, 1);
@@ -190,7 +189,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 2, 2016, 0, 1);
@@ -199,7 +198,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 2, 2016, 13, 1);
@@ -208,7 +207,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 2, 2016, 5, 0);
@@ -217,7 +216,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		
 		try {
 			employee.registerVacationTime(2016, 5, 2, 2016, 5, 40);
@@ -226,7 +225,7 @@ public class TestRegisterOtherTime {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-		assertEquals(0, employee.getOtherTime("Course"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 	}
 	
 	/**
@@ -245,7 +244,7 @@ public class TestRegisterOtherTime {
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016
-		assertEquals(10 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(10 * 24, employee.getTimeForPersonalActivity("Vacation"));
 		
 		//Set current date to May 6th 2016
 		DateServer dateServer = mock(DateServer.class);
@@ -256,20 +255,20 @@ public class TestRegisterOtherTime {
 		
 		//Register sick days on vacation days starting before the vacation and ending in the vacation
 		employee.registerSickTime(2016, 4, 28, 2016, 5, 5);
-		assertEquals(8 * 24, employee.getOtherTime("Sick"));
+		assertEquals(8 * 24, employee.getTimeForPersonalActivity("Sick"));
 		//Vacation now: 6/5/2016 - 10/5/2016
-		assertEquals(5 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(5 * 24, employee.getTimeForPersonalActivity("Vacation"));
 		
 		//Register vacation days on vacation days starting in the vacation period and ending after (extending the vacation)
 		employee.registerVacationTime(2016, 5, 8, 2016, 5, 20);
 		//Vacation now: 6/5/2016 - 20/5/2016
-		assertEquals(15 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(15 * 24, employee.getTimeForPersonalActivity("Vacation"));
 		
 		//Register course attendance starting and ending in a vacation (dividing the vacation into two parts)
 		employee.registerCourseTime(2016, 5, 10, 2016, 5, 15);
-		assertEquals(6 * 24, employee.getOtherTime("Course"));
+		assertEquals(6 * 24, employee.getTimeForPersonalActivity("Course"));
 		//Vacation now: 6/5/2016 - 9/5/2016 and 16/5/2016 - 20/5/2016  
-		assertEquals(4 * 24 + 5 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(4 * 24 + 5 * 24, employee.getTimeForPersonalActivity("Vacation"));
 	}
 	
 	@Test
@@ -278,17 +277,17 @@ public class TestRegisterOtherTime {
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016
-		assertEquals(10 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(10 * 24, employee.getTimeForPersonalActivity("Vacation"));
 		
 		//Register course attendance starting before the vacation and ending after the vacation (overwriting the vacation completely)
 		employee.registerCourseTime(2016, 4, 28, 2016, 5, 15);
-		assertEquals(18 * 24, employee.getOtherTime("Course"));  
-		assertEquals(0, employee.getOtherTime("Vacation"));
+		assertEquals(18 * 24, employee.getTimeForPersonalActivity("Course"));  
+		assertEquals(0, employee.getTimeForPersonalActivity("Vacation"));
 	
 		//Register vacation exactly in the course period
 		employee.registerVacationTime(2016, 4, 28, 2016, 5, 15);
-		assertEquals(0, employee.getOtherTime("Course"));
-		assertEquals(18 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
+		assertEquals(18 * 24, employee.getTimeForPersonalActivity("Vacation"));
 	}
 	@Test
 	public void testRegisteronOccupiedDates3() throws OperationNotAllowedException {
@@ -296,12 +295,12 @@ public class TestRegisterOtherTime {
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016
-		assertEquals(10 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(10 * 24, employee.getTimeForPersonalActivity("Vacation"));
 		
 		//Register course attendance starting on the same date as the vacation
 		employee.registerCourseTime(2016, 5, 1, 2016, 5, 1);  
-		assertEquals(24, employee.getOtherTime("Course"));
-		assertEquals(9 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(24, employee.getTimeForPersonalActivity("Course"));
+		assertEquals(9 * 24, employee.getTimeForPersonalActivity("Vacation"));
 	}
 	@Test
 	public void testRegisteronOccupiedDates4() throws OperationNotAllowedException {
@@ -309,12 +308,12 @@ public class TestRegisterOtherTime {
 		employee.registerVacationTime(2016, 5, 1, 2016, 5, 10);
 		
 		//Vacation now: 1/5/2016 - 10/5/2016
-		assertEquals(10 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(10 * 24, employee.getTimeForPersonalActivity("Vacation"));
 		
 		//Register course attendance ending on the same date as the vacation
 		employee.registerCourseTime(2016, 5, 9, 2016, 5, 10);  
-		assertEquals(2 * 24, employee.getOtherTime("Course"));
-		assertEquals(8 * 24, employee.getOtherTime("Vacation"));
+		assertEquals(2 * 24, employee.getTimeForPersonalActivity("Course"));
+		assertEquals(8 * 24, employee.getTimeForPersonalActivity("Vacation"));
 	}
 	/**
 	 * Tests the scenario where an employee's calendar is updated with no overlapping dates 

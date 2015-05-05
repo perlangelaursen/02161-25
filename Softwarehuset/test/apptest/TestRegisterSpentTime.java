@@ -20,8 +20,7 @@ public class TestRegisterSpentTime {
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
-		// Create company executive, project leader for a project and employee
-		// assigned to the project
+		// Create company, executive, project leader for a project and employee assigned to the project
 		Address address = new Address("City", "Street");
 		company = new Company("Softwarehuset", address);
 		Executive executive = new Executive("Executive", "Department1",	company, "password");
@@ -55,11 +54,11 @@ public class TestRegisterSpentTime {
 		company.employeeLogin("LAND", "empassword1");
 		// Add employee to project and activity
 		projectLeader.assignEmployeeProject(employee, project);
-		projectLeader.assignEmployeeActivity(employee, activity);
+		projectLeader.assignEmployeeActivity(employee.getID(), activity.getName());
 
 		// Register spent time
 		company.employeeLogin("KANO", "empassword2");
-		employee.registerSpentTime(activity, 100);
+		employee.registerSpentTime(project.getID()+"-Designing", 100);
 
 		// See spent time
 		assertEquals(100, activity.getSpentTime(employee));
@@ -79,12 +78,12 @@ public class TestRegisterSpentTime {
 		company.employeeLogin("LAND", "empassword1");
 		// Add employee to project and activity
 		projectLeader.assignEmployeeProject(employee, project);
-		projectLeader.assignEmployeeActivity(employee, activity);
+		projectLeader.assignEmployeeActivity(employee.getID(), activity.getName());
 
 		// Try to register spent time
 		company.employeeLogin("KANO", "empassword2");
 		try {
-			employee.registerSpentTime(activity, -1);
+			employee.registerSpentTime(project.getID()+"-Designing", -1);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Invalid time", e.getMessage());
@@ -107,7 +106,7 @@ public class TestRegisterSpentTime {
 	@Test
 	public void testRegisterWithoutLoggingIn() throws Exception {
 		try {
-			employee.registerSpentTime(activity, 100);
+			employee.registerSpentTime(project.getID()+"-Designing", 100);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Employee is not logged in", e.getMessage());
@@ -129,7 +128,7 @@ public class TestRegisterSpentTime {
 		company.employeeLogin("KANO", "empassword2");
 		
 		try {
-			employee.registerSpentTime(activity, 100);
+			employee.registerSpentTime(project.getID()+"-Designing", 100);
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("Employee is not assigned to the chosen activity", e.getMessage());

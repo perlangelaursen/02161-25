@@ -4,12 +4,30 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import softwarehuset.*;
 import static org.junit.Assert.*;
 
 public class TestCreateProject {
+	
+	private Address address;
+	private Company company;
+	private Employee employee;
+	@Before
+	public void setUp() throws OperationNotAllowedException {
+		// Create company and executive
+		address = new Address("City", "Street");
+		company = new Company("Softwarehuset", address);
+		Executive executive = new Executive("Executive", "Department1",	company, "password");
+		employee = company.createEmployee("LINK", "empassword",	"Department1");
+		
+		// Log in as executive
+		company.executiveLogin("password");
+
+	}
+	
 	/**
 	 * Tests the scenario where the executive successfully creates a project
 	 * with start and end date and a project with only a name
@@ -21,21 +39,11 @@ public class TestCreateProject {
 	 */
 	@Test
 	public void testNewProjectSuccess() throws OperationNotAllowedException {
-		// Create company and executive
-		Address address = new Address("City", "Street");
-		Company company = new Company("Company", address);
-		Executive executive = new Executive("Name", "Department1", company, "password");
-
-		// Log in as executive
-		assertFalse(company.executiveIsLoggedIn());
-		company.executiveLogin("password");
-		assertTrue(company.executiveIsLoggedIn());
-
 		// Create a project
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.JANUARY, 23);
-		end.set(2015, Calendar.FEBRUARY, 23);
+		start.set(2016, Calendar.JANUARY, 23);
+		end.set(2016, Calendar.FEBRUARY, 23);
 		company.createProject("Project01", start, end);
 		company.createProject("Project02");
 
@@ -56,12 +64,8 @@ public class TestCreateProject {
 	 */
 	@Test
 	public void testNewProjectLoggedOut() throws Exception {
-		// Create company and executive
-		Address address = new Address("City", "Street");
-		Company company = new Company("Company", address);
-		Executive ex = new Executive("Name", "Department1", company, "password");
-
 		// Executive is not logged in
+		company.employeeLogout();
 		company.executiveLogin("wrongPassword");
 		assertFalse(company.executiveIsLoggedIn());
 
@@ -105,19 +109,11 @@ public class TestCreateProject {
 	 */
 	@Test
 	public void testNewProjectDateOrder() throws Exception {
-		// Create company and executive
-		Address address = new Address("City", "Street");
-		Company company = new Company("Company", address);
-		Executive executive = new Executive("Name", "Department1", company, "password");
-
-		// Log in as executive
-		company.executiveLogin("password");
-
 		// Create a project
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
-		start.set(2015, Calendar.FEBRUARY, 23);
-		end.set(2015, Calendar.JANUARY, 23);
+		start.set(2016, Calendar.FEBRUARY, 23);
+		end.set(2016, Calendar.JANUARY, 23);
 
 		// Try to create a project
 		try {
@@ -125,6 +121,37 @@ public class TestCreateProject {
 			fail("OperationNotAllowedException exception should have been thrown");
 		} catch (OperationNotAllowedException e) {
 			assertEquals("The end date is set before the start date",e.getMessage());
+			assertEquals("Create project",e.getOperation());
+		}
+
+		// See projects
+		List<Project> projects = (List<Project>) company.getProjects();
+		int numberOfProjects = projects.size();
+		assertEquals(0, numberOfProjects);
+	}
+	
+	/**
+	 * Tests the scenario where the chosen dates have already been passed
+	 * <ol>
+	 * <li>The executive is logged in
+	 * <li>The executive tries to create a project with dates in the past
+	 * <li>An exception is thrown
+	 * </ol>
+	 */
+	@Test
+	public void testNewProjectPassedDates() throws Exception {
+		// Create dates
+		GregorianCalendar start = new GregorianCalendar();
+		GregorianCalendar end = new GregorianCalendar();
+		start.set(2015, Calendar.JANUARY, 23);
+		end.set(2015, Calendar.FEBRUARY, 23);
+
+		// Try to create a project
+		try {
+			company.createProject("Project01", start, end);
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("The start date has already been passed",e.getMessage());
 			assertEquals("Create project",e.getOperation());
 		}
 
