@@ -1,12 +1,12 @@
-//Test by Van Anh Thi Trinh - s144449
+//Van Anh Thi Trinh - s144449
 package apptest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-
 import java.util.*;
 import org.junit.*;
 import softwarehuset.*;
+
 public class TestSeeRegisteredSpentTime {
 	Company company;
 	Employee projectLeader, employee;
@@ -17,9 +17,8 @@ public class TestSeeRegisteredSpentTime {
 	public void setUp() throws OperationNotAllowedException {
 		// Create company executive, project leader for a project and employee
 		// assigned to the project
-		Address address = new Address("City", "Street");
+		Address address = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", address);
-		Executive executive = new Executive("Executive", "Department1",	company, "password");
 		projectLeader = company.createEmployee("HABU", "empassword1", "Department1");
 		employee = company.createEmployee("JANK", "empassword2", "Department1");
 
@@ -62,6 +61,7 @@ public class TestSeeRegisteredSpentTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testSeeRegisteredSpentTime() throws OperationNotAllowedException {
 		//Login
@@ -82,6 +82,7 @@ public class TestSeeRegisteredSpentTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testSeeRegisteredSpentTimeOnWrongActivity() throws OperationNotAllowedException {
 		//Login

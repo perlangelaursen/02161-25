@@ -1,18 +1,13 @@
+//Per Lange Laursen - s144486
+
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
-
-/*
-* Test created by Per Lange Laursen - s144486 DTU
-*/
 
 public class TestAssignEmployeeToProjectAndActivity {
 	/**
@@ -33,7 +28,7 @@ public class TestAssignEmployeeToProjectAndActivity {
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company and executive
-		Address address = new Address("City", "Street");
+		Address address = new Address("City", "Street", 1);
 		company = new Company("Company", address);
 		Executive executive = new Executive("Name", "Department1", company, "password");
 		
@@ -124,7 +119,6 @@ public class TestAssignEmployeeToProjectAndActivity {
 		}
 	}
 	
-	//Assign to activity
 	@Test
 	public void testAssignEmployeeActivity() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();

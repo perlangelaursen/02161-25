@@ -121,7 +121,7 @@ public class Project {
 		}
 	}
 
-	public Report getSpecificReportByName(String name) throws OperationNotAllowedException {
+	public Report getSpecificReport(String name) throws OperationNotAllowedException {
 		if(com.getLoggedInEmployee() == null){
 			throw new OperationNotAllowedException("Get report is not allowed if not logged in", "Get report"); 
 		}
@@ -129,5 +129,17 @@ public class Project {
 			if(r.getName().equals(name)) return r;
 		}
 		return null;
+	}
+
+	public void setStart(GregorianCalendar start2) {
+		if(projectLeader.getID().equals(this.getID())) {
+			start = start2;
+		}
+	}
+
+	public void setEnd(GregorianCalendar end2) {
+		if(projectLeader.getID().equals(this.getID())) {
+			end = end2; 
+		}
 	}
 }

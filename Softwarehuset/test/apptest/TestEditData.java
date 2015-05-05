@@ -1,26 +1,22 @@
+//Mathias Enggrob Boon - s144484
 package apptest;
 
 import static org.junit.Assert.*;
-
-import java.time.Month;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
 
 public class TestEditData {
 	private Company company;
 	private Employee projectLeader;
-	private Employee test1;
 	Project p1, p2;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company and executive
-		Address address = new Address("City", "Street");
+		Address address = new Address("City", "Street", 1);
 		company = new Company("Company", address);
 		Executive executive = new Executive("Name", "Department1", company, "password");
 		company.setExecutive(executive);
@@ -43,7 +39,6 @@ public class TestEditData {
 		projectLeader = company.createEmployee("ABCD", "password", "RandD");
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		
-		test1 = company.createEmployee("EFGH", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
 		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(projectLeader, p1);

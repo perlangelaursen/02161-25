@@ -1,15 +1,15 @@
-//Test by Van Anh Thi Trinh - s144449
+//Van Anh Thi Trinh - s144449
 package apptest;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import softwarehuset.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import org.junit.Before;
+import org.junit.Test;
+import softwarehuset.*;
+
+
 
 public class TestRegisterOtherTime {
 	private Company company;
@@ -18,7 +18,7 @@ public class TestRegisterOtherTime {
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company, executive, project leader for a project and employee assigned to the project
-		Address address = new Address("City", "Street");
+		Address address = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", address);
 		employee = company.createEmployee("LINK", "empassword",	"Department1");
 	}
@@ -33,6 +33,7 @@ public class TestRegisterOtherTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterOtherTime() throws OperationNotAllowedException {
 		company.employeeLogin("LINK", "empassword");
@@ -57,6 +58,7 @@ public class TestRegisterOtherTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterInvalidTimes() throws OperationNotAllowedException {
 		company.employeeLogin("LINK", "empassword");
@@ -114,6 +116,7 @@ public class TestRegisterOtherTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterNonExistingDates() throws OperationNotAllowedException {
 		company.employeeLogin("LINK", "empassword");
@@ -238,6 +241,7 @@ public class TestRegisterOtherTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisteronOccupiedDates() throws OperationNotAllowedException {
 		company.employeeLogin("LINK", "empassword");
@@ -289,6 +293,7 @@ public class TestRegisterOtherTime {
 		assertEquals(0, employee.getTimeForPersonalActivity("Course"));
 		assertEquals(18 * 24, employee.getTimeForPersonalActivity("Vacation"));
 	}
+	
 	@Test
 	public void testRegisteronOccupiedDates3() throws OperationNotAllowedException {
 		company.employeeLogin("LINK", "empassword");
@@ -320,6 +325,7 @@ public class TestRegisterOtherTime {
 	 * (cannot usually happen since the calendar is only updated IF there are overlapping dates)
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterOtherTime2() throws OperationNotAllowedException {
 		Activity vacation = employee.createPersonalActivity(2015, 12, 23, 2016, 1, 3, "Vacation");

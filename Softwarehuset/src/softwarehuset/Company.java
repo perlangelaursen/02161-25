@@ -22,7 +22,12 @@ public class Company {
 		this.address = address;
 		dateServer = new DateServer();
 	}
-
+	public String getName() {
+		return name;
+	}
+	public Address getAddress() {
+		return address;
+	}
 	public void setExecutive(Executive executive) {
 		this.executive = executive;
 	}

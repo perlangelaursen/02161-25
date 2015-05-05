@@ -98,6 +98,7 @@ public class Employee {
 	public int viewProgress(String p) throws OperationNotAllowedException {
 		Project project = company.getSpecificProject(p);
 		checkIfLoggedInProjectLeader(project);
+		
 		return project.getSpentTime();
 	}
 

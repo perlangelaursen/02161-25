@@ -1,34 +1,24 @@
-//Test by Anna Ã˜lgaard Nielsen - s144437
+//Anna Ølgaard Nielsen - s144437
 
 package apptest;
 
 import static org.junit.Assert.*;
-
-import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import softwarehuset.Activity;
-import softwarehuset.Address;
-import softwarehuset.Company;
-import softwarehuset.Employee;
-import softwarehuset.Executive;
-import softwarehuset.OperationNotAllowedException;
-import softwarehuset.Project;
+import softwarehuset.*;
 
 public class TestGetAvailableEmployees {
 	private Address add;
 	private Company com;
 	private Executive ex;
-	private GregorianCalendar d1, d2, d3, d4, d5, d6, d7, d8;
+	private GregorianCalendar d1, d2, d3, d4, d5, d6, d7;
 	private Employee em, em2, em3, em4;
 	private Project p1;
 	
 	@Before
-	public void setUp() throws Exception {
-		add = new Address("roskildevej 2", "roskilde");
+	public void setUp() throws OperationNotAllowedException {
+		add = new Address("City", "Street", 1);
 		com = new Company("SoftwareHuset", add);
 		ex = new Executive("name","Department1", com, "password");
 		com.setExecutive(ex);
@@ -45,7 +35,6 @@ public class TestGetAvailableEmployees {
 		d5 = new GregorianCalendar();
 		d6 = new GregorianCalendar();
 		d7 = new GregorianCalendar();
-		d8 = new GregorianCalendar();
 		
 		com.executiveLogin(ex.getPassword());
 		p1 = com.createProject("p1");
@@ -55,7 +44,7 @@ public class TestGetAvailableEmployees {
 	}
 	
 	@Test
-	public void testAvaiableEmployeesOnePerson() throws Exception {
+	public void testAvaiableEmployeesOnePerson() throws OperationNotAllowedException {
 		
 		ex.assignProjectLeader(em, p1);
 		assertEquals(p1.getProjectLeader(), em);
@@ -80,7 +69,7 @@ public class TestGetAvailableEmployees {
 	}
 	
 	@Test
-	public void testAvailableEmployeesThreePersons() throws Exception {
+	public void testAvailableEmployeesThreePersons() throws OperationNotAllowedException {
 		ex.assignProjectLeader(em, p1);
 		assertEquals(p1.getProjectLeader(), em);
 		
@@ -103,7 +92,7 @@ public class TestGetAvailableEmployees {
 	}
 	
 	@Test
-	public void testAvailableEmployeesOverlap() throws Exception {
+	public void testAvailableEmployeesOverlap() throws OperationNotAllowedException {
 		ex.assignProjectLeader(em, p1);
 		assertEquals(p1.getProjectLeader(), em);
 		
