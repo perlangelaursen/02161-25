@@ -1,25 +1,14 @@
+//Per Lange Laursen - s144486
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import softwarehuset.Address;
-import softwarehuset.Company;
-import softwarehuset.Employee;
-import softwarehuset.Executive;
-import softwarehuset.OperationNotAllowedException;
-
-/*
-* Test created by Per Lange Laursen - s144486 DTU
-*/
+import softwarehuset.*;
 
 public class TestCreateActivity {
-
 	Employee projectLeader;
 	Employee test1;
 	Company company;
@@ -48,6 +37,7 @@ public class TestCreateActivity {
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		test1 = company.createEmployee("LAMP", "password", "RanD");
 	}
+	
 	//Successfully created activity
 	@Test
 	public void testCreateActivity01() throws OperationNotAllowedException {
@@ -83,7 +73,7 @@ public class TestCreateActivity {
 		}
 	}
 	
-	//Wrong date order
+	//End date before start date
 	@Test
 	public void testCreateActivity03() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();
@@ -104,7 +94,7 @@ public class TestCreateActivity {
 		assertEquals(0, company.getSpecificProject("Project01").getActivities().size());
 	}
 	
-	//Nobody is logged in
+	//Not logged in
 	@Test
 	public void testCreateActivity04() throws OperationNotAllowedException {
 		GregorianCalendar start = new GregorianCalendar();

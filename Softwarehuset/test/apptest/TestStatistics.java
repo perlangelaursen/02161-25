@@ -1,3 +1,4 @@
+//Per Lange Laursen - s144486
 package apptest;
 
 import static org.junit.Assert.*;
@@ -5,15 +6,9 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
-
-/*
-* Test created by Per Lange Laursen - s144486 DTU
-*/
 
 public class TestStatistics {
 	Employee projectLeader;
@@ -107,5 +102,4 @@ public class TestStatistics {
 			assertEquals("Project leader operation",e.getOperation());
 		}
 	}
-
 }

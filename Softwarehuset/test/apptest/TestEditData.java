@@ -1,14 +1,11 @@
+//Mathias Enggrob Boon - s144484
 package apptest;
 
 import static org.junit.Assert.*;
-
-import java.time.Month;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
 
 public class TestEditData {

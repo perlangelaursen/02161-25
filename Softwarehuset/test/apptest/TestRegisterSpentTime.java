@@ -1,16 +1,13 @@
-//Test by Van Anh Thi Trinh - s144449
+//Van Anh Thi Trinh - s144449
 
 package apptest;
 
+import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
-import static org.junit.Assert.*;
 
 public class TestRegisterSpentTime {
 	Company company;
@@ -23,7 +20,6 @@ public class TestRegisterSpentTime {
 		// Create company, executive, project leader for a project and employee assigned to the project
 		Address address = new Address("City", "Street");
 		company = new Company("Softwarehuset", address);
-		Executive executive = new Executive("Executive", "Department1",	company, "password");
 		projectLeader = company.createEmployee("LAND", "empassword1", "Department1");
 		employee = company.createEmployee("KANO", "empassword2", "Department1");
 
@@ -49,6 +45,7 @@ public class TestRegisterSpentTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterSpentTime() throws OperationNotAllowedException {
 		company.employeeLogin("LAND", "empassword1");
@@ -73,6 +70,7 @@ public class TestRegisterSpentTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterNegativeTime() throws OperationNotAllowedException {
 		company.employeeLogin("LAND", "empassword1");
@@ -103,6 +101,7 @@ public class TestRegisterSpentTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterWithoutLoggingIn() throws Exception {
 		try {
@@ -123,6 +122,7 @@ public class TestRegisterSpentTime {
 	 * </ol>
 	 * 
 	 */
+	
 	@Test
 	public void testRegisterTimeforWrongActivity() throws Exception {
 		company.employeeLogin("KANO", "empassword2");

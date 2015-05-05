@@ -1,16 +1,13 @@
+//Mathias Enggrob Boon - s144484
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
 
-	//Mathias
 public class TestGetProgressForProjectAndActivity {
 	Employee projectLeader;
 	Employee test1;
@@ -19,32 +16,25 @@ public class TestGetProgressForProjectAndActivity {
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
-		// Create company and executive
 		Address address = new Address("City", "Street");
 		company = new Company("Company", address);
 		Executive executive = new Executive("Name", "Department1", company, "password");
 		company.setExecutive(executive);
-
-		// Log in as executive
 		company.executiveLogin("password");
 		
-		//Set date	
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2016, Calendar.JANUARY, 23);
 		end.set(2016, Calendar.FEBRUARY, 23);
 		
-		//Create projects
 		p1 = company.createProject("Project01", start, end);
 		p2 = company.createProject("Project02", start, end);
 		
-		//Create employee and assign as project leader
-		projectLeader = company.createEmployee("HALO", "password", "RandD");
+		projectLeader = company.createEmployee("EFGH", "password", "RandD");
 		executive.assignProjectLeader(projectLeader,company.getSpecificProject("Project01"));
 		
-		test1 = company.createEmployee("MUHA", "password", "RandD");
+		test1 = company.createEmployee("ABCD", "password", "RandD");
 		company.employeeLogin(projectLeader.getID(), "password");
-		
 		
 		company.getSpecificProject("Project01").createActivity("Activity01", start, end, company.getSpecificProject("Project01"));
 		projectLeader.assignEmployeeProject(projectLeader, company.getSpecificProject("Project01"));

@@ -1,18 +1,12 @@
+//Per Lange Laursen - s144486
 package apptest;
 
 import static org.junit.Assert.*;
-
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
 import softwarehuset.*;
-
-/*
-* Test created by Per Lange Laursen - s144486 DTU
-*/
 
 public class TestColleaguesAssistance {
 
@@ -31,7 +25,7 @@ public class TestColleaguesAssistance {
 		assertFalse(company.executiveIsLoggedIn());
 		company.executiveLogin("password");
 		assertTrue(company.executiveIsLoggedIn());
-				
+		
 		GregorianCalendar start = new GregorianCalendar();
 		GregorianCalendar end = new GregorianCalendar();
 		start.set(2016, Calendar.JANUARY, 23);
@@ -85,7 +79,6 @@ public class TestColleaguesAssistance {
 			assertEquals("User not logged in",e.getMessage());
 			assertEquals("Need For Assistance",e.getOperation());
 		}
-		
 	}
 	
 	@Test
@@ -111,7 +104,6 @@ public class TestColleaguesAssistance {
 		asker.removeAssistingEmployee(selected, p1.getActivity(p1.getID()+"-A"));
 		
 		assertEquals(0, p1.getActivity(p1.getID()+"-A").getAssistingEmployees().size());
-		
 	}
 	
 	@Test
@@ -135,7 +127,6 @@ public class TestColleaguesAssistance {
 			assertEquals("User not logged in",e.getMessage());
 			assertEquals("Remove Assisting Employee from activity",e.getOperation());
 		}
-		
 	}
 	
 	@Test
@@ -156,6 +147,5 @@ public class TestColleaguesAssistance {
 		company.employeeLogin(asker.getID(), "password");
 		asker.requestAssistance(selected, p1.getActivity(p1.getID()+"-A"));
 		assertNull(p1.getActivity(p1.getID()+"-A").getAssistingEmployee(wrong));
-
 	}
 }
