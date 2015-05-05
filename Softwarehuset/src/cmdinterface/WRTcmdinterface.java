@@ -60,20 +60,21 @@ public class WRTcmdinterface {
 		System.out.println();
 		String inputString = input.readLine();
 		String[] commands = inputString.split(" ");
-		if (commands[0].equals("Add") && commands[1].equals("Employee")) {
+		if (commands[0].toLowerCase().equals("add") && commands[1].toLowerCase().equals("employee")) {
 			addEmployee();
 		}
 
-		if (commands[0].equals("Create") && commands[1].equals("Project")) {
+		if (commands[0].toLowerCase().equals("create") && commands[1].toLowerCase().equals("project")) {
 			createProject();
 		}
 
-		if (commands[0].equals("Assign") && commands[1].equals("Project")
-				&& commands[2].equals("Leader")) {
+		if (commands[0].toLowerCase().equals("assign") && commands[1].toLowerCase().equals("project")
+				&& commands[2].toLowerCase().equals("leader")) {
 			assignProjectLeader();
 		}
 
-		if (commands[0].equals("Log") && commands[1].equals("out")) {
+		if (commands[0].toLowerCase().equals("log") && commands[1].toLowerCase().equals("out")) {
+			company.employeeLogout();
 			initialScreen();
 		}
 
@@ -105,7 +106,7 @@ public class WRTcmdinterface {
 		System.out.println("Do you want to add dates to project (Yes or No)?");
 		String choise = input.readLine();
 
-		if(choise.equals("Yes") || choise.equals("yes")) {
+		if(choise.toLowerCase().equals("yes")) {
 			GregorianCalendar start = checkStartDate();
 			GregorianCalendar end = checkEndDate();
 			
@@ -163,7 +164,7 @@ public class WRTcmdinterface {
 		String inputString = input.readLine();
 		String[] commands = inputString.split(" ");
 
-		if (commands[0].equals("Login") && commands.length == 3) {
+		if (commands[0].toLowerCase().equals("login") && commands.length == 3) {
 			company.employeeLogin(commands[1], commands[2]);
 			if (company.getLoggedInEmployee() != null) {
 				employeeScreen();
@@ -173,7 +174,7 @@ public class WRTcmdinterface {
 			initialScreen();
 
 		}
-		if (commands[0].equals("Login") && commands.length == 2) {
+		if (commands[0].toLowerCase().equals("login") && commands.length == 2) {
 			company.executiveLogin(commands[1]);
 			if (company.executiveIsLoggedIn()) {
 				executiveScreen();
@@ -182,7 +183,7 @@ public class WRTcmdinterface {
 			System.out.println();
 			initialScreen();
 		}
-		if (commands[0].equals("Exit")) {
+		if (commands[0].toLowerCase().equals("exit")) {
 			System.exit(0);
 		}
 	}
@@ -222,36 +223,36 @@ public class WRTcmdinterface {
 		System.out.println("Log out");
 
 		String userChoise = input.readLine();
-		if (userChoise.equals("Register spent time")) {
+		if (userChoise.toLowerCase().equals("register spent time")) {
 			registerSpentTime();
-		} else if (userChoise.equals("Ask colleague for assistance")) {
+		} else if (userChoise.toLowerCase().equals("ask colleague for assistance")) {
 			askColleagueForAssistance();
-		} else if (userChoise.equals("Remove assisting colleague")) {
+		} else if (userChoise.toLowerCase().equals("remove assisting colleague")) {
 			removeAssistingColleague();
-		} else if (userChoise
-				.equals("Register vacation, sick-days and course attendance")) {
+		} else if (userChoise.toLowerCase()
+				.equals("register vacation, sick-days and course attendance")) {
 			registerVSC();
-		} else if (userChoise.equals("See registered spent time")) {
+		} else if (userChoise.toLowerCase().equals("see registered spent time")) {
 			registeredSpentTime();
-		} else if (userChoise.equals("Assign employee to project") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("assign employee to project") && isProjectLeader) {
 			assignEmployeeProject();
-		} else if (userChoise.equals("Assign employee to activity") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("assign employee to activity") && isProjectLeader) {
 			assignEmployeeActivity();
-		} else if (userChoise.equals("Create an activity") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("create an activity") && isProjectLeader) {
 			createActivity();
-		} else if (userChoise.equals("Get Project Statistics") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("get project statistics") && isProjectLeader) {
 			getStatistics();
-		} else if (userChoise.equals("Change Project Dates") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("change project dates") && isProjectLeader) {
 			changeProjectDates();
-		} else if (userChoise.equals("Relieve employee from project") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("relieve employee from project") && isProjectLeader) {
 			relieveEmployeeProject();
-		} else if (userChoise.equals("See available employees") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("see available employees") && isProjectLeader) {
 			seeAvailableEmployees();
-		} else if (userChoise.equals("Create reports on project meetings") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("create reports on project meetings") && isProjectLeader) {
 			reportsOnProjectMeetings();
-		} else if (userChoise.equals("View report from project meeting") && isProjectLeader) {
+		} else if (userChoise.toLowerCase().equals("view report from project meeting") && isProjectLeader) {
 			viewReport();
-		} else if (userChoise.equals("Log out")) {
+		} else if (userChoise.toLowerCase().equals("log out")) {
 			company.employeeLogout();
 			initialScreen();
 		} else {
@@ -440,17 +441,17 @@ public class WRTcmdinterface {
 		System.out.print("Enter End Year: ");
 		int endYear = Integer.parseInt(input.readLine());
 
-		if (type.equals("Vacation") || type.equals("vacation")) {
+		if (type.toLowerCase().equals("vacation")) {
 			company.getLoggedInEmployee().registerVacationTime(startYear,
 					startMonth, startDate, endYear, endMonth, endDate);
 		}
 
-		if (type.equals("Sick") || type.equals("sick")) {
+		if (type.toLowerCase().equals("sick")) {
 			company.getLoggedInEmployee().registerSickTime(startYear,
 					startMonth, startDate, endYear, endMonth, endDate);
 		}
 
-		if (type.equals("Course") || type.equals("course")) {
+		if (type.toLowerCase().equals("course")) {
 			company.getLoggedInEmployee().registerCourseTime(startYear,
 					startMonth, startDate, endYear, endMonth, endDate);
 		}
