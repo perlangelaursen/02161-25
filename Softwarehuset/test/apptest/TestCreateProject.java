@@ -16,7 +16,7 @@ public class TestCreateProject {
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company and executive
-		address = new Address("City", "Street");
+		address = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", address);
 		// Log in as executive
 		company.executiveLogin("password");

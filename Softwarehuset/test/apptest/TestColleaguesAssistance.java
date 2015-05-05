@@ -17,7 +17,7 @@ public class TestColleaguesAssistance {
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company and executive
-		Address address = new Address("City", "Street");
+		Address address = new Address("City", "Street", 1);
 		company = new Company("Company", address);
 		Executive executive = new Executive("Name", "Department1", company, "password");
 				

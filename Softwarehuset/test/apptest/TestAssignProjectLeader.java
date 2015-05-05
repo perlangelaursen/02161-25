@@ -19,7 +19,7 @@ public class TestAssignProjectLeader {
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
-		add = new Address("roskildevej 2", "roskilde");
+		add = new Address("City", "Street", 1);
 		com = new Company("SoftwareHuset", add);
 		ex = new Executive("name","Department1", com, "password");
 		em = new Employee("Anders", "password", com, "Project Department");

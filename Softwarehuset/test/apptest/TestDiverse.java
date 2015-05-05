@@ -16,7 +16,7 @@ public class TestDiverse {
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
-		Address add = new Address("Kagevej 2", "Hundige");
+		Address add = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", add);
 		executive = new Executive("Name", "Department1", company, "password");
 		

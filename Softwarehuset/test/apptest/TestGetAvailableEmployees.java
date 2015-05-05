@@ -18,7 +18,7 @@ public class TestGetAvailableEmployees {
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
-		add = new Address("roskildevej 2", "roskilde");
+		add = new Address("City", "Street", 1);
 		com = new Company("SoftwareHuset", add);
 		ex = new Executive("name","Department1", com, "password");
 		com.setExecutive(ex);

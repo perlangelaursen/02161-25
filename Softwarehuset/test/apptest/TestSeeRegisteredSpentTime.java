@@ -17,7 +17,7 @@ public class TestSeeRegisteredSpentTime {
 	public void setUp() throws OperationNotAllowedException {
 		// Create company executive, project leader for a project and employee
 		// assigned to the project
-		Address address = new Address("City", "Street");
+		Address address = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", address);
 		projectLeader = company.createEmployee("HABU", "empassword1", "Department1");
 		employee = company.createEmployee("JANK", "empassword2", "Department1");

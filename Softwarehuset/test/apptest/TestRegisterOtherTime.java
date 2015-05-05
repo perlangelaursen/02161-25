@@ -18,7 +18,7 @@ public class TestRegisterOtherTime {
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company, executive, project leader for a project and employee assigned to the project
-		Address address = new Address("City", "Street");
+		Address address = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", address);
 		employee = company.createEmployee("LINK", "empassword",	"Department1");
 	}
