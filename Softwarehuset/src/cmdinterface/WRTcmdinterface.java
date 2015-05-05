@@ -361,7 +361,7 @@ public class WRTcmdinterface {
 
 		try{
 			int time = company.getLoggedInEmployee().getSpentTime(activity);
-			System.out.println(activity + ": "+ company.getLoggedInEmployee().getSpentTime(activity)+" hours(s)");
+			System.out.println(activity + ": "+ company.getLoggedInEmployee().getSpentTime(activity)+" half-hour(s)");
 			System.out.println();
 		} catch (Exception e){
 			System.out.println(""+e.getMessage());
@@ -462,7 +462,7 @@ public class WRTcmdinterface {
 		System.out.print("Enter Activity ID: ");
 		String activity = input.readLine();
 		
-		System.out.print("Enter the number of total hours: ");
+		System.out.print("Enter the number of half-hours: ");
 		String timeInput = input.readLine();
 		while(!timeInput.matches("[0-9]+")){
 			System.out.println("Spent time must be a number");
