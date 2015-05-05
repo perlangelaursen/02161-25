@@ -186,7 +186,6 @@ public class WRTcmdinterface {
 
 	private void employeeScreen() throws IOException, OperationNotAllowedException {
 		boolean isProjectLeader = false;
-		
 		System.out.println("[User: " + company.getLoggedInEmployee().getID()+
 				" " + company.getLoggedInEmployee().getDepartment() + "]");
 		System.out.println("Employee options");

@@ -3,29 +3,31 @@ package apptest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
 import java.util.*;
+
 import org.junit.*;
+
 import softwarehuset.*;
 
 public class TestSeeRegisteredSpentTime {
 	Company company;
 	Employee projectLeader, employee;
 	Project project;
-	Executive executive;
 	Activity activity, activity2, activity3;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
-		// Create company, executive, project leader for a project and employee
+		// Create company executive, project leader for a project and employee
 		// assigned to the project
 		Address address = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", address);
-		executive = new Executive("Name", "Department", company, "password");
+		Executive executive = new Executive("Name", "Department", company, "password");
+		company.executiveLogin("password");
 		projectLeader = company.createEmployee("HABU", "empassword1", "Department1");
 		employee = company.createEmployee("JANK", "empassword2", "Department1");
 
 		// Create project and assign project leader
-		company.executiveLogin("password");
 		project = company.createProject("Project01");
 		project.assignProjectLeader(projectLeader);
 

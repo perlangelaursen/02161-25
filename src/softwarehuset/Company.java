@@ -22,12 +22,7 @@ public class Company {
 		this.address = address;
 		dateServer = new DateServer();
 	}
-	public String getName() {
-		return name;
-	}
-	public Address getAddress() {
-		return address;
-	}
+
 	public void setExecutive(Executive executive) {
 		this.executive = executive;
 	}
@@ -176,5 +171,21 @@ public class Company {
 		if (date < 1 || date > daysInMonth){
 			throw new OperationNotAllowedException("Invalid time input", "Choose date");
 		}
+	}
+
+	public void setAddress(String city, String street, int number) throws OperationNotAllowedException { 
+		if(city.length()==0 || street.length()==0){
+			throw new OperationNotAllowedException("Unable to set address, invalid city/street name", "Set address");
+		}
+		if(number<=0){
+			throw new OperationNotAllowedException("Unable to set address, invalid street number", "Set address");
+		}
+		address.setCity(city);
+		address.setStreet(street);
+		address.setStreetNumber(number);
+	}
+
+	public Address getAddress() {
+		return address;
 	}
 }

@@ -38,6 +38,7 @@ public class TestAssignProjectLeader {
 		p1 = com.getSpecificProject("p1");
 		assertEquals(com.getProjects().size(), 1);
 		p1 = com.getSpecificProject(150001);
+		assertNull(com.getSpecificProject(150502));
 		assertEquals(com.getProjects().size(), 1);
 		ex.assignProjectLeader(em, p1);
 		assertEquals(p1.getProjectLeader(), em);

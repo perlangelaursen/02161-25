@@ -102,6 +102,8 @@ public class Employee {
 		return project.getSpentTime();
 	}
 
+
+
 	public List<String> getStatisticsProject(Project project) throws OperationNotAllowedException {
 		checkIfLoggedInProjectLeader(project);
 		
@@ -317,25 +319,4 @@ public class Employee {
 		}
 		return a;
 	}
-	
-	public void editProjectStart(String project, int year, int month, int date) throws OperationNotAllowedException {
-		Project p = company.getSpecificProject(project);
-		checkIfLoggedInProjectLeader(p);
-		
-		company.checkForInvalidDate(year, month-1, date);
-		GregorianCalendar start = new GregorianCalendar();
-		start.set(year, month-1, date, 0, 0, 0);
-		p.setStart(start);
-	}
-
-	public void editProjectEnd(String project, int year, int month, int date) throws OperationNotAllowedException {
-		Project p = company.getSpecificProject(project);
-		checkIfLoggedInProjectLeader(p);
-		
-		company.checkForInvalidDate(year, month-1, date);
-		GregorianCalendar end = new GregorianCalendar();
-		end.set(year, month-1, date, 0, 0, 0);
-		p.setEnd(end);
-	}
-	
 }

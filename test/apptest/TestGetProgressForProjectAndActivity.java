@@ -46,9 +46,9 @@ public class TestGetProgressForProjectAndActivity {
 	
 	@Test
 	public void testProgressActivity() throws OperationNotAllowedException {
-		
 		assertEquals(100, projectLeader.viewProgress("Project01", p1.getID()+"-Activity01"));
 	}
+	
 	@Test
 	public void testProgressProject() throws OperationNotAllowedException {
 		assertEquals(100, projectLeader.viewProgress("Project01"));

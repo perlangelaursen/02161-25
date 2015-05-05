@@ -2,13 +2,10 @@
 package apptest;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import softwarehuset.*;
 
 public class TestEditData {
@@ -91,24 +88,5 @@ public class TestEditData {
 			assertEquals("Invalid time input", e.getMessage());
 			assertEquals("Choose date", e.getOperation());
 		}
-	}
-	
-	@Test
-	public void testSetData() throws OperationNotAllowedException {
-		company.employeeLogin(projectLeader.getID(), "password");
-		assertEquals(company.getLoggedInEmployee(), projectLeader);
-		
-		GregorianCalendar start = new GregorianCalendar(2015, Calendar.JANUARY, 3);
-		projectLeader.editProjectStart("Project01", 2015, 1, 3);
-		assertEquals(company.getSpecificProject("Project01").getStart().get(Calendar.DAY_OF_MONTH), start.get(Calendar.DAY_OF_MONTH));
-		assertEquals(company.getSpecificProject("Project01").getStart().get(Calendar.MONTH), start.get(Calendar.MONTH));
-		assertEquals(company.getSpecificProject("Project01").getStart().get(Calendar.YEAR), start.get(Calendar.YEAR));
-		
-		GregorianCalendar end = new GregorianCalendar(2015, Calendar.APRIL, 3);
-		projectLeader.editProjectEnd("Project01", 2015, 4, 3);
-		assertEquals(company.getSpecificProject("Project01").getEnd().get(Calendar.DAY_OF_MONTH), end.get(Calendar.DAY_OF_MONTH));
-		assertEquals(company.getSpecificProject("Project01").getEnd().get(Calendar.MONTH), end.get(Calendar.MONTH));
-		assertEquals(company.getSpecificProject("Project01").getEnd().get(Calendar.YEAR), end.get(Calendar.YEAR));
-		
 	}
 }
