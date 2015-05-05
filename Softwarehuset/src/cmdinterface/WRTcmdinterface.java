@@ -213,55 +213,45 @@ public class WRTcmdinterface {
 		String userChoise = input.readLine();
 		if (userChoise.equals("Register spent time")) {
 			registerSpentTime();
-		}
-		if (userChoise.equals("Ask colleague for assistance")) {
+		} else if (userChoise.equals("Ask colleague for assistance")) {
 			askColleagueForAssistance();
-		}
-		if (userChoise.equals("Remove assisting colleague")) {
+		} else if (userChoise.equals("Remove assisting colleague")) {
 			removeAssistingColleague();
-		}
-		if (userChoise
+		} else if (userChoise
 				.equals("Register vacation, sick-days and course attendance")) {
 			registerVSC();
-		}
-		if (userChoise.equals("See registered spent time")) {
+		} else if (userChoise.equals("See registered spent time")) {
 			registeredSpentTime();
-		}
-		if (userChoise.equals("Assign employee to project") && isProjectLeader) {
+		} else if (userChoise.equals("Assign employee to project") && isProjectLeader) {
 			assignEmployeeProject();
-		}
-		if (userChoise.equals("Assign employee to activity") && isProjectLeader) {
+		} else if (userChoise.equals("Assign employee to activity") && isProjectLeader) {
 			assignEmployeeActivity();
-		}
-		if (userChoise.equals("Create an activity") && isProjectLeader) {
+		} else if (userChoise.equals("Create an activity") && isProjectLeader) {
 			createActivity();
-		}
-		if (userChoise.equals("Get Project Statistics") && isProjectLeader) {
+		} else if (userChoise.equals("Get Project Statistics") && isProjectLeader) {
 			getStatistics();
-		}
-		if (userChoise.equals("Relieve employee from project") && isProjectLeader) {
+		} else if (userChoise.equals("Relieve employee from project") && isProjectLeader) {
 			relieveEmployeeProject();
-		}
-		if (userChoise.equals("See available employees") && isProjectLeader) {
+		} else if (userChoise.equals("See available employees") && isProjectLeader) {
 			seeAvailableEmployees();
-		}
-		if (userChoise.equals("Create reports on project meetings") && isProjectLeader) {
+		} else if (userChoise.equals("Create reports on project meetings") && isProjectLeader) {
 			reportsOnProjectMeetings();
-		}
-		if (userChoise.equals("View report from project meeting") && isProjectLeader) {
+		} else if (userChoise.equals("View report from project meeting") && isProjectLeader) {
 			viewReport();
-		}
-		if (userChoise.equals("Log out")) {
+		} else if (userChoise.equals("Log out")) {
 			company.employeeLogout();
 			initialScreen();
+		} else {
+			System.out.println("Incorrect command. Try Again.\n");
+			employeeScreen();
 		}
 	}
 
 	private void viewReport() throws IOException, OperationNotAllowedException {
-		System.out.print("Enter Project ID: ");
+		System.out.print("Enter Project Name: ");
 		String project = input.readLine();
 
-		System.out.print("Enter Report ID: ");
+		System.out.print("Enter Report Name: ");
 		String report = input.readLine();
 
 		System.out.println(company.getSpecificProject(project)
@@ -272,10 +262,10 @@ public class WRTcmdinterface {
 
 	private void reportsOnProjectMeetings() throws IOException,
 			OperationNotAllowedException {
-		System.out.print("Enter Project ID: ");
+		System.out.print("Enter Project Name: ");
 		String project = input.readLine();
 
-		System.out.print("Enter Report ID: ");
+		System.out.print("Enter Report Name: ");
 		String report = input.readLine();
 
 		System.out.print("Enter Report Date: ");
@@ -357,10 +347,10 @@ public class WRTcmdinterface {
 	}
 
 	private void removeAssistingColleague() throws IOException,	OperationNotAllowedException {
-		System.out.print("Enter Project ID: ");
+		System.out.print("Enter Project Name: ");
 		String project = input.readLine();
 
-		System.out.print("Enter Activity ID: ");
+		System.out.print("Enter Activity Name: ");
 		String activity = input.readLine();
 
 		System.out.print("Enter Employee ID: ");
@@ -378,10 +368,10 @@ public class WRTcmdinterface {
 
 	private void askColleagueForAssistance() throws IOException,
 			OperationNotAllowedException {
-		System.out.print("Enter Project ID: ");
+		System.out.print("Enter Project Name: ");
 		String project = input.readLine();
 
-		System.out.print("Enter Activity ID: ");
+		System.out.print("Enter Activity Name: ");
 		String activity = input.readLine();
 
 		System.out.print("Enter Employee ID: ");
@@ -469,7 +459,7 @@ public class WRTcmdinterface {
 
 	private void relieveEmployeeProject() throws IOException,
 			OperationNotAllowedException {
-		System.out.print("Enter Project ID: ");
+		System.out.print("Enter Project Name: ");
 		String project = input.readLine();
 
 		System.out.print("Enter Employee ID: ");
@@ -486,7 +476,7 @@ public class WRTcmdinterface {
 
 	private void getStatistics() throws OperationNotAllowedException,
 			IOException {
-		System.out.print("Enter Project ID: ");
+		System.out.print("Enter Project Name: ");
 		String project = input.readLine();
 
 		List<String> statistics = company.getLoggedInEmployee()
@@ -505,7 +495,7 @@ public class WRTcmdinterface {
 		String activity = input.readLine();
 
 		GregorianCalendar start = checkStartDate();
-		GregorianCalendar end = checkStartDate();
+		GregorianCalendar end = checkEndDate();
 		try{
 			company.getLoggedInEmployee().createActivity(project, activity, start, end);
 			System.out.println("The activity "+project.getID()+"-"+activity+" has been created");
