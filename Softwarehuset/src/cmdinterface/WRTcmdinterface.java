@@ -466,7 +466,7 @@ public class WRTcmdinterface {
 		String timeInput = input.readLine();
 		while(!timeInput.matches("[0-9]+")){
 			System.out.println("Spent time must be a number");
-			System.out.print("Enter the number of total hours: ");
+			System.out.print("Enter the number of half-hours: ");
 			timeInput = input.readLine();
 		}
 		int time = Integer.parseInt(timeInput);
