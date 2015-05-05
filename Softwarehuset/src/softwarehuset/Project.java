@@ -132,14 +132,22 @@ public class Project {
 	}
 
 	public void setStart(GregorianCalendar start2) {
-		if(projectLeader.getID().equals(this.getID())) {
+		if(projectLeader.getID().equals(com.getLoggedInEmployee().getID())) {
 			start = start2;
 		}
 	}
+	
+	public GregorianCalendar getStart() {
+		return start;
+	}
 
 	public void setEnd(GregorianCalendar end2) {
-		if(projectLeader.getID().equals(this.getID())) {
+		if(projectLeader.getID().equals(com.getLoggedInEmployee().getID())) {
 			end = end2; 
 		}
+	}
+	
+	public GregorianCalendar getEnd() {
+		return end;
 	}
 }

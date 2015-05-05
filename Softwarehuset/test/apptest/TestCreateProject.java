@@ -12,12 +12,14 @@ import softwarehuset.*;
 public class TestCreateProject {
 	private Address address;
 	private Company company;
+	private Executive ex;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException {
 		// Create company and executive
 		address = new Address("City", "Street", 1);
 		company = new Company("Softwarehuset", address);
+		ex = new Executive("Name", "Department", company, "password");
 		// Log in as executive
 		company.executiveLogin("password");
 	}
