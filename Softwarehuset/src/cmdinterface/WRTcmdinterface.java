@@ -178,6 +178,8 @@ public class WRTcmdinterface {
 	}
 
 	private void employeeScreen() throws IOException, OperationNotAllowedException {
+		boolean isProjectLeader = false;
+		
 		System.out.println("[User: " + company.getLoggedInEmployee().getID()+
 				" " + company.getLoggedInEmployee().getDepartment() + "]");
 		System.out.println("Employee options");
@@ -187,16 +189,25 @@ public class WRTcmdinterface {
 		System.out.println("- Register vacation, sick-days and course attendance");
 		System.out.println("- See registered spent time");
 		System.out.println();
-		System.out.println("Project Leader options");
-		System.out.println("- Assign employee to project");
-		System.out.println("- Assign employee to activity");
-		System.out.println("- Create an activity");
-		System.out.println("- Get Project Statistics");
-		System.out.println("- Relieve employee from project");
-		System.out.println("- See available employees");
-		System.out.println("- Create reports on project meetings");
-		System.out.println("- View report from project meeting");
-		System.out.println();
+		
+		for(Project p : company.getProjects()) {
+			if(p.getProjectLeader().getID().equals(company.getLoggedInEmployee().getID())) {
+				isProjectLeader = true;
+			}
+		}
+		
+		if (isProjectLeader) {
+			System.out.println("Project Leader options");
+			System.out.println("- Assign employee to project");
+			System.out.println("- Assign employee to activity");
+			System.out.println("- Create an activity");
+			System.out.println("- Get Project Statistics");
+			System.out.println("- Relieve employee from project");
+			System.out.println("- See available employees");
+			System.out.println("- Create reports on project meetings");
+			System.out.println("- View report from project meeting");
+			System.out.println();
+		}
 		System.out.println("Log out");
 
 		String userChoise = input.readLine();
@@ -216,28 +227,28 @@ public class WRTcmdinterface {
 		if (userChoise.equals("See registered spent time")) {
 			registeredSpentTime();
 		}
-		if (userChoise.equals("Assign employee to project")) {
+		if (userChoise.equals("Assign employee to project") && isProjectLeader) {
 			assignEmployeeProject();
 		}
-		if (userChoise.equals("Assign employee to activity")) {
+		if (userChoise.equals("Assign employee to activity") && isProjectLeader) {
 			assignEmployeeActivity();
 		}
-		if (userChoise.equals("Create an activity")) {
+		if (userChoise.equals("Create an activity") && isProjectLeader) {
 			createActivity();
 		}
-		if (userChoise.equals("Get Project Statistics")) {
+		if (userChoise.equals("Get Project Statistics") && isProjectLeader) {
 			getStatistics();
 		}
-		if (userChoise.equals("Relieve employee from project")) {
+		if (userChoise.equals("Relieve employee from project") && isProjectLeader) {
 			relieveEmployeeProject();
 		}
-		if (userChoise.equals("See available employees")) {
+		if (userChoise.equals("See available employees") && isProjectLeader) {
 			seeAvailableEmployees();
 		}
-		if (userChoise.equals("Create reports on project meetings")) {
+		if (userChoise.equals("Create reports on project meetings") && isProjectLeader) {
 			reportsOnProjectMeetings();
 		}
-		if (userChoise.equals("View report from project meeting")) {
+		if (userChoise.equals("View report from project meeting") && isProjectLeader) {
 			viewReport();
 		}
 		if (userChoise.equals("Log out")) {
