@@ -57,8 +57,37 @@ public class TestAssignEmployeeToProjectAndActivity {
 	
 	@Test
 	public void testAssignEmployeeProject() throws OperationNotAllowedException {
+		
+		try {
+			company.createEmployee("Anders", "password", "department");
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Employee ID must be the length of 4 letters",e.getMessage());
+			assertEquals("Create employee",e.getOperation());
+		}
+		
+		try {
+			company.createEmployee("AND1", "password", "department");
+			fail("OperationNotAllowedException exception should have been thrown");
+		} catch (OperationNotAllowedException e) {
+			assertEquals("Employee ID must not contain any numbers",e.getMessage());
+			assertEquals("Create employee",e.getOperation());
+		}	
+		
+		company.employeeLogin("ABCD", "password");
+		Employee test3 = company.createEmployee("ANDS", "password", "department");
+			
+		//test3 employee is not assigned to project p1
+		assertNull(p1.getEmployee("ANDS"));
+		projectLeader.assignEmployeeProject(test3, p1);
+		assertEquals(p1.getEmployee("ANDS"), test3);
+		
+		//Check a random not-employee is not assigned to project p1
+		assertNull(p1.getEmployee("STEF"));
+		
 		company.employeeLogin(projectLeader.getID(), "password");
 		projectLeader.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
+		// Check for ID and department
 		assertEquals(company.getSpecificProject("Project01").getEmployee("HFBJ").getID(), test1.getID());
 		assertEquals(company.getSpecificProject("Project01").getEmployee("HFBJ").getDepartment(), test1.getDepartment());
 	}
@@ -66,6 +95,13 @@ public class TestAssignEmployeeToProjectAndActivity {
 	@Test
 	public void testNotLoggedIn() throws OperationNotAllowedException {
 		Employee test2 = company.createEmployee("HFBJ", "password", "Department1");
+		
+		company.employeeLogin("HAVD", "password");
+		assertTrue(company.executiveIsLoggedIn());
+		
+		company.employeeLogin("BAMS", "password2");
+		assertTrue(company.executiveIsLoggedIn());
+		
 		try {
 			test2.assignEmployeeProject(test1, company.getSpecificProject("Project01"));
 			fail("OperationNotAllowedException exception should have been thrown");
@@ -166,5 +202,15 @@ public class TestAssignEmployeeToProjectAndActivity {
 			assertEquals("Employee does not exist", e.getMessage());
 			assertEquals("Assign employee to activity", e.getOperation());
 		}
+	}
+	
+	@Test
+	public void testEmployeeNotExist() throws OperationNotAllowedException {
+		Employee test2 = company.createEmployee("LAVT", "password", "department");
+		
+		assertEquals(company.getEmployee("HFBJ"), test1);
+		assertEquals(company.getEmployee("LAVT"), test2);
+		assertNull(company.getEmployee("MIST"));
+		
 	}
 }
