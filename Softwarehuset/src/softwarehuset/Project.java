@@ -130,4 +130,16 @@ public class Project {
 		}
 		return null;
 	}
+
+	public void setStart(GregorianCalendar start2) {
+		if(projectLeader.getID().equals(this.getID())) {
+			start = start2;
+		}
+	}
+
+	public void setEnd(GregorianCalendar end2) {
+		if(projectLeader.getID().equals(this.getID())) {
+			end = end2; 
+		}
+	}
 }

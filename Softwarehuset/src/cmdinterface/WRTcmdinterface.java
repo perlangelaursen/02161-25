@@ -101,20 +101,30 @@ public class WRTcmdinterface {
 				System.out.println();
 			}
 		}
-
-		GregorianCalendar start = checkStartDate();
-		GregorianCalendar end = checkEndDate();
 		
-		try {
-			Project p = company.createProject(projectName, start, end);
+		System.out.println("Do you want to add dates to project (Yes or No)?");
+		String choise = input.readLine();
+
+		if(choise.equals("Yes") || choise.equals("yes")) {
+			GregorianCalendar start = checkStartDate();
+			GregorianCalendar end = checkEndDate();
+			
+			try {
+				Project p = company.createProject(projectName, start, end);
+				System.out.println("Project created: " + p.getID());
+				System.out.println();
+				executiveScreen();
+			} catch (Exception e) {
+				System.out.println("End date cannot be before start date");
+				System.out.println("Project could not be created");
+				System.out.println();
+				createProject();
+			}
+		} else {
+			Project p = company.createProject(projectName);
 			System.out.println("Project created: " + p.getID());
 			System.out.println();
 			executiveScreen();
-		} catch (Exception e) {
-			System.out.println("End date cannot be before start date");
-			System.out.println("Project could not be created");
-			System.out.println();
-			createProject();
 		}
 	}
 
@@ -202,6 +212,7 @@ public class WRTcmdinterface {
 			System.out.println("- Assign employee to activity");
 			System.out.println("- Create an activity");
 			System.out.println("- Get Project Statistics");
+			System.out.println("- Change Project Dates");
 			System.out.println("- Relieve employee from project");
 			System.out.println("- See available employees");
 			System.out.println("- Create reports on project meetings");
@@ -230,6 +241,8 @@ public class WRTcmdinterface {
 			createActivity();
 		} else if (userChoise.equals("Get Project Statistics") && isProjectLeader) {
 			getStatistics();
+		} else if (userChoise.equals("Change Project Dates") && isProjectLeader) {
+			changeProjectDates();
 		} else if (userChoise.equals("Relieve employee from project") && isProjectLeader) {
 			relieveEmployeeProject();
 		} else if (userChoise.equals("See available employees") && isProjectLeader) {
@@ -245,6 +258,20 @@ public class WRTcmdinterface {
 			System.out.println("Incorrect command. Try Again.\n");
 			employeeScreen();
 		}
+	}
+
+	private void changeProjectDates() throws IOException, OperationNotAllowedException {
+		System.out.print("Enter Project Name: ");
+		String project = input.readLine();
+		
+		GregorianCalendar start = checkStartDate();
+		GregorianCalendar end = checkEndDate();
+		
+		company.getSpecificProject(project).setStart(start);
+		company.getSpecificProject(project).setEnd(end);
+		
+		
+		employeeScreen();
 	}
 
 	private void viewReport() throws IOException, OperationNotAllowedException {
