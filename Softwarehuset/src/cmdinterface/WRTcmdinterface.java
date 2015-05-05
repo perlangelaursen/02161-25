@@ -282,7 +282,7 @@ public class WRTcmdinterface {
 		System.out.print("Enter Report Name: ");
 		String report = input.readLine();
 
-		System.out.println(company.getSpecificProject(project).getSpecificReport(report).getContent());
+		System.out.println(company.getSpecificProject(project).getSpecificReportByName(report).getContent());
 		employeeScreen();
 	}
 
@@ -311,7 +311,7 @@ public class WRTcmdinterface {
 		String content = input.readLine();
 
 		company.getLoggedInEmployee().editReport(
-				company.getSpecificProject(project).getSpecificReport(
+				company.getSpecificProject(project).getSpecificReportByName(
 						report), content);
 
 		employeeScreen();
